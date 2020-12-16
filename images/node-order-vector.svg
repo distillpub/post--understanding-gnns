@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="195.20245mm"
+   height="125.77274mm"
+   viewBox="0 0 195.20245 125.77274"
+   version="1.1"
+   id="svg687"
+   inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
+   sodipodi:docname="node-order-vector.svg">
+  <defs
+     id="defs681">
+    <marker
+       style="overflow:visible"
+       id="marker3020"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,4,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path3018" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Sstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Sstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.3,0,0,0.3,-0.69,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path2576" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.4,0,0,0.4,4,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path2552" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : -22.727261 : 1"
+       inkscape:vp_y="0 : 999.99996 : 0"
+       inkscape:vp_z="210 : -22.727261 : 1"
+       inkscape:persp3d-origin="105 : -72.227259 : 1"
+       id="perspective2842" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140" />
+    <rect
+       style="fill:#f2f2f2;stroke:#000000;stroke-width:0.053;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1773"
+       width="5.4001565"
+       height="5.1220994"
+       x="69.849236"
+       y="81.671036" />
+    <marker
+       style="overflow:visible"
+       id="Arrow1Lstart"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path1846" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker1832"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lstart"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path1830" />
+    </marker>
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-5" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2153" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-2" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2153-3" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-24" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2153-1" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-26" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2153-0" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-9" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2153-4" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-53" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2153-11" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-7" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2294" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-5-3" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2323" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-2-9" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2353" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-24-4" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2383" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-26-4" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2413" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-9-1" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2443" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-9-2" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2443-4" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2140-53-3" />
+    <rect
+       x="20.293285"
+       y="73.980583"
+       width="4.6237864"
+       height="7.1925564"
+       id="rect2489" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.03"
+     inkscape:cx="29.207278"
+     inkscape:cy="90.878024"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="2560"
+     inkscape:window-height="1414"
+     inkscape:window-x="0"
+     inkscape:window-y="26"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata684">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-2.6650561,-88.693213)">
+    <path
+       style="fill:none;stroke:#130e05;stroke-width:0.830355;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.96371;paint-order:stroke fill markers"
+       d="m 33.707523,100.2112 -25.5725934,28.66917 48.9406504,6.61597 9.699921,73.65771"
+       id="path5587" />
+    <path
+       style="fill:none;stroke:#050505;stroke-width:0.829051px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.987903;paint-order:stroke fill markers"
+       d="m 17.393963,175.63315 39.681617,-40.13681 55.55423,48.51703"
+       id="path5597" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.829051px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;paint-order:stroke fill markers"
+       d="m 57.07558,135.49634 43.20885,-15.87831"
+       id="path5599" />
+    <ellipse
+       style="fill:#ececec;stroke:#000000;stroke-width:0.479414;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path5538"
+       cx="33.927979"
+       cy="100.43172"
+       rx="5.070426"
+       ry="5.072237" />
+    <ellipse
+       style="fill:#ececec;stroke:#000000;stroke-width:0.479414;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path5538-2"
+       cx="68.098228"
+       cy="208.64026"
+       rx="5.070426"
+       ry="5.072237" />
+    <ellipse
+       style="fill:#ffb380;stroke:#000000;stroke-width:0.479414;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path5538-0"
+       cx="57.075588"
+       cy="135.05525"
+       rx="5.070426"
+       ry="5.072237" />
+    <ellipse
+       style="fill:#ececec;stroke:#000000;stroke-width:0.479414;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path5538-9"
+       cx="100.72533"
+       cy="120.05906"
+       rx="5.070426"
+       ry="5.072237" />
+    <ellipse
+       style="fill:#ececec;stroke:#000000;stroke-width:0.479414;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path5538-07"
+       cx="18.275782"
+       cy="175.63313"
+       rx="5.070426"
+       ry="5.072237" />
+    <ellipse
+       style="fill:#ececec;stroke:#000000;stroke-width:0.479414;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path5538-1"
+       cx="112.1889"
+       cy="184.89546"
+       rx="5.070426"
+       ry="5.072237" />
+    <ellipse
+       style="fill:#ececec;stroke:#000000;stroke-width:0.479414;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path5538-6"
+       cx="9.4576635"
+       cy="127.55713"
+       rx="5.070426"
+       ry="5.072237" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="31.759539"
+       y="102.73104"
+       id="text1629"><tspan
+         sodipodi:role="line"
+         id="tspan1627"
+         x="31.759539"
+         y="102.73104"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.264583">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="31.253862"
+       y="118.34841"
+       id="text1633"><tspan
+         sodipodi:role="line"
+         id="tspan1631"
+         x="31.253862"
+         y="118.34841"
+         style="stroke-width:0.264583" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="7.292892"
+       y="129.96309"
+       id="text1629-2"><tspan
+         sodipodi:role="line"
+         id="tspan1627-7"
+         x="7.292892"
+         y="129.96309"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.264583">7</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="55.16988"
+       y="137.5226"
+       id="text1629-3"><tspan
+         sodipodi:role="line"
+         id="tspan1627-9"
+         x="55.16988"
+         y="137.5226"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.264583">3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="16.112337"
+       y="177.84006"
+       id="text1629-7"><tspan
+         sodipodi:role="line"
+         id="tspan1627-79"
+         x="16.112337"
+         y="177.84006"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.264583">6</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="66.136078"
+       y="211.22797"
+       id="text1629-5"><tspan
+         sodipodi:role="line"
+         id="tspan1627-3"
+         x="66.136078"
+         y="211.22797"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.264583">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="109.97643"
+       y="187.28947"
+       id="text1629-33"><tspan
+         sodipodi:role="line"
+         id="tspan1627-8"
+         x="109.97643"
+         y="187.28947"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.264583">7</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="98.637146"
+       y="122.08857"
+       id="text1629-58"><tspan
+         sodipodi:role="line"
+         id="tspan1627-96"
+         x="98.637146"
+         y="122.08857"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.264583">6</tspan></text>
+    <rect
+       style="fill:#ececec;stroke:#000000;stroke-width:0.111658;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1706"
+       width="11.011141"
+       height="11.149437"
+       x="186.80054"
+       y="106.13834" />
+    <rect
+       style="fill:#f2f2f2;stroke:#000000;stroke-width:0.111658;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1773-8"
+       width="11.011141"
+       height="11.149437"
+       x="186.80054"
+       y="117.28777" />
+    <rect
+       style="fill:#f2f2f2;stroke:#000000;stroke-width:0.111658;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1773-4"
+       width="11.011141"
+       height="11.149437"
+       x="186.80054"
+       y="128.43723" />
+    <rect
+       style="fill:#ffb380;stroke:#000000;stroke-width:0.111658;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1773-0"
+       width="11.011141"
+       height="11.149437"
+       x="186.80054"
+       y="128.43723" />
+    <rect
+       style="fill:#ececec;stroke:#000000;stroke-width:0.111658;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1773-46"
+       width="11.011141"
+       height="11.149437"
+       x="186.80054"
+       y="139.58667" />
+    <rect
+       style="fill:#f2f2f2;stroke:#000000;stroke-width:0.111658;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1773-464"
+       width="11.011141"
+       height="11.149437"
+       x="186.80054"
+       y="150.7361" />
+    <rect
+       style="fill:#ececec;stroke:#000000;stroke-width:0.111658;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1773-3"
+       width="11.011141"
+       height="11.149437"
+       x="186.80054"
+       y="161.88557" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:2.82222000000000017px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1773) url(#rect1773-8) url(#rect1773-4) url(#rect1773-0) url(#rect1773-46) url(#rect1773-464) url(#rect1773-3);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583;"
+       x="71.775269"
+       y="85.426636"
+       id="text5639"
+       transform="matrix(2.0390411,0,0,2.1767319,48.050805,-70.105907)"><tspan
+         x="69.849609"
+         y="84.246672"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.264583">1</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.94577px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.557413"
+       x="196.80316"
+       y="120.51574"
+       id="text5639-0"
+       transform="scale(0.96785549,1.0332121)"><tspan
+         sodipodi:role="line"
+         id="tspan5637-0"
+         x="196.80316"
+         y="120.51574"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.94577px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.557413">7</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.94577px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.557413"
+       x="196.80319"
+       y="131.39618"
+       id="text5639-3"
+       transform="scale(0.96785549,1.0332121)"><tspan
+         sodipodi:role="line"
+         id="tspan5637-2"
+         x="196.80319"
+         y="131.39618"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.94577px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.557413">3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.94577px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.557413"
+       x="196.80319"
+       y="142.27661"
+       id="text5639-82"
+       transform="scale(0.96785549,1.0332121)"><tspan
+         sodipodi:role="line"
+         id="tspan5637-4"
+         x="196.80319"
+         y="142.27661"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.94577px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.557413">6</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.94577px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.557413"
+       x="196.80319"
+       y="153.15703"
+       id="text5639-83"
+       transform="scale(0.96785549,1.0332121)"><tspan
+         sodipodi:role="line"
+         id="tspan5637-5"
+         x="196.80319"
+         y="153.15703"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.94577px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.557413">7</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.94577px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.557413"
+       x="196.80319"
+       y="164.03748"
+       id="text5639-00"
+       transform="scale(0.96785549,1.0332121)"><tspan
+         sodipodi:role="line"
+         id="tspan5637-6"
+         x="196.80319"
+         y="164.03748"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.94577px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.557413">1</tspan></text>
+    <rect
+       style="fill:#ececec;stroke:#000000;stroke-width:0.111658;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1773-3-0"
+       width="11.011141"
+       height="11.149438"
+       x="186.80054"
+       y="173.03502" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.94577px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.557414"
+       x="196.70329"
+       y="175.00995"
+       id="text5639-82-6"
+       transform="scale(0.96785549,1.0332121)"><tspan
+         sodipodi:role="line"
+         id="tspan5637-4-6"
+         x="196.70329"
+         y="175.00995"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.94577px;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';stroke-width:0.557414">6</tspan></text>
+    <path
+       style="fill:#000000;stroke:#000000;stroke-width:0.546;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-mid:url(#Arrow1Mstart);marker-end:url(#marker3020)"
+       d="m 119.62652,144.49333 c 35.2078,0 34.89622,0 34.89622,0"
+       id="path1844" />
+    <text
+       xml:space="preserve"
+       id="text2138"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140);"
+       transform="translate(14.898867,13.871359)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next'">A</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-5);"
+       transform="translate(-18.15849,41.857199)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan>B</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-7"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-2);"
+       transform="translate(33.987545,49.306633)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan
+           style="font-weight:bold">C</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-8"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-24);"
+       transform="translate(83.821687,34.92152)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan>D</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-3"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-26);"
+       transform="translate(96.665539,99.140775)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan>E</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-9"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-9);"
+       transform="translate(54.023953,125.85599)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan>F</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-2"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-53);"
+       transform="translate(-10.965934,91.434464)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan>G</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-0"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-7);"
+       transform="translate(155.2983,34.407765)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next'">A</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-1-6"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-5-3);"
+       transform="translate(155.2983,45.673853)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan>B</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-7-1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-2-9);"
+       transform="translate(155.2983,56.93994)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan
+           style="font-weight:bold">C</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-8-1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-24-4);"
+       transform="translate(155.2983,68.206028)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan>D</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-3-6"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-26-4);"
+       transform="translate(155.2983,79.472115)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan>E</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-9-0"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-9-1);"
+       transform="translate(155.2983,90.738202)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan>F</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       id="text2138-2-1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.64444000000000035px;line-height:1.25;font-family:'Avenir Next';-inkscape-font-specification:'Avenir Next';white-space:pre;shape-inside:url(#rect2140-53-3);"
+       transform="translate(155.2983,102.00429)"><tspan
+         x="20.292969"
+         y="78.818118"><tspan>G</tspan></tspan></text>
+  </g>
+</svg>
