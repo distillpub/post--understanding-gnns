@@ -1185,10 +1185,10 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           return ["svg","draw_text","draw_separator_lines","draw_inp_img","draw_pred_img_gcn","draw_pred_img_cnn","draw_next_img"].includes(name) || null;
         });
       </script>
-      <p>
-        You can modify the input grid (left) by clicking on the individual cells to toggle them, or randomize the entire grid with the 'Randomize Grid' button.
+      <figcaption style="margin-bottom: 1em;">
+        Modify the input grid (left) by clicking on the individual cells to toggle them (black: alive, white: dead), or randomize the entire grid with the 'Randomize Grid' button.
         Clicking the 'Reset' button sets all cells as dead.
-      </p>
+      </figcaption>
       <p>
         The visualization above serves as an excellent test for generalizability of these models, beyond the standard validation set metrics.
         On closer observation, we see that:
