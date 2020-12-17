@@ -1,8 +1,12 @@
 <!doctype html>
 
 <head>
+  <style>
+    body {transition: opacity ease-in 0.2s; } 
+    body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
+  </style>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=1200">
   <script src="https://distill.pub/template.v2.js"></script>
   <style id="distill-article-specific-styles">
     .subgrid {
@@ -423,22 +427,22 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </li>
       </ul>
     <figure id="global-vs-local-conv" class="l-page">
-        <img src="images/global-vs-local.svg" style="margin-right: 10%; margin-left: 10%; margin-bottom: 5em; width: 80%;"></img>
-        <figcaption style="position: absolute; text-align: center; left: 35%; top: 35%; width: 25%;">
+        <img src="images/global-vs-local.svg" style="margin-right: 10%; margin-left: 10%; width: 80%;"></img>
+        <figcaption style="position: absolute; text-align: center; left: 35%; top: 39%; width: 25%;">
           Spectral convolutions are global. All nodes take part in the convolution at each node.
         </figcaption>
-        <figcaption style="position: absolute; text-align: center; left: 35%; top: 82%; width: 25%;">
+        <figcaption style="position: absolute; text-align: center; left: 35%; top: 95%; width: 25%;">
           Spatial convolutions are local. Only the node's immediate neighbours take part in the convolution at each node.
         </figcaption>
-        <div class="l-page" style="display: flex;">
-          <figcaption style="width: 40%; margin-left: 10%; text-align: center;">
-            <b>Left:</b> Node features before the convolution.
-          </figcaption>
-          <figcaption style="width: 60%; margin-right: 10%; text-align: right;">
-            <b>Right:</b> Node features after the convolution.
-          </figcaption>
-        </div>
-    </figure>
+      </figure>
+    <div class="l-page" style="display: flex; margin-top: 1em; margin-bottom: 2em;">
+      <figcaption style="width: 50%; margin-left: 10%; text-align: center;">
+        <b>Left:</b> Node features before the convolution.
+      </figcaption>
+      <figcaption style="width: 50%; margin-right: 10%; text-align: right;">
+        <b>Right:</b> Node features after the convolution.
+      </figcaption>
+    </div>
     <p>
       The next sections will explain these in more detail.
     </p>
@@ -495,8 +499,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         by just collecting each of the values $x_i$ assigned to node $i$ in $G$:
       </p>
         <figure id="standard-neural-networks" class="l-body">
-          <img src="images/node-order-vector.svg" style="margin-right: 10%; margin-left: 10%; width: 70%;"></img>
-          <figcaption style="position: absolute; left: 62%; top: 80%; width: 35%;">
+          <img src="images/node-order-vector.svg" style="margin-right: 10%; margin-left: 10%; margin-bottom: 1%; width: 80%;"></img>
+          <figcaption style="text-align: center;">
             Fixing a node order (indicated by the alphabets) and collecting all node features into a single vector $x$.
           </figcaption>
         </figure>
