@@ -246,36 +246,93 @@
 }
 
 @inproceedings{node2vec,
-author = {Grover, Aditya and Leskovec, Jure},
-title = {Node2vec: Scalable Feature Learning for Networks},
-year = {2016},
-isbn = {9781450342322},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/2939672.2939754},
-doi = {10.1145/2939672.2939754},
-abstract = {Prediction tasks over nodes and edges in networks require careful effort in engineering features used by learning algorithms. Recent research in the broader field of representation learning has led to significant progress in automating prediction by learning the features themselves. However, present feature learning approaches are not expressive enough to capture the diversity of connectivity patterns observed in networks. Here we propose node2vec, an algorithmic framework for learning continuous feature representations for nodes in networks. In node2vec, we learn a mapping of nodes to a low-dimensional space of features that maximizes the likelihood of preserving network neighborhoods of nodes. We define a flexible notion of a node's network neighborhood and design a biased random walk procedure, which efficiently explores diverse neighborhoods. Our algorithm generalizes prior work which is based on rigid notions of network neighborhoods, and we argue that the added flexibility in exploring neighborhoods is the key to learning richer representations.We demonstrate the efficacy of node2vec over existing state-of-the-art techniques on multi-label classification and link prediction in several real-world networks from diverse domains. Taken together, our work represents a new way for efficiently learning state-of-the-art task-independent representations in complex networks.},
-booktitle = {Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
-pages = {855–864},
-numpages = {10},
-keywords = {graph representations, information networks, node embeddings, feature learning},
-location = {San Francisco, California, USA},
-series = {KDD '16}
+  author = {Grover, Aditya and Leskovec, Jure},
+  title = {Node2vec: Scalable Feature Learning for Networks},
+  year = {2016},
+  isbn = {9781450342322},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/2939672.2939754},
+  doi = {10.1145/2939672.2939754},
+  abstract = {Prediction tasks over nodes and edges in networks require careful effort in engineering features used by learning algorithms. Recent research in the broader field of representation learning has led to significant progress in automating prediction by learning the features themselves. However, present feature learning approaches are not expressive enough to capture the diversity of connectivity patterns observed in networks. Here we propose node2vec, an algorithmic framework for learning continuous feature representations for nodes in networks. In node2vec, we learn a mapping of nodes to a low-dimensional space of features that maximizes the likelihood of preserving network neighborhoods of nodes. We define a flexible notion of a node's network neighborhood and design a biased random walk procedure, which efficiently explores diverse neighborhoods. Our algorithm generalizes prior work which is based on rigid notions of network neighborhoods, and we argue that the added flexibility in exploring neighborhoods is the key to learning richer representations.We demonstrate the efficacy of node2vec over existing state-of-the-art techniques on multi-label classification and link prediction in several real-world networks from diverse domains. Taken together, our work represents a new way for efficiently learning state-of-the-art task-independent representations in complex networks.},
+  booktitle = {Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
+  pages = {855–864},
+  numpages = {10},
+  keywords = {graph representations, information networks, node embeddings, feature learning},
+  location = {San Francisco, California, USA},
+  series = {KDD '16}
 }
 
 @inproceedings{deepwalk,
-author = {Perozzi, Bryan and Al-Rfou, Rami and Skiena, Steven},
-title = {DeepWalk: Online Learning of Social Representations},
-year = {2014},
-isbn = {9781450329569},
-publisher = {Association for Computing Machinery},
-address = {New York, NY, USA},
-url = {https://doi.org/10.1145/2623330.2623732},
-doi = {10.1145/2623330.2623732},
-booktitle = {Proceedings of the 20th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
-pages = {701–710},
-numpages = {10},
-keywords = {deep learning, latent representations, learning with partial labels, online learning, social networks, network classification},
-location = {New York, New York, USA},
-series = {KDD '14}
+  author = {Perozzi, Bryan and Al-Rfou, Rami and Skiena, Steven},
+  title = {DeepWalk: Online Learning of Social Representations},
+  year = {2014},
+  isbn = {9781450329569},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/2623330.2623732},
+  doi = {10.1145/2623330.2623732},
+  booktitle = {Proceedings of the 20th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
+  pages = {701–710},
+  numpages = {10},
+  keywords = {deep learning, latent representations, learning with partial labels, online learning, social networks, network classification},
+  location = {New York, New York, USA},
+  series = {KDD '14}
 }
+
+@InProceedings{neural-message-passing,
+  title = {Neural Message Passing for Quantum Chemistry},
+  author = {Justin Gilmer and Samuel S. Schoenholz and Patrick F. Riley and Oriol Vinyals and George E. Dahl},
+  booktitle = {Proceedings of the 34th International Conference on Machine Learning},
+  pages = {1263--1272},
+  year = {2017},
+  editor = {Doina Precup and Yee Whye Teh},
+  volume = {70},
+  series = {Proceedings of Machine Learning Research},
+  address = {International Convention Centre, Sydney, Australia},
+  month = {06--11 Aug},
+  publisher = {PMLR},
+  pdf = {http://proceedings.mlr.press/v70/gilmer17a/gilmer17a.pdf},
+  url = {http://proceedings.mlr.press/v70/gilmer17a.html},
+}
+
+@article{graphnets,
+  author    = {Peter W. Battaglia and
+               Jessica B. Hamrick and
+               Victor Bapst and
+               Alvaro Sanchez{-}Gonzalez and
+               Vin{\'{\i}}cius Flores Zambaldi and
+               Mateusz Malinowski and
+               Andrea Tacchetti and
+               David Raposo and
+               Adam Santoro and
+               Ryan Faulkner and
+               Caglar Gulcehre and
+               H. Francis Song and
+               Andrew J. Ballard and
+               Justin Gilmer and
+               George E. Dahl and
+               Ashish Vaswani and
+               Kelsey R. Allen and
+               Charles Nash and
+               Victoria Langston and
+               Chris Dyer and
+               Nicolas Heess and
+               Daan Wierstra and
+               Pushmeet Kohli and
+               Matthew Botvinick and
+               Oriol Vinyals and
+               Yujia Li and
+               Razvan Pascanu},
+  title     = {Relational inductive biases, deep learning, and graph networks},
+  journal   = {CoRR},
+  volume    = {abs/1806.01261},
+  year      = {2018},
+  url       = {http://arxiv.org/abs/1806.01261},
+  archivePrefix = {arXiv},
+  eprint    = {1806.01261},
+  timestamp = {Wed, 24 Jul 2019 18:56:21 +0200},
+  biburl    = {https://dblp.org/rec/journals/corr/abs-1806-01261.bib},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+

@@ -1,10 +1,6 @@
 <!doctype html>
 
 <head>
-  <style>
-    body {transition: opacity ease-in 0.2s; } 
-    body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
-  </style>
   <meta charset="utf-8">
   <meta name="viewport" content="width=1200">
   <script src="https://distill.pub/template.v2.js"></script>
@@ -217,7 +213,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
   </d-front-matter>
 
   <d-title>
-    <h1>Exploring Graph Neural Networks</h1>
+    <h1>Understanding Convolutions on Graphs</h1>
     <p>Understanding what they do, and how they work.</p>
   </d-title>
 
@@ -236,7 +232,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <div><a href="#extending">Extending Convolutions to Graphs</a></div>
         <div><a href="#spectral">Spectral Convolutions</a></div>
         <div><a href="#global-to-local">From Global to Local Convolutions</a></div>
-        <div><a href="#spatial">Spatial Convolutions and Inductive Learning</a></div>
+        <div><a href="#spatial">Modern Spatial Convolutions</a></div>
         <div><a href="#interactive">Interactive Graph Neural Networks</a></div>
         <div><a href="#learning">Learning GNN Parameters</a></div>
         <div><a href="#gnns-vs-cnns">Are GNNs 'better' than CNNs?</a></div>
@@ -286,7 +282,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     </h3>
       <p>
         Graphs are extremely flexible mathematical models; but this means they lack consistent structure across instances.
-        Consider the task of predicting whether a given chemical molecule is toxic<d-cite key="molecules-gnn"></d-cite>:
+        Consider the task of predicting whether a given chemical molecule is toxic<d-cite key="molecules-gnn"></d-cite> <d-cite key="neural-message-passing"></d-cite> :
       </p>
       <figure class="l-page-outset" id="menthyl-nicotinate-molecule" style="display: inline-flex;">
         <!-- <img src="images/1,2,6-trigalloyl-glucose-molecule.svg" style="width: 50%; margin-left: 2em; margin-right: 2em;"></img>
@@ -380,6 +376,10 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         In case some nodes lack features, $x_v$ is set as some predefined constant.
       </p>
       <p>
+        For the most part, we will assume $G$ is undirected, and all nodes are of the same type <d-footnote>These kinds of graphs are called 'homogeneous'.</d-footnote>, for ease of exposition.
+        Many of the same ideas apply to other kinds of graphs: see <a href="#different-kinds-of-graphs">Different Kinds of Graphs</a> at the end of the article for more.
+      </p>
+      <p>
         For each node $v \in V$, we define 'node embeddings' $h_v$, fixed-size vectors describing each node.
         In case the embeddings are computed iteratively, we use the notation $h_v^{(k)}$ to indicate the embedding after the $k^{\text{th}}$ iteration.
         We can think of each iteration as the equivalent of a 'layer' in standard neural networks.
@@ -393,7 +393,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <p>
         Different GNN variants are distinguished by the way these embeddings are computed!
       </p>
-
 
     <h2 id="extending">
       Extending Convolutions to Graphs
@@ -641,7 +640,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
   
       <h3>Embedding Computation</h3>
       <p>
-        We now have the background to understand spectral convolutions (first introduced in <d-cite key="spectral-networks"></d-cite>),
+        We now have the background to understand spectral convolutions (first introduced in the context of neural networks in <d-cite key="spectral-networks"></d-cite>),
         and how they can be used to compute embeddings/feature representations of nodes.
       </p>
       <p>
@@ -665,10 +664,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         For clarity, we have considered the case where node features $h^{(k)}$ at each layer $k$ are just real numbers.
         The procedure above generalizes easily to the case where each $h^{(k)} \in \mathbb{R}^{d_k}$, as well: see <d-cite key="spectral-networks"></d-cite> for details.
       </p>
-      <!-- <p>
-        Learning the filter weights $w$ is possible because the embedding computation is completely differentiable.
-        We discuss more about this in a <a href="#learning">later section</a>!
-      </p> -->
 
       <h3>
         Spectral Convolutions are Node-Order Invariant
@@ -862,41 +857,13 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     </p>
 
     <h2 id="spatial">
-      Spatial Convolutions and Inductive Learning
+      Modern Spatial Convolutions
     </h2>
       <p>
-        While ChebNet was a breakthrough in learning localized filters over graphs,
-        the filters were learnt for a fixed input graph Laplacian $L$.
-        This makes them unable to generalize to unseen graphs.
+        ChebNet was a breakthrough in learning localized filters over graphs,
+        and it motivated many to think of graph convolutions from a different perspective:
       </p>
       <p>
-        This is a good time to introduce the two types of learning scenarios:
-        <ul>
-          <li><b>Transductive Learning:</b>
-            Predict over a specific set of test inputs (here, nodes or graphs).
-          </li>
-          <li><b>Inductive Learning:</b>
-            Learn general rules for prediction, which can then be applied to any set of test inputs.
-          </li>
-        </ul>
-      </p>
-      <p>
-        Inductive learning is harder, because we want to learn general rules. In the context of classification,
-        this means we want to be able to classify unseen nodes or graphs.
-        In the transductive setting, however, we can use information from the test nodes as part of the training process, 
-        since these are known in advance.
-      </p>
-      <p>
-        Spatial convolutions are similar in spirit to ChebNet-like graph convolutions,
-        but can also be used in the inductive learning setting.
-      </p>
-      <p class="shaded-figure" style="padding-left: 1em;">
-        <b>Key Idea:</b>
-          Perform ChebNet-like localized convolutions, without explicitly involving the Laplacian $L$.
-        </ul>
-      </p>
-      <p>
-        How can we do this?
         Let's go back to the effect of multiplying $x$ by $L$, and focus on a particular vertex $v$:
         <d-math block>
           \begin{aligned}
@@ -906,19 +873,25 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
                   &= D_v \  x_v - \sum_{u \in \mathcal{N}(v)} x_u
           \end{aligned}
         </d-math>
-        As expected from the degree, this is a $1$-hop localized convolution.
+        As expected from the degree <d-footnote>$p_w(L) = L$ is a degree-$1$ polynomial.</d-footnote>, this is a $1$-hop localized convolution.
         But more importantly, we can think of this convolution as arising of two steps:
         <ul>
-          <li>Aggregation over immediate neighbour features $x_u$.</li>
+          <li>Aggregating over immediate neighbour features $x_u$.</li>
           <li>Combining with the node's own feature $x_v$.</li>
         </ul>
       </p>
       <p>
-        By ensuring that the aggregation is node-order invariant, the overall convolution becomes node-order invariant.
-        This is precisely the idea behind spatial convolutions!
+        This is precisely the idea behind modern spatial convolutions: allowing different kinds of 'aggregation' and 'combination' steps,
+        beyond what is possible using 'Laplacian polynomial' multiplication from ChebNet.
       </p>
       <p>
-        Spatial convolutions can be thought of as 'message-passing' between adjacent nodes.
+        By ensuring that the aggregation is node-order invariant, the overall convolution becomes node-order invariant.
+      </p>
+      <p>
+        These convolutions can be thought of as 'message-passing' between adjacent nodes:
+        after each step, every node receives some 'information' from its neighbours.
+      </p>
+      <p>
         By iteratively repeating the $1$-hop localized convolutions $K$ times (ie, repeatedly 'passing messages'),
         the receptive field of the convolution effectively includes all nodes upto $K$ hops away.
       </p>
@@ -930,12 +903,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           Spatial convolutions form the backbone of most popular GNN architectures in recent times.
           Let's look at some of the most popular ones!
           <ul>
-            <li>Graph Convolutional Networks (GCN)<d-cite key="semi-supervised-gcn"></d-cite>
-              <d-footnote>
-                The original GCN paper dealt with only transductive learning.
-                However, it can be easily extended to an inductive setting.
-              </d-footnote> 
-            </li>
+            <li>Graph Convolutional Networks (GCN)<d-cite key="semi-supervised-gcn"></d-cite></li>
             <li>Graph Attention Networks (GAT)<d-cite key="gat"></d-cite></li>
             <li>Graph Sample and Aggregate (GraphSAGE)<d-cite key="graphsage"></d-cite></li>
             <li>Graph Isomorphism Network (GIN)<d-cite key="gin"></d-cite></li>
@@ -966,6 +934,12 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <d-cite key="gin"></d-cite> demonstrates that aggregation functions indeed can be compared on how well
         they can uniquely preserve node neighbourhood features;
         we recommend the interested reader read the detailed theoretical analysis there.
+      </p>
+      <p>
+        Here, we talk about spatial convolutions, where the computation only occurs at the nodes.
+        Some graph neural networks <d-cite key="neural-message-passing"></d-cite> <d-cite key="graphnets"></d-cite> perform computation over the edges as well;
+        they compute edge embeddings together with node embeddings.
+        This is an even more general framework - but the same 'message passing' ideas from this section apply!
       </p>
 
     <h2 id="interactive">
@@ -1240,11 +1214,11 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <ul>
           <li>Directed graphs: Aggregate across in-neighbourhood and/or out-neighbourhood features. </li>
           <li>Temporal graphs: Aggregate across previous and/or future node features.</li>
-          <li>Graphs with Edge Features: Compute edge embeddings together with node embeddings.</li>
+          <li>Heterogeneous graphs: Learn different aggregation functions for each node/edge type.</li>
         </ul>
       </p>
       <p>
-        There do exist more sophisticated techniques: see <d-cite key="gnn-survey"></d-cite> for more!
+        There do exist more sophisticated techniques for each of the above classes of graphs: see <d-cite key="gnn-survey"></d-cite> for more!
       </p>
 
       <h3 id="pooling">
@@ -1411,6 +1385,12 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <li><a href="https://distill.pub/2019/memorization-in-rnns/">Visualizing memorization in RNNs</a></li>
         <li><a href="https://distill.pub/2020/understanding-rl-vision/">Understanding RL Vision</a></li>
       </ul>
+    </p>
+    <p>
+      We would like to thank Thomas Kipf for his valuable feedback on the technical content within this article.
+    </p>
+    <p>
+      We would also like to acknowledge <a href="http://web.stanford.edu/class/cs224w/">CS224W: Machine Learning with Graphs</a> as an excellent reference from which the authors benefitted significantly.
     </p>
     <p>
       Finally, we would like to thank Anirban Santara, Sujoy Paul and Ansh Khurana at Google Research India for their help with setting up and running experiments.
