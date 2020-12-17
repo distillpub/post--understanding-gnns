@@ -424,10 +424,10 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </ul>
     <figure id="global-vs-local-conv" class="l-page">
         <img src="images/global-vs-local.svg" style="margin-right: 10%; margin-left: 10%; margin-bottom: 5em; width: 80%;"></img>
-        <figcaption style="position: absolute; left: 38%; top: 30%; width: 25%;">
+        <figcaption style="position: absolute; text-align: center; left: 35%; top: 35%; width: 25%;">
           Spectral convolutions are global. All nodes take part in the convolution at each node.
         </figcaption>
-        <figcaption style="position: absolute; left: 38%; top: 80%; width: 25%;">
+        <figcaption style="position: absolute; text-align: center; left: 35%; top: 82%; width: 25%;">
           Spatial convolutions are local. Only the node's immediate neighbours take part in the convolution at each node.
         </figcaption>
         <div class="l-page" style="display: flex;">
@@ -510,8 +510,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         adjacent nodes in $G$ (ie, are smooth!), would have smaller values of $R_L(x)$.
       </p>
       <p>
-        $L$ is a real, symmetric matrix, which means it has all real eigenvalues $\lambda_1 \leq \ldots \leq \lambda_{n}$. <d-footnote><b>Recall:</b> An eigenvalue $\lambda$ of a matrix $A$ is a value satisfying the equation 
-          $Au = \lambda u$ for a certain vector $u$, called an eigenvector.</d-footnote> 
+        $L$ is a real, symmetric matrix, which means it has all real eigenvalues $\lambda_1 \leq \ldots \leq \lambda_{n}$. <d-footnote>An eigenvalue $\lambda$ of a matrix $A$ is a value
+        satisfying the equation $Au = \lambda u$ for a certain vector $u$, called an eigenvector.</d-footnote>
         Further, the corresponding eigenvectors $u_1, \ldots, u_{n}$ can be taken to be orthonormal:
         <d-math block style="text-align: center;">
           u_{k_1}^T u_{k_2} =
@@ -748,12 +748,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           p_w(L) = \sum_{i = 1}^K w_i L^i
         </d-math>
         Does the degree $K$ influence the behaviour of the filter? Of course! 
-        It is not too hard to show that:
-        <div style="position: relative;">
-          <figcaption style="position: absolute; left: 110%; top: 1.5em; width: 30em;">
-            This is Lemma 5.2 from <d-cite key="wavelets-graphs"></d-cite>!
-          </figcaption>
-        </div>
+        It is not too hard to show that: <d-footnote>This is Lemma 5.2 from <d-cite key="wavelets-graphs"></d-cite>!</d-footnote>
         <d-math block>
           \text{dist}_G(v, u) > d \quad \Longrightarrow \quad L_{vu}^d = 0.
         </d-math>
