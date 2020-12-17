@@ -112,11 +112,6 @@ div.viz_list{
   }
 }
 
-d-contents {
-  position: absolute;
-  padding-top: 32px;
-}
-
 d-contents nav h3 {
   margin-top: 0;
   margin-bottom: 1em;
@@ -250,19 +245,21 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <div><a href="#supplementary">Supplementary Material</a></div>
       </nav>
     </d-contents>
-    <p id="introduction">
-      Many systems and interactions - social networks, molecules, organizations, citations, physical models, transactions - can be represented quite naturally as graphs.
-      How can we reason about and make predictions within these systems?
-    </p>
-    <p>
-      One idea is to look at tools that have worked well in other domains: neural networks have shown immense predictive power in a variety of learning tasks.
-      Standard neural networks, however, operate on fixed-size and/or regular-structured inputs (such as sentences, images and video).
-      This makes them unable to elegantly process graph-structured data.
-    </p>
+    <div>
+      <p id="introduction">
+        Many systems and interactions - social networks, molecules, organizations, citations, physical models, transactions - can be represented quite naturally as graphs.
+        How can we reason about and make predictions within these systems?
+      </p>
+      <p>
+        One idea is to look at tools that have worked well in other domains: neural networks have shown immense predictive power in a variety of learning tasks.
+        Standard neural networks, however, operate on fixed-size and/or regular-structured inputs (such as sentences, images and video).
+        This makes them unable to elegantly process graph-structured data.
+      </p>
+      <figure id="standard-neural-networks" class="l-page">
+        <img src="images/standard-neural-networks.svg" style="width: 100%;"></img>
+      </figure>
+    </div>
     
-    <figure id="standard-neural-networks" class="l-page">
-      <img src="images/standard-neural-networks.svg" style="width: 80%; margin-left: 8%;"></img>
-    </figure>
 
     <p>
       Graph Neural Networks (GNNs) are a family of extensions of neural networks that can operate naturally on graph-structured data. 
@@ -287,12 +284,16 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         Graphs are extremely flexible mathematical models; but this means they lack consistent structure across instances.
         Consider the task of predicting whether a given chemical molecule is toxic<d-cite key="molecules-gnn"></d-cite>:
       </p>
-      <figure class="l-page-outset" id="menthyl-nicotinate-molecule" style="display: block; margin-bottom: 5%;">
-        <img src="images/1,2,6-trigalloyl-glucose-molecule.svg" style="width: 50%; margin-left: 2em; margin-right: 2em;"></img>
-        <img src="images/caramboxin-molecule.svg" style="width: 25%; margin-left: 6em; margin-bottom: 4em;"></img>
-        <figcaption style="position: absolute; left: 4%;">A <span style="color: green;">non-toxic</span> 1,2,6-trigalloyl-glucose molecule.</figcaption>
-        <figcaption style="position: absolute; left: 75%;">A <span style="color: rgba(228, 35, 35, 0.911);">toxic</span> caramboxin molecule.</figcaption>
+      <figure class="l-page-outset" id="menthyl-nicotinate-molecule" style="display: inline-flex;">
+        <!-- <img src="images/1,2,6-trigalloyl-glucose-molecule.svg" style="width: 50%; margin-left: 2em; margin-right: 2em;"></img>
+        <img src="images/caramboxin-molecule.svg" style="width: 25%; margin-left: 6em; margin-bottom: 4em;"></img> -->
+        <img src="images/1,2,6-trigalloyl-glucose-molecule.svg" style="width: 50%;"></img>
+        <img src="images/caramboxin-molecule.svg" style="width: 25%; height: 60%; margin-top: 8%; margin-left: 10%;"></img>
       </figure>
+      <div class="l-page-outset" style="display: flex; margin-bottom: 5%;">
+        <figcaption style="width: 50%; margin-left: 1%;"><b>Left:</b> A <span style="color: green;">non-toxic</span> 1,2,6-trigalloyl-glucose molecule.</figcaption>
+        <figcaption style="width: 50%; margin-right: 15%; text-align: right;"><b>Right:</b> A <span style="color: rgba(228, 35, 35, 0.911);">toxic</span> caramboxin molecule.</figcaption>
+      </div>
       <p>
         Looking at a few examples, the following issues quickly become apparent:
       </p>
@@ -314,14 +315,14 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       Extending the point above: graphs often have no inherent ordering present amongst the nodes.
       Compare this to images, where every pixel is uniquely determined by its absolute position within the image!
 
-      <figure id="standard-neural-networks" class="l-page" style="text-align: center;">
-        <img src="images/node-order-alternatives.svg" style="width: 70%;"></img>
-        <figcaption style="position: absolute; left: 90%; top: 20%; width: 35%;">
+      <figure id="standard-neural-networks" class="l-page" style="margin-bottom: 1em;">
+        <img src="images/node-order-alternatives.svg" style="margin-bottom: 1em; margin-left: 15%; width: 70%;"></img>
+        <figcaption style="text-align: center;">
           Representing the graph as one vector requires us to fix an order on the nodes.
           But what do we do when the nodes have no inherent order?
         </figcaption>
-        <figcaption style="position: absolute; left: 90%; top: 60%; width: 35%;">
-          <b>Left:</b> The same graph labelled in two different ways. The alphabets indicate the ordering of the nodes.
+        <figcaption style="text-align: center;">
+          <b>Above:</b> The same graph labelled in two different ways. The alphabets indicate the ordering of the nodes.
         </figcaption>
       </figure>
   
@@ -363,7 +364,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       
       <figure id="graph-tasks" class="l-page">
         <img src="images/graph-tasks.svg" style="width: 100%;"></img>
-        <figcaption style="position: absolute; left: 110%; top: 65%; width: 25%;">
+        <figcaption style="text-align: center;">
           Examples of problems that can be defined over graphs.
           This list is not exhaustive!
         </figcaption>
@@ -421,20 +422,22 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           <b>Spatial Convolutions</b>: Perform node-order invariant local convolutions over node neighbourhoods.
         </li>
       </ul>
-    <figure id="global-vs-local-conv" class="l-page" style="margin-bottom: 5em;">
-        <img src="images/global-vs-local.svg" style="margin-right: 10%; margin-left: 10%; width: 80%;"></img>
-        <figcaption style="position: absolute; left: 100%; top: 15%; width: 25%;">
+    <figure id="global-vs-local-conv" class="l-page">
+        <img src="images/global-vs-local.svg" style="margin-right: 10%; margin-left: 10%; margin-bottom: 5em; width: 80%;"></img>
+        <figcaption style="position: absolute; left: 38%; top: 30%; width: 25%;">
           Spectral convolutions are global. All nodes take part in the convolution at each node.
         </figcaption>
-        <figcaption style="position: absolute; left: 100%; top: 70%; width: 25%;">
+        <figcaption style="position: absolute; left: 38%; top: 80%; width: 25%;">
           Spatial convolutions are local. Only the node's immediate neighbours take part in the convolution at each node.
         </figcaption>
-        <figcaption style="position: absolute; left: 35%; top: 102%; width: 100%;">
-          <b>Left:</b> Node features before the convolution.
-        </figcaption>
-        <figcaption style="position: absolute; left: 35%; top: 105%; width: 100%;">
-          <b>Right:</b> Node features after the convolution.
-        </figcaption>
+        <div class="l-page" style="display: flex;">
+          <figcaption style="width: 40%; margin-left: 10%; text-align: center;">
+            <b>Left:</b> Node features before the convolution.
+          </figcaption>
+          <figcaption style="width: 60%; margin-right: 10%; text-align: right;">
+            <b>Right:</b> Node features after the convolution.
+          </figcaption>
+        </div>
     </figure>
     <p>
       The next sections will explain these in more detail.
@@ -471,11 +474,11 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </d-math>
       </p>
       <figure id="standard-neural-networks" class="l-page">
-        <img src="images/laplacian.svg" style="margin-right: 0%; margin-left: 10%; width: 70%;"></img>
-        <figcaption style="position: absolute; left: 90%; top: 20%; width: 20%;">
+        <img src="images/laplacian.svg" style="margin-right: 0%; margin-left: 10%; width: 70%; margin-bottom: 1em;"></img>
+        <figcaption style="text-align: center;">
           The Laplacian $L$ for an undirected graph $G$, with the row corresponding to node $\textsf{C}$ highlighted.
         </figcaption>
-        <figcaption style="position: absolute; left: 90%; top: 50%; width: 20%;">
+        <figcaption style="text-align: center;">
           The Laplacian $L$ depends only on the structure of the graph $G$, not any node features.
         </figcaption>
       </figure>
@@ -499,30 +502,17 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </figure>
       <p>
         We will also normalize $x$ such that $\sum_{i = 1}^n x_i^2 = 1$. 
-        If we look at the following quantity involving $L$:
-      </p>
-        <figure style="position: relative; margin: 0;">
-          <figcaption style="position: absolute; left: 110%; top: 38%; width: 30em;">
-            <d-math>R_L</d-math> is formally called the <a href="https://en.wikipedia.org/wiki/Rayleigh_quotient">Rayleigh quotient</a>.
-          </figcaption>
-          <d-math block>
-            R_L(x) = \frac{x^T L x}{x^T x} = \frac{\sum_{(i, j) \in E} (x_i - x_j)^2}{\sum_i x_i^2} = \sum_{(i, j) \in E} (x_i - x_j)^2.
-          </d-math>
-        </figure>
-      <p>
+        If we look at the following quantity involving $L$: <d-footnote><d-math>R_L</d-math> is formally called the <a href="https://en.wikipedia.org/wiki/Rayleigh_quotient">Rayleigh quotient</a>.</d-footnote> 
+        <d-math block>
+          R_L(x) = \frac{x^T L x}{x^T x} = \frac{\sum_{(i, j) \in E} (x_i - x_j)^2}{\sum_i x_i^2} = \sum_{(i, j) \in E} (x_i - x_j)^2.
+        </d-math>
         we immediately see that feature vectors $x$ that assign similar values to 
         adjacent nodes in $G$ (ie, are smooth!), would have smaller values of $R_L(x)$.
       </p>
-      <div style="position: relative; margin: 0;">
-        <figcaption style="position: absolute; left: 110%; width: 40%;">
-          <b>Recall:</b> An eigenvalue $\lambda$ of a matrix $A$ is a value satisfying the equation 
-          $Au = \lambda u$ for a certain vector $u$, called an eigenvector.
-        </figcaption>
-      </div>
       <p>
-        $L$ is a real, symmetric matrix, which means it has all real eigenvalues $\lambda_1 \leq \ldots \leq \lambda_{n}$.
+        $L$ is a real, symmetric matrix, which means it has all real eigenvalues $\lambda_1 \leq \ldots \leq \lambda_{n}$. <d-footnote><b>Recall:</b> An eigenvalue $\lambda$ of a matrix $A$ is a value satisfying the equation 
+          $Au = \lambda u$ for a certain vector $u$, called an eigenvector.</d-footnote> 
         Further, the corresponding eigenvectors $u_1, \ldots, u_{n}$ can be taken to be orthonormal:
-      </p>
         <d-math block style="text-align: center;">
           u_{k_1}^T u_{k_2} =
           \begin{cases}
@@ -530,9 +520,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
             0 \quad \text{ if } {k_1} \neq {k_2}.
           \end{cases}
         </d-math>
-      <p>
         It turns out that these eigenvectors of $L$ are successively less smooth, as $R_L$ indicates:
-      </p>
+        <d-footnote>This is the <a href="https://en.wikipedia.org/wiki/Min-max_theorem">min-max theorem for eigenvalues.</a></d-footnote>
         <figure style="position: relative; margin: 0;">
           <d-math block>
             \underset{x, \ x \perp \{u_1, \ldots, u_{i - 1}\}}{\text{argmin}} R_L(x) = u_i.
@@ -541,10 +530,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
             \qquad
             \min_{x, \ x \perp \{u_1, \ldots, u_{i - 1}\}} R_L(x) = \lambda_i.
           </d-math>
-          <figcaption style="position: absolute; left: 110%; top: 30%; width: 30em;">
-            This is the <a href="https://en.wikipedia.org/wiki/Min-max_theorem">min-max theorem for eigenvalues.</a>
-          </figcaption>
         </figure>
+      </p>
       <p>
         The set of eigenvalues of $L$ are called its 'spectrum', hence the name!
         We denote the 'spectral' decomposition of $L$ as:

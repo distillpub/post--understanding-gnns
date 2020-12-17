@@ -105,11 +105,6 @@ div.viz_list{
   }
 }
 
-d-contents {
-  position: absolute;
-  padding-top: 32px;
-}
-
 d-contents nav h3 {
   margin-top: 0;
   margin-bottom: 1em;
