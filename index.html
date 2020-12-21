@@ -252,7 +252,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </p>
       <p>
         One idea is to look at tools that have worked well in other domains: neural networks have shown immense predictive power in a variety of learning tasks.
-        Standard neural networks, however, operate on fixed-size and/or regular-structured inputs (such as sentences, images and video).
+        However, neural networks have been traditionally used to operate on fixed-size and/or regular-structured inputs (such as sentences, images and video).
         This makes them unable to elegantly process graph-structured data.
       </p>
       <figure id="standard-neural-networks" class="l-page">
@@ -260,14 +260,13 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </figure>
     </div>
     
-
     <p>
       Graph Neural Networks (GNNs) are a family of extensions of neural networks that can operate naturally on graph-structured data. 
       By extracting and utilizing features from the underlying graph,
       GNNs can make more informed predictions about individual entities in these interactions.
     </p>
     <p>
-      In this article, we will describe the motivation behind popular GNN variants, interact with them, and explore their performance on some illuminating tasks.
+      In this article, we will describe the motivation behind popular GNN variants, interact with them, and explore their performance on an illuminating task.
     </p>
     <p>
       First, let's discuss some of the complications that graphs come with. With a firm understanding of these issues, we will be able to better critique and appreciate GNN variants.
@@ -285,8 +284,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         Consider the task of predicting whether a given chemical molecule is toxic<d-cite key="molecules-gnn"></d-cite> <d-cite key="neural-message-passing"></d-cite> :
       </p>
       <figure class="l-page-outset" id="menthyl-nicotinate-molecule" style="display: inline-flex;">
-        <!-- <img src="images/1,2,6-trigalloyl-glucose-molecule.svg" style="width: 50%; margin-left: 2em; margin-right: 2em;"></img>
-        <img src="images/caramboxin-molecule.svg" style="width: 25%; margin-left: 6em; margin-bottom: 4em;"></img> -->
         <img src="images/1,2,6-trigalloyl-glucose-molecule.svg" style="width: 50%;"></img>
         <img src="images/caramboxin-molecule.svg" style="width: 25%; height: 60%; margin-top: 8%; margin-left: 10%;"></img>
       </figure>
@@ -328,7 +325,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
   
     </p>
     <p>
-      With this lack of ordering, we choose our own, and we must ensure our algorithms are invariant to our choice of ordering of nodes.
+      With this lack of inherent order, we make an adhoc choice of ordering. 
+      For this reason, we must ensure our algorithms are invariant to our choice of ordering of the nodes.
       Otherwise, choosing a different ordering of nodes would lead to different predictions.
     </p>
 
@@ -341,15 +339,17 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </p>
       <p>
         Luckily, most naturally occuring graphs are 'sparse':
-        they tend to have number of edges linear in the number of vertices. We will see that this allows the use of clever methods
-        to efficiently compute representations of nodes and edges within the graph: where the number of parameters is not tied to the size of the graph.
+        they tend to have their number of edges linear in their number of vertices.
+        We will see that this allows the use of clever methods
+        to efficiently compute representations of nodes within the graph.
+        Such methods will have their number of parameters independent of the size of the graph.
       </p>
 
     <h2 id="problem-and-notation">
       Problem Setting and Notation
     </h2>
       <p>
-        There are many non-trivial problems that can be formulated over graphs:
+        There are many useful problems that can be formulated over graphs:
         <ul>
           <li><b>Node Classification:</b> Classifying individual nodes.</li>
           <li><b>Graph Classification:</b> Classifying entire graphs. </li>
@@ -366,8 +366,11 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </figcaption>
       </figure>
       <p>
-        One of the generic approaches to solving many of these problems is <b>node representation learning</b>: learning to map individual nodes to vectors ('representations'/'embeddings').
-        See <a href="#learning">Learning GNN Parameters</a> for how the learnt representations can be used for these tasks!
+        A common precursor in solving many of these problems is <b>node representation learning</b>:
+        learning to map individual nodes to fixed-size real-valued vectors (called 'representations' or 'embeddings').
+      </p>
+      <p>
+        See <a href="#learning">Learning GNN Parameters</a> for how the learnt embeddings can be used for these tasks!
       </p>
       <p>
         Different GNN variants are distinguished by the way these representations are computed!
@@ -378,16 +381,16 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         In case some nodes lack features, $x_v$ is set as some predefined constant.
       </p>
       <p>
-        For the most part, we will assume $G$ is undirected, and all nodes are of the same type <d-footnote>These kinds of graphs are called 'homogeneous'.</d-footnote>, for ease of exposition.
+        For ease of exposition, we will assume $G$ is undirected, and all nodes are of the same type <d-footnote>These kinds of graphs are called 'homogeneous'.</d-footnote>.
         Many of the same ideas apply to other kinds of graphs: see <a href="#different-kinds-of-graphs">Different Kinds of Graphs</a> for more.
       </p>
       <p>
-        For each node $v \in V$, we define 'node embeddings' $h_v$, fixed-size vectors describing each node.
+        We denote the node embedding for a node $v \in V$ by $h_v$. 
         In case the embeddings are computed iteratively, we use the notation $h_v^{(k)}$ to indicate the embedding after the $k^{\text{th}}$ iteration.
         We can think of each iteration as the equivalent of a 'layer' in standard neural networks.
       </p>
       <p>
-        Where applicable, $M_v$ denotes the row corresponding to vertex $v$ in the matrix (or vector) $M$.
+        For an arbitrary matrix (or vector) $M$, $M_v$ denotes the row corresponding to vertex $v$, wherever applicable.
       </p>
       <p>
         We use $\mathcal{N}(v)$ to denote the set of neighbours of vertex $v$.
@@ -401,16 +404,15 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     </p>
       <ul>
         <li>
-          Images are graphs with very regular structure, and,
+          Images are graphs with very regular grid-like structure, and,
         </li>
         <li>
-          Convolutions have been seen to be quite powerful in extracting features from images:
-          for example, in Convolutional Neural Networks.
+          Convolutions, as in Convolutional Neural Networks, have been seen to be quite powerful in extracting features from images,
         </li>
       </ul>
     <p>
       a natural idea is to consider generalizing convolutions to arbitrary graphs. Recall, however, the challenges
-      listed out in the previous section: in particular, ordinary convolutions are not node-order invariant, because
+      listed out in the <a href="#challenges">previous section</a>: in particular, ordinary convolutions are not node-order invariant, because
       they depend on the absolute positions of pixels!
     </p>
     <p>
@@ -426,13 +428,13 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </ul>
     <figure id="global-vs-local-conv" class="l-page">
         <img src="images/global-vs-local.svg" style="margin-right: 10%; margin-left: 10%; width: 80%;"></img>
-        <figcaption style="position: absolute; text-align: center; left: 35%; top: 39%; width: 25%;">
+        <figcaption style="position: absolute; text-align: center; left: 39%; top: 39%; width: 25%;">
           Spectral convolutions are global. All nodes take part in the convolution at each node.
         </figcaption>
-        <figcaption style="position: absolute; text-align: center; left: 35%; top: 95%; width: 25%;">
+        <figcaption style="position: absolute; text-align: center; left: 39%; top: 96%; width: 25%;">
           Spatial convolutions are local. Only the node's immediate neighbours take part in the convolution at each node.
         </figcaption>
-      </figure>
+    </figure>
     <div class="l-page" style="display: flex; margin-top: 1em; margin-bottom: 2em;">
       <figcaption style="width: 50%; margin-left: 10%; text-align: center;">
         <b>Left:</b> Node features before the convolution.
@@ -452,7 +454,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         The Graph Laplacian
       </h3>
       <p>
-        Given a graph $G$, with adjacency matrix $A$, we can construct a diagonal degree matrix $D$ where:      
+        Given a graph $G$, we denote its $0-1$ adjacency matrix by $A$, and we can construct a diagonal degree matrix $D$ where:      
       </p>
         <figure id="diagonal-degree-matrix">
           <div style="position:relative; top:-35px">
@@ -464,7 +466,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           </span>
   
           <figcaption style="position:absolute; left:200px; top:10px; width:250px">
-            The degree of vertex $i$ is the number of out-going edges from $i$!
+            The degree of vertex $i$ is the number of out-going edges from $i$.
           </figcaption>
 
           </div>
@@ -540,19 +542,19 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <d-math block>
           L = U_n \Lambda U_n^T.
         </d-math>
-        where $U_m$ denotes the matrix of the first $m$ eigenvectors (corresponding to the smallest $m$ eigenvalues)
-        and $\Lambda$ is the diagonal matrix of sorted eigenvalues:
+        where $\Lambda$ is the diagonal matrix of sorted eigenvalues,
+        and for any $m \leq n$, $U_m$ denotes the matrix of the first $m$ eigenvectors (corresponding to the smallest $m$ eigenvalues):
         <d-math block>
-          U_m = \begin{bmatrix}  \\ u_1 \ \cdots \ u_m \\ \end{bmatrix}
-          \qquad
-          \qquad
-          \qquad
-          \qquad
           \Lambda = \begin{bmatrix}
                         \lambda_{1} &        & \\
                                     & \ddots & \\
                                     &        & \lambda_{n}
-                    \end{bmatrix}.
+                    \end{bmatrix}
+          \qquad
+          \qquad
+          \qquad
+          \qquad
+          U_m = \begin{bmatrix}  \\ u_1 \ \cdots \ u_m \\ \end{bmatrix}.
         </d-math>
         The orthonormality condition between eigenvectors gives us that $U_m^T U_m = I_m$, the identity matrix.
       </p>
@@ -1097,7 +1099,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         all that matters is the count of alive neighbours surrounding a cell, not their positions.
         This aligns well with the inductive bias of the GCN models to treat each neighbour equally.
         <d-footnote>
-          Indeed, on a grid, the GCN variant here is equivalent to a uniform 3x3 filter (except for the center pixel which can have a different weight).
+          Indeed, on a grid, the GCN variant here is equivalent to a uniform $3 \times 3$ filter (except for the center pixel which can have a different weight).
         </d-footnote>
         For this reason, we would expect GCN models to perform better than CNN models on this task,
         which would have to learn to weigh neighbours equally.
@@ -1110,6 +1112,9 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           the GCN models have $2m^2 + 9m + 2$ parameters, while the CNN models have $2m^2 + 23m + 2$.
           Thus, the CNN models vary from about $2\times$ (at $m = 1$) to about $1.5\times$ (at $m = 10$) as big as the GCN models,
           in terms of number of parameters.
+        </d-footnote>
+        <d-footnote>
+          The linear layer in the CNNs is implemented as a standard 2D-convolution with filter shape $1 \times 1$.
         </d-footnote>
       </p>
       <figure id="validation-accuracy-boxplot" class="l-page" style="text-align: center;">
