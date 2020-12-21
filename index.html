@@ -349,7 +349,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       Problem Setting and Notation
     </h2>
       <p>
-        While there are many non-trivial problems that can be formulated over graphs:
+        There are many non-trivial problems that can be formulated over graphs:
         <ul>
           <li><b>Node Classification:</b> Classifying individual nodes.</li>
           <li><b>Graph Classification:</b> Classifying entire graphs. </li>
@@ -357,11 +357,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           <li><b>Link Prediction:</b> Predicting missing links.</li>
           <li><b>Influence Maximization:</b> Identifying influential nodes.</li>
         </ul>
-      </p>
-      <p>
-        we are going to focus on the first task here, but you will see that most of the same ideas carry over to other tasks!
-      </p>
-      
+      </p>      
       <figure id="graph-tasks" class="l-page">
         <img src="images/graph-tasks.svg" style="width: 100%;"></img>
         <figcaption style="text-align: center;">
@@ -369,7 +365,10 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           This list is not exhaustive!
         </figcaption>
       </figure>
-
+      <p>
+        One of the generic approaches to solving many of these problems is <b>node representation learning</b>: learning to map individual nodes to vectors ('representations').
+        See <a href="#learning">Learning GNN Parameters</a> for how the learnt representations can be used for these tasks!
+      </p>
       <p>
         We will define a graph $G$ as a set of nodes, $V$, with a set of edges $E$ connecting them.
         Nodes can have individual features: we will denote $x_v$ as the individual feature for node $v \in V$.
@@ -377,7 +376,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </p>
       <p>
         For the most part, we will assume $G$ is undirected, and all nodes are of the same type <d-footnote>These kinds of graphs are called 'homogeneous'.</d-footnote>, for ease of exposition.
-        Many of the same ideas apply to other kinds of graphs: see <a href="#different-kinds-of-graphs">Different Kinds of Graphs</a> at the end of the article for more.
+        Many of the same ideas apply to other kinds of graphs: see <a href="#different-kinds-of-graphs">Different Kinds of Graphs</a> for more.
       </p>
       <p>
         For each node $v \in V$, we define 'node embeddings' $h_v$, fixed-size vectors describing each node.
@@ -994,39 +993,42 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <p>
         All of the embedding computations we've described here, whether spectral or spatial, are completely differentiable.
         This allows GNNs to be trained in an end-to-end fashion, just like a standard neural network,
-        once a suitable loss function $L$ is defined.
+        once a suitable loss function $L$ is defined:
+        <ul>
+          <li>
+            <b>Node Classification</b>: Any standard loss used for classification tasks can be used, such as categorical cross-entropy:
+            <d-math block>
+              L(y_v, \hat{y_v}) = -\sum_{c} y_{vc} \log{\hat{y_{vc}}}.
+            </d-math>
+            where $\hat{y_{vc}}$ is the predicted probability that node $v$ is in class $c$.
+            GNNs adapt well to the semi-supervised setting, which is when only some nodes in the graph are labelled.
+            In this setting, one way to define a loss $L_G$ over an input graph $G$ is
+            <d-math block>
+              L_{G} = \frac{\sum\limits_{v \in \text{Lab}(G)} L(y_v, \hat{y_v})}{| \text{Lab}(G) |}
+            </d-math>
+            where, we only compute losses over labelled nodes <d-math>\text{Lab}(G)</d-math>!
+          </li>
+          <li>
+            <b>Graph Classification</b>: By aggregating node representations, one can construct a vector representation of the entire graph.
+            This graph representation can be used for any graph-level task, even beyond classification.
+          </li>
+          <li>
+            <b>Link Prediction</b>: Sample pairs of adjacent and non-adjacent nodes, and use these vector pairs as inputs to predict the presence/absence of an edge.
+          </li>
+          <li>
+            <b>Node Clustering</b>: Cluster the learned node representations!
+          </li>
+        </ul>
       </p>
-      <p>
-        For example, in the case of node classification, any standard loss used for classification tasks can be used, such as categorical cross-entropy:
-        <d-math block>
-          L(y_v, \hat{y_v}) = -\sum_{c} y_{vc} \log{\hat{y_{vc}}}.
-        </d-math>
-        where $\hat{y_{vc}}$ is the predicted probability that node $v$ is in class $c$.
-      </p>
-      <p>
-        GNNs adapt well to the semi-supervised setting, which is when only some nodes in the graph are labelled.
-        In this setting, one way to define a loss $L_G$ over an input graph $G$ is:
-        <figure id="semi-supervised-loss">
-          <div style="position:relative; top:-35px">
 
-          <span style="position:absolute; left:0px; top:0px">
-            <d-math block>L_{G} = \frac{\sum\limits_{v \in \text{Lab}(G)} L(y_v, \hat{y_v})}{| \text{Lab}(G) |}</d-math>
-          </span>
-  
-          <figcaption style="position:absolute; left:350px; top:40px; width:200px">
-            Only compute losses over labelled nodes <d-math>\text{Lab}(G)</d-math>!
-          </figcaption>
-
-          </div>
-        </figure>
-      </p>
       <p>
-        There has also been a lot of interest recently in self-supervised techniques for training GNNs
+        Sometimes, we may not have a downstream task (such as node classification) to optimize for. 
+        This has led to interest in self-supervised techniques for training GNNs
         <d-cite key="m3s"></d-cite><d-cite key="when-does-self-help"></d-cite><d-cite key="self-supervised-graphs-new"></d-cite>.
         The key idea in each of these papers is to train GNNs to predict local (eg. node degrees, clustering coefficient) and/or global graph properties (eg. pairwise distances).
       </p>
       <p>
-        Sometimes, we may not have a downstream task (such as node classification) to optimize for. In that case, one approach is to enforce that similar nodes get similar embeddings,
+        Another self-supervised technique is to enforce that neighbouring nodes get similar embeddings,
         mimicking random-walk approaches such as node2vec <d-cite key="node2vec"></d-cite> and DeepWalk <d-cite key="deepwalk"></d-cite>:
         <d-math block>
           L_{G} = \sum_{v} \sum_{u \in N_R(v)} \log\frac{\exp{z_v^T z_u}}{\sum\limits_{u'} \exp{z_{u'}^T z_u}}.
