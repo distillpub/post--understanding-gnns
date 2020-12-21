@@ -366,8 +366,11 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </figcaption>
       </figure>
       <p>
-        One of the generic approaches to solving many of these problems is <b>node representation learning</b>: learning to map individual nodes to vectors ('representations').
+        One of the generic approaches to solving many of these problems is <b>node representation learning</b>: learning to map individual nodes to vectors ('representations'/'embeddings').
         See <a href="#learning">Learning GNN Parameters</a> for how the learnt representations can be used for these tasks!
+      </p>
+      <p>
+        Different GNN variants are distinguished by the way these representations are computed!
       </p>
       <p>
         We will define a graph $G$ as a set of nodes, $V$, with a set of edges $E$ connecting them.
@@ -388,9 +391,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </p>
       <p>
         We use $\mathcal{N}(v)$ to denote the set of neighbours of vertex $v$.
-      </p>
-      <p>
-        Different GNN variants are distinguished by the way these embeddings are computed!
       </p>
 
     <h2 id="extending">
