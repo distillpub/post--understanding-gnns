@@ -1013,6 +1013,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           <li>
             <b>Graph Classification</b>: By aggregating node representations, one can construct a vector representation of the entire graph.
             This graph representation can be used for any graph-level task, even beyond classification.
+            See <a href="#pooling">Pooling</a> for how representations of graphs can be constructed.
           </li>
           <li>
             <b>Link Prediction</b>: Sample pairs of adjacent and non-adjacent nodes, and use these vector pairs as inputs to predict the presence/absence of an edge.
@@ -1232,7 +1233,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         Pooling
       </h3>
         <p>
-          This article discusses how GNNs compute node embeddings. But, what if we wanted to make graph-level predictions (for example, predicting the toxicity of a molecule)?
+          This article discusses how GNNs compute useful representations of nodes.
+          But what if we wanted to compute representations of graphs for graph-level tasks (for example, predicting the toxicity of a molecule)?
         </p>
         <p>
           A simple solution is to just aggregate the final node embeddings and pass them through another neural network $\text{PREDICT}_G$:
