@@ -511,7 +511,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           R_L(x) = \frac{x^T L x}{x^T x} = \frac{\sum_{(i, j) \in E} (x_i - x_j)^2}{\sum_i x_i^2} = \sum_{(i, j) \in E} (x_i - x_j)^2.
         </d-math>
         we immediately see that feature vectors $x$ that assign similar values to 
-        adjacent nodes in $G$ (ie, are smooth!), would have smaller values of $R_L(x)$.
+        adjacent nodes in $G$ (i.e., are smooth!), would have smaller values of $R_L(x)$.
       </p>
       <p>
         $L$ is a real, symmetric matrix, which means it has all real eigenvalues $\lambda_1 \leq \ldots \leq \lambda_{n}$. <d-footnote>An eigenvalue $\lambda$ of a matrix $A$ is a value
@@ -526,7 +526,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </d-math>
         It turns out that these eigenvectors of $L$ are successively less smooth, as $R_L$ indicates:
         <d-footnote>This is the <a href="https://en.wikipedia.org/wiki/Min-max_theorem">min-max theorem for eigenvalues.</a></d-footnote>
-        <figure style="position: relative; margin: 0;">
+        <figure id="min-max" style="position: relative; margin: 0;">
           <d-math block>
             \underset{x, \ x \perp \{u_1, \ldots, u_{i - 1}\}}{\text{argmin}} R_L(x) = u_i.
             \qquad
@@ -575,7 +575,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <p>
         What happens if we limit ourselves to the first $m$ eigenvectors, where $m$ is much smaller than $n$?
         Then, we will only be able to represent feature functions which are linear combinations of the first $m$ eigenvectors.
-        The first $m$ eigenvectors are the smoothest set of $m$ orthonormal vectors (by the min-max theorem above);
+        The first $m$ eigenvectors are the smoothest set of $m$ orthonormal vectors (by the <a href="#min-max">min-max theorem</a> above);
         hence, their linear combinations will be smooth as well.
         Thus, we have incorporated a smoothness prior!
       </p>
@@ -600,6 +600,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </div>
       <figcaption style="width: 100%; margin-top: 1em;">
         Move the sliders to change the spectral representation $\hat{x}$ (right), and see how $x$ itself changes on the image (left).
+        Note how the first eigenvectors are much 'smoother' than the later ones.
       </figcaption>
 
       <script type="module">
@@ -893,7 +894,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         after each step, every node receives some 'information' from its neighbours.
       </p>
       <p>
-        By iteratively repeating the $1$-hop localized convolutions $K$ times (ie, repeatedly 'passing messages'),
+        By iteratively repeating the $1$-hop localized convolutions $K$ times (i.e., repeatedly 'passing messages'),
         the receptive field of the convolution effectively includes all nodes upto $K$ hops away.
       </p>
 
@@ -1191,7 +1192,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <p>
         While we have looked at many techniques and ideas in this article, the field of Graph Neural Networks is extremely vast,
         and we have been forced to restrict our discussion to a narrow subset of the entire literature.
-        We recommend the interested reader take a look at <d-cite key="gnn-survey"></d-cite> for a more comprehensive survey.
+        We recommend the interested reader take a look at <d-cite key="gnn-survey"></d-cite><d-cite key="gnn-review"></d-cite> for more comprehensive surveys.
       </p>
 
       <h3 id="practical-techniques">
@@ -1226,7 +1227,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </ul>
       </p>
       <p>
-        There do exist more sophisticated techniques for each of the above classes of graphs: see <d-cite key="gnn-survey"></d-cite> for more!
+        There do exist more sophisticated techniques for each of the above classes of graphs: see <d-cite key="gnn-survey"></d-cite><d-cite key="gnn-review"></d-cite> for more!
       </p>
 
       <h3 id="pooling">
