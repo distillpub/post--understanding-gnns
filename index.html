@@ -1378,8 +1378,49 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       If the 'validation' loss hasn't improved over its value $300$ steps ago, the training procedure stops ('early-stopping').
     </p>
     <p>
-      For each value of the overparametrization factor from $1$ to $10$, we train $40$ GCN and $40$ CNN models, each initialized differently (according to a random seed).
+      For each value of the overparametrization factor $m$ from $1$ to $10$, we train $40$ GCN and $40$ CNN models, each initialized differently (according to a random seed).
       Across all of these, only $2$ models went through all $8000$ training steps, and both of them had perfect validation accuracy.
+    </p>
+    <p>
+      For completeness, we list the best and worst seeds (according to the validation accuracy after training) for each value of the overparametrization factor $m$.
+      If multiple seeds had the same final validation accuracy, the larger seed (in value) was chosen.
+      <!-- XManager Experiment ID: 19174057 -->
+      <table>
+        <thead>
+          <caption>GCN Seeds</caption>
+          <tr><th>$m$</th><th>Best Seed</th><th>Worst Seed</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>1</td><td>25</td></tr>
+          <tr><td>2</td><td>13</td><td>31</td></tr>
+          <tr><td>3</td><td>29</td><td>5</td></tr>
+          <tr><td>4</td><td>0</td><td>13</td></tr>
+          <tr><td>5</td><td>39</td><td>25</td></tr>
+          <tr><td>6</td><td>39</td><td>3</td></tr>
+          <tr><td>7</td><td>39</td><td>32</td></tr>
+          <tr><td>8</td><td>39</td><td>17</td></tr>
+          <tr><td>9</td><td>39</td><td>5</td></tr>
+          <tr><td>10</td><td>39</td><td>0</td></tr>
+        </tbody>
+      </table>
+      <table>
+        <thead>
+          <caption>CNN Seeds</caption>
+          <tr><th>$m$</th><th>Best Seed</th><th>Worst Seed</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>25</td><td>24</td></tr>
+          <tr><td>2</td><td>37</td><td>11</td></tr>
+          <tr><td>3</td><td>19</td><td>4</td></tr>
+          <tr><td>4</td><td>19</td><td>21</td></tr>
+          <tr><td>5</td><td>39</td><td>8</td></tr>
+          <tr><td>6</td><td>39</td><td>17</td></tr>
+          <tr><td>7</td><td>39</td><td>30</td></tr>
+          <tr><td>8</td><td>39</td><td>13</td></tr>
+          <tr><td>9</td><td>39</td><td>30</td></tr>
+          <tr><td>10</td><td>39</td><td>34</td></tr>
+        </tbody>
+      </table>
     </p>
     <p>
       Links to all of this code are available in the <a href="#supplementary">Supplementary Material</a>.
