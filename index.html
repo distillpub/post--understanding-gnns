@@ -179,11 +179,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
             "affiliationURL": "https://research.google/"
         },
         {
-            "author": "Ashish Tendulkar",
-            "affiliation": "Google Research",
-            "affiliationURL": "https://research.google/"
-        },
-        {
             "author": "Balaraman Ravindran",
             "affiliation": "Google Research",
             "affiliationURL": "https://research.google/"
@@ -373,7 +368,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         See <a href="#learning">Learning GNN Parameters</a> for how the learnt embeddings can be used for these tasks!
       </p>
       <p>
-        Different GNN variants are distinguished by the way these representations are computed!
+        Different GNN variants are distinguished by the way these representations are computed.
       </p>
       <p>
         We will define a graph $G$ as a set of nodes, $V$, with a set of edges $E$ connecting them.
@@ -436,11 +431,11 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </figcaption>
     </figure>
     <div class="l-page" style="display: flex; margin-top: 1em; margin-bottom: 2em;">
-      <figcaption style="width: 50%; margin-left: 10%; text-align: center;">
-        <b>Left:</b> Node features before the convolution.
+      <figcaption style="width: 25%; margin-left: 10%; text-align: center;">
+        <b>Left:</b> Node features, indicated as numbers within the nodes, <i>before</i> the convolution.
       </figcaption>
-      <figcaption style="width: 50%; margin-right: 10%; text-align: right;">
-        <b>Right:</b> Node features after the convolution.
+      <figcaption style="width: 25%; margin-left: 30%; margin-right: 10%; text-align: center;">
+        <b>Right:</b> Node features, indicated as numbers within the nodes, <i>after</i> the convolution.
       </figcaption>
     </div>
     <p>
@@ -736,7 +731,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <d-math block>
           \widehat{Lx} = U_n^T \left( Lx \right) = U_n^T \left(U_n \Lambda U_n^T\right) x = \left(U_n^T U_n \right) \Lambda \left(U_n^T x\right) = \Lambda \hat{x}.
         </d-math>
-        By multiplying $x$ by $L$, the its spectral representation $\hat{x}$ gets element-wise multiplied by the eigenvalues!
+        By multiplying $x$ by $L$, its spectral representation $\hat{x}$ gets element-wise multiplied by the eigenvalues!
         Recall that this element-wise multiplication in the spectral domain was exactly what Spectral Networks were doing, but more explicitly.
       </p>
       <p style="margin: 0;">
@@ -949,7 +944,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     </h2>
       <p>
         Below is an interactive visualization of these GNN models on small graphs.
-        For clarity, the node features are just real numbers here,
+        For clarity, the node features are just real numbers here, shown inside the squares next to each node,
         but the same equations hold when the node features are vectors!
       </p>
 
@@ -976,8 +971,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       });
       </script>
       <figcaption style="margin-top: 1em; margin-bottom: 1em;">
-        Click on a node to see the update equation at that node for the next iteration. Use the sliders on the left to change the weights
-        for the current iteration, and watch how the update equation changes.
+        Choose a GNN model using the tabs at the top. Click on a node to see the update equation at that node for the next iteration.
+        Use the sliders on the left to change the weights for the current iteration, and watch how the update equation changes. 
       </figcaption>
 
       <p>
@@ -1062,7 +1057,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         Initially, each cell is either alive or dead.
         At the next step, the grid configuration updates in the following manner:
         <ul>
-          <li>Alive cells which have less than 2 alive neighbours, die by loneliness.</li>
+          <li>Alive cells which have fewer than 2 alive neighbours, die by loneliness.</li>
           <li>Alive cells which have greater than 3 alive neighbours, die by overpopulation.</li>
           <li>Dead cells which have exactly 3 alive neighbours, become alive.</li>
           <li>Every other cell maintains its state.</li>
@@ -1089,7 +1084,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         However, they find that only CNN models with many more parameters can actually find the optimal solution consistently, when trained with stochastic gradient descent.
       </p>
       <p>
-        How would GNNs fair at the Game of Life?
+        How would GNNs fare at the Game of Life?
         We mimic <d-cite key='game-of-life-nns'></d-cite>, and create an equivalent minimal 3-layer GCN model
         <d-footnote>
           See <a href="#minimal-models">Appendix: Minimal Models for The Game of Life</a>.
@@ -1444,12 +1439,19 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       We would also like to acknowledge <a href="http://web.stanford.edu/class/cs224w/">CS224W: Machine Learning with Graphs</a> as an excellent reference from which the authors benefitted significantly.
     </p>
     <p>
+      Ashish Tendulkar at Google Research India provided significant feedback on the content within this article, helping its readability.
+      He also helped with identifying the topics this article should cover, and with brainstorming the experiments here.
+    </p>
+    <p>
       Finally, we would like to thank Anirban Santara, Sujoy Paul and Ansh Khurana at Google Research India for their help with setting up and running experiments.
     </p>
 
     <h3>Author Contributions</h3>
     <p>
       <b>Ameya Daigavane</b> drafted most of the text, designed experiments and created the interactive visualizations in this article.
+      <b>Balaraman Ravindran</b> and <b>Gaurav Aggarwal</b> extensively guided the overall direction of the article,
+      deliberated over the design and scope of experiments, provided much feedback on the interactive visualizations,
+      edited the text, and described improvements to make the article more accessible to readers.
     </p>
 
     <d-citation-list></d-citation-list>
