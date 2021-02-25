@@ -312,6 +312,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     <p>
       Extending the point above: graphs often have no inherent ordering present amongst the nodes.
       Compare this to images, where every pixel is uniquely determined by its absolute position within the image!
+    </p>
 
       <figure id="node-order-alternatives" class="l-page" style="margin-bottom: 1em;">
         <img src="images/node-order-alternatives.svg" style="margin-bottom: 1em; margin-left: 15%; width: 70%;"
@@ -325,7 +326,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </figcaption>
       </figure>
   
-    </p>
     <p>
       With this lack of inherent order, we make an adhoc choice of ordering. 
       For this reason, we must ensure our algorithms are invariant to our choice of ordering of the nodes.
@@ -663,7 +663,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <p>
         First, we fix an ordering of the nodes in $G$. This gives us $A$ and $L$, allowing us to compute $U_m$.
         Finally, we define:
-        <div class="spec_figure_init"></div>
+      </p>
+        <div class="spec_figure_init" role="img" alt="Equations defining spectral convolutions."></div>
         <div class="spec_figure"></div>
         <div class="style"></div>
 
@@ -676,7 +677,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           if (name === "style") return Inspector.into(".style")();
         });
         </script>
-      </p>
       <p>
         For clarity, we have considered the case where node features $h^{(k)}$ at each layer $k$ are just real numbers.
         The procedure above generalizes easily to the case where each $h^{(k)} \in \mathbb{R}^{d_k}$, as well: see <d-cite key="spectral-networks"></d-cite> for details.
@@ -797,7 +797,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         To emphasize the spectral effects of the convolution, the two plots on the bottom display the spectral representations $\hat{x}$ of 
         $x$, and $\hat{x'}$ of $x'$ respectively. Note how higher-degree polynomials accentuate the eigenvectors corresponding to the larger eigenvalues more!
       </p>
-        <div class="shaded-figure l-screen" id="polynomial-convolutions" style="grid-column: page;">
+        <div class="shaded-figure l-screen" id="polynomial-convolutions" style="grid-column: page;"
+          role="img" alt="An interactive visualization defining polynomial convolutions on an input grid, showing the spectral representations of the filter.">
           <div class="grid_buttons_display" style="margin-bottom: -10px;"></div>
           <div class="poly_color_scale" style="display: flex; justify-content: center; margin-bottom: 30px;"></div>
           <div class="poly_figcaptions" style="position: relative; top: -50px;"></div>
@@ -872,7 +873,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           For consistency, we list the embedding computation for ChebNet (again, with one-dimensional node features) below.
           Note the lack of any 'spectral' quantities!
         </p>
-          <div class="cheb_figure"></div>
+          <div class="cheb_figure" role="img" alt="Equations defining ChebNet."></div>
           <div class="style"></div>
 
           <script type="module">
@@ -935,18 +936,18 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <p>
           Spatial convolutions form the backbone of most popular GNN architectures in recent times.
           Let's look at some of the most popular ones!
+        </p>
           <ul style="margin-bottom: 0;">
             <li>Graph Convolutional Networks (GCN)<d-cite key="semi-supervised-gcn"></d-cite></li>
             <li>Graph Attention Networks (GAT)<d-cite key="gat"></d-cite></li>
             <li>Graph Sample and Aggregate (GraphSAGE)<d-cite key="graphsage"></d-cite></li>
             <li>Graph Isomorphism Network (GIN)<d-cite key="gin"></d-cite></li>
           </ul>
-        </p>
         <p style="margin-bottom: 0;">
           Click on the different tabs below to see the definitions of the different models.
         </p>
 
-        <div class="fig_div l-page"></div>
+        <div class="fig_div l-page" role="img" alt="Equations defining the embedding computations for GCN, GAT, GraphSAGE and GIN models."></div>
         <div class="text_div"></div>
         <div class="interactive_list" style="display: none;"></div>
         <div class="style"></div>
@@ -987,7 +988,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         but the same equations hold when the node features are vectors!
       </p>
 
-      <div class="shaded-figure l-screen" style="grid-column: page;">
+      <div class="shaded-figure l-screen" style="grid-column: page;" role="img" alt="An interactive visualization of different GNN models with update equations displayed at the selected node.">
         <div class="viz_list l-page"></div>
         <div class="buttons l-page"></div>
         <div class="fig l-page"></div>
@@ -1099,14 +1100,14 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         Conway's Game of Life <d-cite key="game-of-life"></d-cite> is a simple game played on an infinite grid of cells. (Here, we focus on finite $8 \times 8$ grids.)
         Initially, each cell is either alive or dead.
         At the next step, the grid configuration updates in the following manner:
+      </p>
         <ul>
           <li>Alive cells which have fewer than 2 alive neighbours, die by loneliness.</li>
           <li>Alive cells which have greater than 3 alive neighbours, die by overpopulation.</li>
           <li>Dead cells which have exactly 3 alive neighbours, become alive.</li>
           <li>Every other cell maintains its state.</li>
         </ul>
-      </p>
-      <figure id="game-of-life-example" class="l-page" style="text-align: center;">
+        <figure id="game-of-life-example" class="l-page" style="text-align: center;">
         <img src="images/game-of-life-example.svg" style="width: 80%;"
              alt="A Game of Life grid with an initial configuration, updated to a new configuration. Alive cells are filled in with black. Dead cells are filled in with white.">
         <figcaption>A grid with an initial configuration, updated to a new configuration.
@@ -1223,11 +1224,11 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <p>
         The visualization above serves as an excellent test for generalizability of these models, beyond the standard validation set metrics.
         On closer observation, we see that:
+      </p>
         <ul>
           <li>The best CNN and GCN models at $m = 1$ have nearly identical predictions.</li>
           <li>Although not identical, there are many similarities between the predictions of the worst CNN and GCN models at $m = 5$.</li>
         </ul>
-      </p>
 
     <h2 id="further-reading">
       Further Reading
@@ -1428,7 +1429,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     </p>
     <p>
       For completeness, we list the best and worst seeds (according to the validation accuracy after training) for each value of the overparametrization factor $m$.
-      If multiple seeds had the same final validation accuracy, the larger seed (in value) was chosen.
+      If multiple seeds had the same final validation accuracy, the largest seed (in numeric value) was chosen.
+    </p>
       <!-- XManager Experiment ID: 19174057 -->
       <table>
         <caption>GCN Seeds</caption>
@@ -1466,7 +1468,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           <tr><td>10</td><td>39</td><td>34</td></tr>
         </tbody>
       </table>
-    </p>
     <p>
       Links to all of this code are available in the <a href="#supplementary">Supplementary Material</a>.
     </p>
