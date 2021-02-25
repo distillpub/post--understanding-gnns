@@ -1,6 +1,8 @@
 <!doctype html>
 
+<html lang="en">
 <head>
+  <title>Understanding Convolutions on Graphs</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=1200">
   <script src="https://distill.pub/template.v2.js"></script>
@@ -251,7 +253,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         This makes them unable to elegantly process graph-structured data.
       </p>
       <figure id="standard-neural-networks" class="l-page">
-        <img src="images/standard-neural-networks.svg" style="width: 100%;"></img>
+        <img src="images/standard-neural-networks.svg" style="width: 100%;">
       </figure>
     </div>
     
@@ -279,8 +281,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         Consider the task of predicting whether a given chemical molecule is toxic<d-cite key="molecules-gnn"></d-cite> <d-cite key="neural-message-passing"></d-cite> :
       </p>
       <figure class="l-page-outset" id="menthyl-nicotinate-molecule" style="display: inline-flex;">
-        <img src="images/1,2,6-trigalloyl-glucose-molecule.svg" style="width: 50%;"></img>
-        <img src="images/caramboxin-molecule.svg" style="width: 25%; height: 60%; margin-top: 8%; margin-left: 10%;"></img>
+        <img src="images/1,2,6-trigalloyl-glucose-molecule.svg" style="width: 50%;">
+        <img src="images/caramboxin-molecule.svg" style="width: 25%; height: 60%; margin-top: 8%; margin-left: 10%;">
       </figure>
       <div class="l-page-outset" style="display: flex; margin-bottom: 5%;">
         <figcaption style="width: 50%; margin-left: 1%;"><b>Left:</b> A <span style="color: green;">non-toxic</span> 1,2,6-trigalloyl-glucose molecule.</figcaption>
@@ -307,8 +309,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       Extending the point above: graphs often have no inherent ordering present amongst the nodes.
       Compare this to images, where every pixel is uniquely determined by its absolute position within the image!
 
-      <figure id="standard-neural-networks" class="l-page" style="margin-bottom: 1em;">
-        <img src="images/node-order-alternatives.svg" style="margin-bottom: 1em; margin-left: 15%; width: 70%;"></img>
+      <figure id="node-order-alternatives" class="l-page" style="margin-bottom: 1em;">
+        <img src="images/node-order-alternatives.svg" style="margin-bottom: 1em; margin-left: 15%; width: 70%;">
         <figcaption style="text-align: center;">
           Representing the graph as one vector requires us to fix an order on the nodes.
           But what do we do when the nodes have no inherent order?
@@ -354,7 +356,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </ul>
       </p>      
       <figure id="graph-tasks" class="l-page">
-        <img src="images/graph-tasks.svg" style="width: 100%;"></img>
+        <img src="images/graph-tasks.svg" style="width: 100%;">
         <figcaption style="text-align: center;">
           Examples of problems that can be defined over graphs.
           This list is not exhaustive!
@@ -422,7 +424,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </li>
       </ul>
     <figure id="global-vs-local-conv" class="l-page">
-        <img src="images/global-vs-local.svg" style="margin-right: 10%; margin-left: 10%; width: 80%;"></img>
+        <img src="images/global-vs-local.svg" style="margin-right: 10%; margin-left: 10%; width: 80%;">
         <figcaption style="position: absolute; text-align: center; left: 39%; top: 39%; width: 25%;">
           Spectral convolutions are global. All nodes take part in the convolution at each node.
         </figcaption>
@@ -473,7 +475,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </d-math>
       </p>
       <figure id="standard-neural-networks" class="l-page">
-        <img src="images/laplacian.svg" style="margin-right: 0%; margin-left: 10%; width: 70%; margin-bottom: 1em;"></img>
+        <img src="images/laplacian.svg" style="margin-right: 0%; margin-left: 10%; width: 70%; margin-bottom: 1em;">
         <figcaption style="text-align: center;">
           The Laplacian $L$ for an undirected graph $G$, with the row corresponding to node $\textsf{C}$ highlighted.
         </figcaption>
@@ -494,7 +496,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         by just collecting each of the values $x_i$ assigned to node $i$ in $G$:
       </p>
         <figure id="standard-neural-networks" class="l-body">
-          <img src="images/node-order-vector.svg" style="margin-right: 10%; margin-left: 10%; margin-bottom: 1%; width: 80%;"></img>
+          <img src="images/node-order-vector.svg" style="margin-right: 10%; margin-left: 10%; margin-bottom: 1%; width: 80%;">
           <figcaption style="text-align: center;">
             Fixing a node order (indicated by the alphabets) and collecting all node features into a single vector $x$.
           </figcaption>
@@ -1067,7 +1069,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </ul>
       </p>
       <figure id="validation-accuracy-boxplot" class="l-page" style="text-align: center;">
-        <img src="images/game-of-life-example.svg" style="width: 80%;"></img>
+        <img src="images/game-of-life-example.svg" style="width: 80%;">
         <figcaption>A grid with an initial configuration, updated to a new configuration.
           Alive cells are filled in with black. Dead cells are filled in with white.</figcaption>
       </figure>
@@ -1117,8 +1119,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           The linear layer in the CNNs is implemented as a standard 2D-convolution with filter shape $1 \times 1$.
         </d-footnote>
       </p>
-      <figure id="validation-accuracy-boxplot" class="l-page" style="text-align: center;">
-        <img src="images/overparametrization-factor.svg" style="width: 80%;"></img>
+      <figure id="overparametrization-factor" class="l-page" style="text-align: center;">
+        <img src="images/overparametrization-factor.svg" style="width: 80%;">
       </figure>
       <p>
         However, our experiments show that CNNs and GCNs perform very similarly on the Game of Life.
@@ -1129,7 +1131,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         The results below are for 40 different random initializations for each model.
       </p>
       <figure id="validation-accuracy-boxplot" class="l-screen" style="margin-top: 0; text-align: center;">
-        <img src="images/validation-accuracy-boxplot.svg" style="width: 80%;"></img>
+        <img src="images/validation-accuracy-boxplot.svg" style="width: 80%;">
         <figcaption style="width: 50%; margin-left: 25%; margin-right: 25%;">
           Distribution of validation accuracies for each trained model as the overparametrization factor ($m$) is varied.
           The boxplot bodies extend from the 25th percentile to the 75th percentile accuracies, while the whiskers extend from the 5th percentile to the 95th percentile accuracies.
@@ -1142,7 +1144,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         of parameters in the models.
       </p>
       <figure id="success-probabilities" class="l-page" style="margin-top: 0; text-align: center;">
-        <img src="images/success-probabilities.svg" style="width: 100%;"></img>
+        <img src="images/success-probabilities.svg" style="width: 100%;">
       </figure>
       <p>
         These experiments suggest that the GCN models don't learn the rules of the Game of Life in the form they are given above,
@@ -1384,8 +1386,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       If multiple seeds had the same final validation accuracy, the larger seed (in value) was chosen.
       <!-- XManager Experiment ID: 19174057 -->
       <table>
+        <caption>GCN Seeds</caption>
         <thead>
-          <caption>GCN Seeds</caption>
           <tr><th>$m$</th><th>Best Seed</th><th>Worst Seed</th></tr>
         </thead>
         <tbody>
@@ -1402,8 +1404,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </tbody>
       </table>
       <table>
+        <caption>CNN Seeds</caption>
         <thead>
-          <caption>CNN Seeds</caption>
           <tr><th>$m$</th><th>Best Seed</th><th>Worst Seed</th></tr>
         </thead>
         <tbody>
@@ -1464,3 +1466,4 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
   <d-bibliography src="bibliography.bib"></d-bibliography>
 
 <script type="text/javascript" src="/index.bundle.js"></script></body>
+</html>
