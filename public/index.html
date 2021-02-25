@@ -505,19 +505,22 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
             Fixing a node order (indicated by the alphabets) and collecting all node features into a single vector $x$.
           </figcaption>
         </figure>
-      <p>
+      <span>
         We will also normalize $x$ such that $\sum_{i = 1}^n x_i^2 = 1$. 
         If we look at the following quantity involving $L$: <d-footnote><d-math>R_L</d-math> is formally called the <a href="https://en.wikipedia.org/wiki/Rayleigh_quotient">Rayleigh quotient</a>.</d-footnote> 
-        <d-math block>
-          R_L(x) = \frac{x^T L x}{x^T x} = \frac{\sum_{(i, j) \in E} (x_i - x_j)^2}{\sum_i x_i^2} = \sum_{(i, j) \in E} (x_i - x_j)^2.
-        </d-math>
+      </span>
+      <d-math block>
+        R_L(x) = \frac{x^T L x}{x^T x} = \frac{\sum_{(i, j) \in E} (x_i - x_j)^2}{\sum_i x_i^2} = \sum_{(i, j) \in E} (x_i - x_j)^2.
+      </d-math>
+      <p>
         we immediately see that feature vectors $x$ that assign similar values to 
         adjacent nodes in $G$ (i.e., are smooth!), would have smaller values of $R_L(x)$.
       </p>
-      <p>
+      <span>
         $L$ is a real, symmetric matrix, which means it has all real eigenvalues $\lambda_1 \leq \ldots \leq \lambda_{n}$. <d-footnote>An eigenvalue $\lambda$ of a matrix $A$ is a value
         satisfying the equation $Au = \lambda u$ for a certain vector $u$, called an eigenvector.</d-footnote>
         Further, the corresponding eigenvectors $u_1, \ldots, u_{n}$ can be taken to be orthonormal:
+      </span>
         <d-math block style="text-align: center;">
           u_{k_1}^T u_{k_2} =
           \begin{cases}
@@ -525,8 +528,10 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
             0 \quad \text{ if } {k_1} \neq {k_2}.
           \end{cases}
         </d-math>
+      <span>
         It turns out that these eigenvectors of $L$ are successively less smooth, as $R_L$ indicates:
         <d-footnote>This is the <a href="https://en.wikipedia.org/wiki/Min-max_theorem">min-max theorem for eigenvalues.</a></d-footnote>
+      </span>
         <figure id="min-max" style="position: relative; margin: 0;">
           <d-math block>
             \underset{x, \ x \perp \{u_1, \ldots, u_{i - 1}\}}{\text{argmin}} R_L(x) = u_i.
@@ -536,15 +541,17 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
             \min_{x, \ x \perp \{u_1, \ldots, u_{i - 1}\}} R_L(x) = \lambda_i.
           </d-math>
         </figure>
-      </p>
-      <p>
+      <span>
         The set of eigenvalues of $L$ are called its 'spectrum', hence the name!
         We denote the 'spectral' decomposition of $L$ as:
+      </span>
         <d-math block>
           L = U_n \Lambda U_n^T.
         </d-math>
+      <span>
         where $\Lambda$ is the diagonal matrix of sorted eigenvalues,
         and for any $m \leq n$, $U_m$ denotes the matrix of the first $m$ eigenvectors (corresponding to the smallest $m$ eigenvalues):
+      </span>
         <d-math block>
           \Lambda = \begin{bmatrix}
                         \lambda_{1} &        & \\
@@ -557,18 +564,23 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           \qquad
           U_m = \begin{bmatrix}  \\ u_1 \ \cdots \ u_m \\ \end{bmatrix}.
         </d-math>
+      <span>
         The orthonormality condition between eigenvectors gives us that $U_m^T U_m = I_m$, the identity matrix.
-      </p>
-      <p>
+      </span>
+      <span>
         As these $n$ eigenvectors form a basis for $\mathbb{R}^n$,
         any feature function $x$ can be represented as a linear combination of these eigenvectors:
+      </span>
         <d-math block>
           x = \sum_{i = 1}^n \hat{x_i} u_i = U_n \hat{x}.
         </d-math>
-        The orthonormality condition allows us to state:
+        <span>
+          The orthonormality condition allows us to state:
+        </span>
         <d-math block>
           x = U_n \hat{x} \quad \Longleftrightarrow \quad U_n^T x = \hat{x}.
         </d-math>
+      <p>
         This pair of equations allows us to interconvert between the 'natural' representation $x$ and the 'spectral' representation $\hat{x}$.
         Indeed, we are not only limited to feature functions $x$! We can represent any vector $w \in \mathbb{R^n}$ in the spectral basis:
         in particular, the weights of filters we want to convolve with! 
@@ -745,27 +757,28 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         By multiplying $x$ by $L$, its spectral representation $\hat{x}$ gets element-wise multiplied by the eigenvalues!
         Recall that this element-wise multiplication in the spectral domain was exactly what Spectral Networks were doing, but more explicitly.
       </p>
-      <p style="margin: 0;">
+      <span>
         Polynomials $p(L)$ of the Laplacian have a similar effect on the spectral representations:
-      </p>
+      </span>
         <d-math block>
           \widehat{p(L)x} = p(\Lambda) \hat{x}.
         </d-math>
-      <p style="margin: 0;">
+      <span>
         And now, a natural way to represent filters $w$ is just as polynomials $p_w$, where the weight $w_i$ is the coefficient of $L^i$:
-      </p>
+      </span>
       <d-math block>
         p_w(L) = \sum_{i = 1}^K w_i L^i
       </d-math>
-      <p style="margin: 0;">
+      <span>
         Does the degree $K$ influence the behaviour of the filter? Of course! 
         It is not too hard to show that: <d-footnote>This is Lemma 5.2 from <d-cite key="wavelets-graphs"></d-cite>!</d-footnote>
-      </p>
+      </span>
       <d-math block>
         \text{dist}_G(v, u) > d \quad \Longrightarrow \quad L_{vu}^d = 0.
       </d-math>
-      <p>
+      <span>
         which implies, when we convolve $x$ with $p_w(L)$ to get $x'$:
+      </span>
         <d-math block>
           \begin{aligned}
           x'_v = (p_w(L)x)_v  &= (p_w(L))_v x \\
@@ -774,6 +787,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
               &= \sum_{i = 1}^K w_i \sum_{u \in G \atop \text{dist}_G(v, u) \leq i} L^i_{vu} x_u.
           \end{aligned}
         </d-math>
+      <p>
         Effectively, the convolution at node $v$ occurs only with nodes $u$ which are not more than $K$ hops away.
         Thus, the filters we will learn are localized! The degree of the localization is governed completely by $K$.
       </p>
@@ -818,16 +832,16 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
             Use the sliders at the bottom to change the coefficients of $p_w$. To reset all coefficients of $p_w$ to $0$, press 'Reset Coefficients.'
           </figcaption>
         </figure>
-      <p>
+      <span>
         ChebNet takes this idea even further, by instead looking at polynomials of the form:
-      </p>
+      </span>
         <d-math block>
           p_w(L) = \sum_{i = 1}^K w_i T_i(\tilde{L})
         </d-math>
-      <p>
+      <span>
         where $T_i$ is the degree-$i$ <a href="https://en.wikipedia.org/wiki/Chebyshev_polynomials">Chebyshev polynomial of the first kind</a> and
         $\tilde{L}$ is the normalized Laplacian:
-      </p>
+      </span>
         <d-math block>
           \tilde{L} = \frac{2L}{\lambda_{\max}(L)} - I_n.
         </d-math> 
@@ -880,9 +894,9 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         ChebNet was a breakthrough in learning localized filters over graphs,
         and it motivated many to think of graph convolutions from a different perspective:
       </p>
-      <p>
+      <span>
         Let's go back to the effect of multiplying $x$ by $L$, and focus on a particular vertex $v$:
-      </p>
+      </span>
         <d-math block>
           \begin{aligned}
            (Lx)_v &= L_v x \\ 
