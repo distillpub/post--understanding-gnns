@@ -738,45 +738,52 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
 
       <p>
         To motivate this, let us look at the effect of multiplying a feature function $x$ by the Laplacian $L$ on its spectral representation $\hat{x}$:
+      </p>
         <d-math block>
           \widehat{Lx} = U_n^T \left( Lx \right) = U_n^T \left(U_n \Lambda U_n^T\right) x = \left(U_n^T U_n \right) \Lambda \left(U_n^T x\right) = \Lambda \hat{x}.
         </d-math>
+      <p>
         By multiplying $x$ by $L$, its spectral representation $\hat{x}$ gets element-wise multiplied by the eigenvalues!
         Recall that this element-wise multiplication in the spectral domain was exactly what Spectral Networks were doing, but more explicitly.
       </p>
       <p style="margin: 0;">
         Polynomials $p(L)$ of the Laplacian have a similar effect on the spectral representations:
+      </p>
         <d-math block>
           \widehat{p(L)x} = p(\Lambda) \hat{x}.
         </d-math>
+      <p style="margin: 0;">
         And now, a natural way to represent filters $w$ is just as polynomials $p_w$, where the weight $w_i$ is the coefficient of $L^i$:
-        <d-math block>
-          p_w(L) = \sum_{i = 1}^K w_i L^i
-        </d-math>
+      </p>
+      <d-math block>
+        p_w(L) = \sum_{i = 1}^K w_i L^i
+      </d-math>
+      <p style="margin: 0;">
         Does the degree $K$ influence the behaviour of the filter? Of course! 
         It is not too hard to show that: <d-footnote>This is Lemma 5.2 from <d-cite key="wavelets-graphs"></d-cite>!</d-footnote>
+      </p>
+      <d-math block>
+        \text{dist}_G(v, u) > d \quad \Longrightarrow \quad L_{vu}^d = 0.
+      </d-math>
+      <p>
+        which implies, when we convolve $x$ with $p_w(L)$ to get $x'$:
         <d-math block>
-          \text{dist}_G(v, u) > d \quad \Longrightarrow \quad L_{vu}^d = 0.
+          \begin{aligned}
+          x'_v = (p_w(L)x)_v  &= (p_w(L))_v x \\
+              &= \sum_{i = 1}^K w_i L^i_v x \\
+              &= \sum_{i = 1}^K w_i \quad \sum_{u \in G} \enspace	\; L^i_{vu} x_u \\
+              &= \sum_{i = 1}^K w_i \sum_{u \in G \atop \text{dist}_G(v, u) \leq i} L^i_{vu} x_u.
+          \end{aligned}
         </d-math>
-        <p>
-          which implies, when we convolve $x$ with $p_w(L)$ to get $x'$:
-          <d-math block>
-            \begin{aligned}
-            x'_v = (p_w(L)x)_v  &= (p_w(L))_v x \\ 
-                &= \sum_{i = 1}^K w_i L^i_v x \\
-                &= \sum_{i = 1}^K w_i \quad \sum_{u \in G} \enspace	\; L^i_{vu} x_u \\
-                &= \sum_{i = 1}^K w_i \sum_{u \in G \atop \text{dist}_G(v, u) \leq i} L^i_{vu} x_u.
-            \end{aligned}
-          </d-math>
-          Effectively, the convolution at node $v$ occurs only with nodes $u$ which are not more than $K$ hops away.
-          Thus, the filters we will learn are localized! The degree of the localization is governed completely by $K$.
-        </p>
+        Effectively, the convolution at node $v$ occurs only with nodes $u$ which are not more than $K$ hops away.
+        Thus, the filters we will learn are localized! The degree of the localization is governed completely by $K$.
       </p>
       <p>
         To help you understand these 'polynomial-based' convolutions better, we have created the visualization below!
         Vary the polynomial coefficients to see how the result $x'$ of the convolution changes.
         To emphasize the spectral effects of the convolution, the two plots on the bottom display the spectral representations $\hat{x}$ of 
         $x$, and $\hat{x'}$ of $x'$ respectively. Note how higher-degree polynomials accentuate the eigenvectors corresponding to the larger eigenvalues more!
+      </p>
         <div class="shaded-figure l-screen" id="polynomial-convolutions" style="grid-column: page;">
           <div class="grid_buttons_display" style="margin-bottom: -10px;"></div>
           <div class="poly_color_scale" style="display: flex; justify-content: center; margin-bottom: 30px;"></div>
@@ -810,18 +817,22 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           To randomize the input grid, press 'Randomize Grid'. To reset all pixels to $0$, press 'Reset Grid'.
           Use the sliders at the bottom to change the coefficients of $p_w$. To reset all coefficients of $p_w$ to $0$, press 'Reset Coefficients.'
         </figcaption>
-      </p>
       <p>
         ChebNet takes this idea even further, by instead looking at polynomials of the form:
+      </p>
         <d-math block>
           p_w(L) = \sum_{i = 1}^K w_i T_i(\tilde{L})
         </d-math>
+      <p>
         where $T_i$ is the degree-$i$ <a href="https://en.wikipedia.org/wiki/Chebyshev_polynomials">Chebyshev polynomial of the first kind</a> and
         $\tilde{L}$ is the normalized Laplacian:
+      </p>
         <d-math block>
           \tilde{L} = \frac{2L}{\lambda_{\max}(L)} - I_n.
         </d-math> 
+      <p>
         What's the motivation here?
+      </p>
         <ul>
           <li>
             $L$ has eigenvalues in the range $[0, \lambda_{\max}]$.
@@ -838,7 +849,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
             but will advise interested readers to take a look at <d-cite key="chebyshev"></d-cite> as a definitive resource.
           </li>
         </ul>
-      </p>
       
       <h3>
         Embedding Computation
@@ -1217,10 +1227,10 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         It turns out that accomodating the different structures of graphs is often hard to do efficiently, but we can still represent many of these algorithms
         as sparse matrix-vector products (since generally, the adjacency matrix is sparse.)
         For example, the GCN variant discussed here can be represented as:
+      </p>
         <d-math block>
           h^{(k)} = D^{-1} A \cdot h^{(k - 1)} {W^{(k)}}^T + h^{(k - 1)} {B^{(k)}}^T.
         </d-math>
-      </p>
       <p>
         Regularization techniques for standard neural networks,
         such as Dropout <d-cite key="dropout"></d-cite>, can be applied straightforwardly to the parameters (for example, zero out entire rows of $W^{(k)}$ above).
@@ -1234,12 +1244,12 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <p>
         Here, we have focused on undirected graphs, to avoid going into too many unnecessary details.
         However, there are some simple variants of spatial convolutions for:
+      </p>
         <ul>
           <li>Directed graphs: Aggregate across in-neighbourhood and/or out-neighbourhood features. </li>
           <li>Temporal graphs: Aggregate across previous and/or future node features.</li>
           <li>Heterogeneous graphs: Learn different aggregation functions for each node/edge type.</li>
         </ul>
-      </p>
       <p>
         There do exist more sophisticated techniques for each of the above classes of graphs: see <d-cite key="gnn-survey"></d-cite><d-cite key="gnn-review"></d-cite> for more!
       </p>
@@ -1257,12 +1267,12 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
             h_G = \text{PREDICT}_G \Big( \text{AGG}_{v \in G}\left(\{ h_v \} \right) \Big)
           </d-math>
           But, we can do even better! We refer the reader to some recent pooling methods:
+        </p>
           <ul>
             <li>SortPool<d-cite key="sortpool"></d-cite>: Sort vertices of the graph to get a fixed-size node-order invariant representation of the graph, and then apply any standard neural network architecture.</li>
             <li>DiffPool<d-cite key="diffpool"></d-cite>: Learn to cluster vertices, build a coarser graph over clusters instead of nodes, then apply a GNN over the coarser graph. Repeat until only one cluster is left. </li>
             <li>SAGPool<d-cite key="sagpool"></d-cite>: Apply a GNN to learn node scores, then keep only the nodes with the top scores, throwing away the rest. Repeat until only one node is left.</li>
           </ul>
-        </p>
       
     <h2 id="supplementary">
       Supplementary Material
@@ -1272,26 +1282,27 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         Reproducing Experiments
       </h3>
       <p>
-        The experiments from <a href="#gnns-vs-cnns">Are GNNs 'better' than CNNs?</a> can be reproduced using the following Colab <img src="images/colab.svg" style="position: relative; top: 2px"> notebook:
+        The experiments from <a href="#gnns-vs-cnns">Are GNNs 'better' than CNNs?</a> can be reproduced using the following Colab <img src="images/colab.svg" alt="Google Colaboratory" style="position: relative; top: 2px"> notebook:
+      </p>
         <ul>
           <li><a href="https://colab.research.google.com/github/google-research/google-research/blob/master/understanding_convolutions_on_graphs/TheGameOfLifeWithGNNs.ipynb">The Game of Life Colab</a></li>
         </ul>
-      </p>
       <p>
-        The saved models (in TensorFlow Saved Model format) can be found at the Google Drive <img src="images/google-drive.svg" width="20" height="20" style="position: relative; top: 2px"> folders below.
+        The saved models (in TensorFlow Saved Model format) can be found at the Google Drive <img src="images/google-drive.svg" alt="Google Drive" width="20" height="20" style="position: relative; top: 2px"> folders below.
         These saved models were converted to a TensorFlow.js Graphs Model using the <a href="https://github.com/tensorflow/tfjs/tree/master/tfjs-converter">TensorFlow.js converter script</a>.
+      </p>
         <ul>
           <li><a href="">The Game of Life Saved Models</a></li>
           <li><a href="">The Game of Life Saved Models Converted</a></li>
         </ul>
-      </p>
 
       <h3>
         Recreating Visualizations
       </h3>
       <p>
-        To aid in the creation of future interactive articles, we have created ObservableHQ <img src="images/observable.svg" width="20" height="20" style="position: relative; top: 3px">
+        To aid in the creation of future interactive articles, we have created ObservableHQ <img src="images/observable.svg" alt="ObservableHQ" width="20" height="20" style="position: relative; top: 3px">
         notebooks for each of the interactive visualizations here:
+      </p>
         <ul>
           <li><a href="https://observablehq.com/@ameyasd/spectral-conversions">Spectral Representations for an Image</a></li>
           <li><a href="https://observablehq.com/@ameyasd/interactive-graph-polynomial-convolutions">Graph Polynomial Convolutions</a></li>
@@ -1302,7 +1313,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           <li><a href="https://observablehq.com/@ameyasd/graph-isomorphism-networks">Graph Isomorphism Networks</a></li>
           <li><a href="https://observablehq.com/@ameyasd/the-game-of-life">The Game of Life</a></li>
         </ul>
-      </p>
 
   </d-article>
 
@@ -1319,6 +1329,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </d-math>
       This variant can capture the optimal update rule with only a few parameters (henceforth, the 'minimal' GCN model, although there may
       be modifications to make this architecture even smaller):
+    </p>
       <ul>
         <li>GCNConv:
           <d-math block>
@@ -1343,7 +1354,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           </d-math>
         </li>
       </ul>
-    </p>
     <p>
       Unlike <d-cite key='game-of-life-nns'></d-cite>, we use ReLU activations exclusively, for consistency.
       With this, the 'minimal' CNN model is slightly different:
@@ -1446,11 +1456,11 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       The static visualizations would not have been possible without <a href="https://inkscape.org/">Inkscape</a>
       and Alexander Lenail's <a href="https://alexlenail.me/NN-SVG/index.html">Neural Network SVG Generator</a>.
       We would also like to acknowledge the following Distill articles for inspiration on article design:
+    </p>
       <ul>
         <li><a href="https://distill.pub/2019/memorization-in-rnns/">Visualizing memorization in RNNs</a></li>
         <li><a href="https://distill.pub/2020/understanding-rl-vision/">Understanding RL Vision</a></li>
       </ul>
-    </p>
     <p>
       We would like to thank Thomas Kipf for his valuable feedback on the technical content within this article.
     </p>
