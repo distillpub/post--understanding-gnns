@@ -712,6 +712,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     <p>
       While the theory of spectral convolutions is mathematically well-grounded,
       there are some key disadvantages that we must talk about:
+    </p>
       <ul>
         <li>
           We need to compute the eigenvector matrix $U_m$ from $L$. For large graphs, this becomes quite infeasible.
@@ -871,7 +872,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <p>
         In conclusion, ChebNet allows us to learn localized filters, and learn them efficiently!
       </p>
-    </p>
 
     <h2 id="spatial">
       Modern Spatial Convolutions
@@ -882,6 +882,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </p>
       <p>
         Let's go back to the effect of multiplying $x$ by $L$, and focus on a particular vertex $v$:
+      </p>
         <d-math block>
           \begin{aligned}
            (Lx)_v &= L_v x \\ 
@@ -890,13 +891,14 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
                   &= D_v \  x_v - \sum_{u \in \mathcal{N}(v)} x_u
           \end{aligned}
         </d-math>
+      <p>
         As expected from the degree <d-footnote>$p_w(L) = L$ is a degree-$1$ polynomial.</d-footnote>, this is a $1$-hop localized convolution.
         But more importantly, we can think of this convolution as arising of two steps:
+      </p>
         <ul>
           <li>Aggregating over immediate neighbour features $x_u$.</li>
           <li>Combining with the node's own feature $x_v$.</li>
         </ul>
-      </p>
       <p>
         This is precisely the idea behind modern spatial convolutions: allowing different kinds of 'aggregation' and 'combination' steps,
         beyond what is possible using 'Laplacian polynomial' multiplication from ChebNet.
@@ -1015,6 +1017,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         All of the embedding computations we've described here, whether spectral or spatial, are completely differentiable.
         This allows GNNs to be trained in an end-to-end fashion, just like a standard neural network,
         once a suitable loss function $L$ is defined:
+      </p>
         <ul>
           <li>
             <b>Node Classification</b>: Any standard loss used for classification tasks can be used, such as categorical cross-entropy:
@@ -1041,7 +1044,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
             <b>Node Clustering</b>: Cluster the learned node representations!
           </li>
         </ul>
-      </p>
 
       <p>
         Sometimes, we may not have a downstream task (such as node classification) to optimize for. 
@@ -1052,9 +1054,11 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <p>
         Another self-supervised technique is to enforce that neighbouring nodes get similar embeddings,
         mimicking random-walk approaches such as node2vec <d-cite key="node2vec"></d-cite> and DeepWalk <d-cite key="deepwalk"></d-cite>:
+      </p>
         <d-math block>
           L_{G} = \sum_{v} \sum_{u \in N_R(v)} \log\frac{\exp{z_v^T z_u}}{\sum\limits_{u'} \exp{z_{u'}^T z_u}}.
         </d-math>
+      <p>
         where $N_R(v)$ is a multi-set of nodes visited when random walks are started from $v$.
         For large graphs, where computing the sum over all nodes may be computationally expensive,
         techniques such as Noise Contrastive Estimation <d-cite key="nce"></d-cite> <d-cite key="nce-embeddings"></d-cite>are especially useful.
