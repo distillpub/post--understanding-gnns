@@ -289,8 +289,12 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
              alt="The molecular structure of toxic caramboxin.">
       </figure>
       <figure class="l-page-outset" style="display: flex; margin-bottom: 5%;">
-        <figcaption style="width: 50%; margin-left: 1%;"><b>Left:</b> A <span style="color: green;">non-toxic</span> 1,2,6-trigalloyl-glucose molecule.</figcaption>
-        <figcaption style="width: 50%; margin-right: 15%; text-align: right;"><b>Right:</b> A <span style="color: rgba(228, 35, 35, 0.911);">toxic</span> caramboxin molecule.</figcaption>
+        <figure style="width: 50%; margin-left: 1%;">
+          <figcaption><b>Left:</b> A <span style="color: green;">non-toxic</span> 1,2,6-trigalloyl-glucose molecule.</figcaption>
+        </figure>
+        <figure style="width: 50%; margin-right: 15%; text-align: right;">
+          <figcaption><b>Right:</b> A <span style="color: rgba(228, 35, 35, 0.911);">toxic</span> caramboxin molecule.</figcaption>
+        </figure>
       </figure>
       <p>
         Looking at a few examples, the following issues quickly become apparent:
@@ -317,12 +321,11 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <figure id="node-order-alternatives" class="l-page" style="margin-bottom: 1em;">
         <img src="images/node-order-alternatives.svg" style="margin-bottom: 1em; margin-left: 15%; width: 70%;"
              alt="Representing the graph as one vector requires us to fix an order on the nodes. But what do we do when the nodes have no inherent order?">
-        <figcaption style="text-align: center;">
+        <figcaption style="text-align: center; margin-left: 10%; width: 80%;">
           Representing the graph as one vector requires us to fix an order on the nodes.
           But what do we do when the nodes have no inherent order?
-        </figcaption>
-        <figcaption style="text-align: center;">
-          <b>Above:</b> The same graph labelled in two different ways. The alphabets indicate the ordering of the nodes.
+          <b>Above:</b> 
+          The same graph labelled in two different ways. The alphabets indicate the ordering of the nodes.
         </figcaption>
       </figure>
   
@@ -432,20 +435,28 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     <figure id="global-vs-local-conv" class="l-page">
         <img src="images/global-vs-local.svg" style="margin-right: 10%; margin-left: 10%; width: 80%;"
          alt="In global convolutions, all nodes take part in the convolution at each node. In local convolutions, only the node's immediate neighbours take part in the convolution at each node.">
-        <figcaption style="position: absolute; text-align: center; left: 39%; top: 39%; width: 25%;">
-          Spectral convolutions are global. All nodes take part in the convolution at each node.
-        </figcaption>
-        <figcaption style="position: absolute; text-align: center; left: 39%; top: 96%; width: 25%;">
-          Spatial convolutions are local. Only the node's immediate neighbours take part in the convolution at each node.
-        </figcaption>
+        <figure style="position: absolute; text-align: center; left: 39%; top: 39%; width: 25%;">
+          <figcaption>
+            Spectral convolutions are global. All nodes take part in the convolution at each node.
+          </figcaption>
+        </figure>
+        <figure style="position: absolute; text-align: center; left: 39%; top: 96%; width: 25%;">
+          <figcaption>
+            Spatial convolutions are local. Only the node's immediate neighbours take part in the convolution at each node.
+          </figcaption>
+        </figure>
     </figure>
     <figure class="l-page" style="display: flex; margin-top: 1em; margin-bottom: 2em;">
-      <figcaption style="width: 25%; margin-left: 10%; text-align: center;">
-        <b>Left:</b> Node features, indicated as numbers within the nodes, <i>before</i> the convolution.
-      </figcaption>
-      <figcaption style="width: 25%; margin-left: 30%; margin-right: 10%; text-align: center;">
-        <b>Right:</b> Node features, indicated as numbers within the nodes, <i>after</i> the convolution.
-      </figcaption>
+      <figure style="width: 25%; margin-left: 10%; text-align: center;">
+        <figcaption>
+          <b>Left:</b> Node features, indicated as numbers within the nodes, <i>before</i> the convolution.
+        </figcaption>
+      </figure>
+      <figure style="width: 25%; margin-left: 30%; margin-right: 10%; text-align: center;">
+        <figcaption>
+          <b>Right:</b> Node features, indicated as numbers within the nodes, <i>after</i> the convolution.
+        </figcaption>
+      </figure>
     </figure>
     <p>
       The next sections will explain these in more detail.
@@ -1110,8 +1121,10 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <figure id="game-of-life-example" class="l-page" style="text-align: center;">
         <img src="images/game-of-life-example.svg" style="width: 80%;"
              alt="A Game of Life grid with an initial configuration, updated to a new configuration. Alive cells are filled in with black. Dead cells are filled in with white.">
-        <figcaption>A grid with an initial configuration, updated to a new configuration.
-          Alive cells are filled in with black. Dead cells are filled in with white.</figcaption>
+        <figcaption>
+          A grid with an initial configuration, updated to a new configuration.
+          Alive cells are filled in with black. Dead cells are filled in with white.
+        </figcaption>
       </figure>
       <p>
         The Game of Life is simple, but research <d-cite key='game-of-life-nns'></d-cite> has shown that neural networks struggle to solve the Game of Life Problem!
