@@ -253,7 +253,9 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         This makes them unable to elegantly process graph-structured data.
       </p>
       <figure id="standard-neural-networks" class="l-page">
-        <img src="images/standard-neural-networks.svg" style="width: 100%;">
+        <img src="images/standard-neural-networks.svg" style="width: 100%;"
+             alt="Neural networks generally operate on fixed-size input vectors. How do we input a graph to a neural network?"
+             title="How do we input a graph to a neural network?">
       </figure>
     </div>
     
@@ -281,13 +283,15 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         Consider the task of predicting whether a given chemical molecule is toxic<d-cite key="molecules-gnn"></d-cite> <d-cite key="neural-message-passing"></d-cite> :
       </p>
       <figure class="l-page-outset" id="menthyl-nicotinate-molecule" style="display: inline-flex;">
-        <img src="images/1,2,6-trigalloyl-glucose-molecule.svg" style="width: 50%;">
-        <img src="images/caramboxin-molecule.svg" style="width: 25%; height: 60%; margin-top: 8%; margin-left: 10%;">
+        <img src="images/1,2,6-trigalloyl-glucose-molecule.svg" style="width: 50%;"
+             alt="The molecular structure of non-toxic 1,2,6-trigalloyl-glucose.">
+        <img src="images/caramboxin-molecule.svg" style="width: 25%; height: 60%; margin-top: 8%; margin-left: 10%;"
+             alt="The molecular structure of toxic caramboxin.">
       </figure>
-      <div class="l-page-outset" style="display: flex; margin-bottom: 5%;">
+      <figure class="l-page-outset" style="display: flex; margin-bottom: 5%;">
         <figcaption style="width: 50%; margin-left: 1%;"><b>Left:</b> A <span style="color: green;">non-toxic</span> 1,2,6-trigalloyl-glucose molecule.</figcaption>
         <figcaption style="width: 50%; margin-right: 15%; text-align: right;"><b>Right:</b> A <span style="color: rgba(228, 35, 35, 0.911);">toxic</span> caramboxin molecule.</figcaption>
-      </div>
+      </figure>
       <p>
         Looking at a few examples, the following issues quickly become apparent:
       </p>
@@ -310,7 +314,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       Compare this to images, where every pixel is uniquely determined by its absolute position within the image!
 
       <figure id="node-order-alternatives" class="l-page" style="margin-bottom: 1em;">
-        <img src="images/node-order-alternatives.svg" style="margin-bottom: 1em; margin-left: 15%; width: 70%;">
+        <img src="images/node-order-alternatives.svg" style="margin-bottom: 1em; margin-left: 15%; width: 70%;"
+             alt="Representing the graph as one vector requires us to fix an order on the nodes. But what do we do when the nodes have no inherent order?">
         <figcaption style="text-align: center;">
           Representing the graph as one vector requires us to fix an order on the nodes.
           But what do we do when the nodes have no inherent order?
@@ -356,7 +361,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </ul>
       </p>      
       <figure id="graph-tasks" class="l-page">
-        <img src="images/graph-tasks.svg" style="width: 100%;">
+        <img src="images/graph-tasks.svg" style="width: 100%;"
+             alt="Examples of problems that can be defined over graphs.">
         <figcaption style="text-align: center;">
           Examples of problems that can be defined over graphs.
           This list is not exhaustive!
@@ -424,7 +430,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </li>
       </ul>
     <figure id="global-vs-local-conv" class="l-page">
-        <img src="images/global-vs-local.svg" style="margin-right: 10%; margin-left: 10%; width: 80%;">
+        <img src="images/global-vs-local.svg" style="margin-right: 10%; margin-left: 10%; width: 80%;"
+         alt="In global convolutions, all nodes take part in the convolution at each node. In local convolutions, only the node's immediate neighbours take part in the convolution at each node.">
         <figcaption style="position: absolute; text-align: center; left: 39%; top: 39%; width: 25%;">
           Spectral convolutions are global. All nodes take part in the convolution at each node.
         </figcaption>
@@ -432,14 +439,14 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           Spatial convolutions are local. Only the node's immediate neighbours take part in the convolution at each node.
         </figcaption>
     </figure>
-    <div class="l-page" style="display: flex; margin-top: 1em; margin-bottom: 2em;">
+    <figure class="l-page" style="display: flex; margin-top: 1em; margin-bottom: 2em;">
       <figcaption style="width: 25%; margin-left: 10%; text-align: center;">
         <b>Left:</b> Node features, indicated as numbers within the nodes, <i>before</i> the convolution.
       </figcaption>
       <figcaption style="width: 25%; margin-left: 30%; margin-right: 10%; text-align: center;">
         <b>Right:</b> Node features, indicated as numbers within the nodes, <i>after</i> the convolution.
       </figcaption>
-    </div>
+    </figure>
     <p>
       The next sections will explain these in more detail.
     </p>
@@ -474,7 +481,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           L = D - A.
         </d-math>
       </p>
-      <figure id="standard-neural-networks" class="l-page">
+      <figure id="laplacian" class="l-page">
         <img src="images/laplacian.svg" style="margin-right: 0%; margin-left: 10%; width: 70%; margin-bottom: 1em;">
         <figcaption style="text-align: center;">
           The Laplacian $L$ for an undirected graph $G$, with the row corresponding to node $\textsf{C}$ highlighted.
@@ -495,8 +502,9 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         After fixing an ordering over the $n$ nodes in $G$, we can think of any feature function $x$ over $G$ as a vector in $\mathbb{R}^n$,
         by just collecting each of the values $x_i$ assigned to node $i$ in $G$:
       </p>
-        <figure id="standard-neural-networks" class="l-body">
-          <img src="images/node-order-vector.svg" style="margin-right: 10%; margin-left: 10%; margin-bottom: 1%; width: 80%;">
+        <figure id="node-order-vector" class="l-body">
+          <img src="images/node-order-vector.svg" style="margin-right: 10%; margin-left: 10%; margin-bottom: 1%; width: 80%;"
+               alt="Fixing a node order and collecting all node features into a single vector.">
           <figcaption style="text-align: center;">
             Fixing a node order (indicated by the alphabets) and collecting all node features into a single vector $x$.
           </figcaption>
@@ -1068,8 +1076,9 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           <li>Every other cell maintains its state.</li>
         </ul>
       </p>
-      <figure id="validation-accuracy-boxplot" class="l-page" style="text-align: center;">
-        <img src="images/game-of-life-example.svg" style="width: 80%;">
+      <figure id="game-of-life-example" class="l-page" style="text-align: center;">
+        <img src="images/game-of-life-example.svg" style="width: 80%;"
+             alt="A Game of Life grid with an initial configuration, updated to a new configuration. Alive cells are filled in with black. Dead cells are filled in with white.">
         <figcaption>A grid with an initial configuration, updated to a new configuration.
           Alive cells are filled in with black. Dead cells are filled in with white.</figcaption>
       </figure>
@@ -1120,7 +1129,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </d-footnote>
       </p>
       <figure id="overparametrization-factor" class="l-page" style="text-align: center;">
-        <img src="images/overparametrization-factor.svg" style="width: 80%;">
+        <img src="images/overparametrization-factor.svg" style="width: 80%;"
+             alt="Architectures for the CNN and GCN models. The CNN has a 3x3 Conv2D + ReLU + Linear + ReLU + Linear structure, while the GCN has a GCNConv + ReLU + Linear + ReLU + Linear structure. Both models output a 2-dimensional vector at each cell indicating their predictions.">
       </figure>
       <p>
         However, our experiments show that CNNs and GCNs perform very similarly on the Game of Life.
@@ -1131,7 +1141,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         The results below are for 40 different random initializations for each model.
       </p>
       <figure id="validation-accuracy-boxplot" class="l-screen" style="margin-top: 0; text-align: center;">
-        <img src="images/validation-accuracy-boxplot.svg" style="width: 80%;">
+        <img src="images/validation-accuracy-boxplot.svg" style="width: 80%;"
+             alt="Distribution of validation accuracies for each trained model as the overparametrization factor is varied. Both GCNs and CNNs do similarly, with increasing performance as the number of parameters increase.">
         <figcaption style="width: 50%; margin-left: 25%; margin-right: 25%;">
           Distribution of validation accuracies for each trained model as the overparametrization factor ($m$) is varied.
           The boxplot bodies extend from the 25th percentile to the 75th percentile accuracies, while the whiskers extend from the 5th percentile to the 95th percentile accuracies.
@@ -1144,7 +1155,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         of parameters in the models.
       </p>
       <figure id="success-probabilities" class="l-page" style="margin-top: 0; text-align: center;">
-        <img src="images/success-probabilities.svg" style="width: 100%;">
+        <img src="images/success-probabilities.svg" style="width: 100%;"
+             alt="Fraction of models that could correctly learn the rules of the Game of Life. Both GCNs and CNNs perform similarly.">
       </figure>
       <p>
         These experiments suggest that the GCN models don't learn the rules of the Game of Life in the form they are given above,
@@ -1172,10 +1184,12 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           return ["svg","draw_text","draw_separator_lines","draw_inp_img","draw_pred_img_gcn","draw_pred_img_cnn","draw_next_img"].includes(name) || null;
         });
       </script>
-      <figcaption style="margin-bottom: 1em;">
-        Modify the input grid (left) by clicking on the individual cells to toggle them (black: alive, white: dead), or randomize the entire grid with the 'Randomize Grid' button.
-        Clicking the 'Reset' button sets all cells as dead.
-      </figcaption>
+      <figure>
+        <figcaption style="margin-bottom: 1em;">
+          Modify the input grid (left) by clicking on the individual cells to toggle them (black: alive, white: dead), or randomize the entire grid with the 'Randomize Grid' button.
+          Clicking the 'Reset' button sets all cells as dead.
+        </figcaption>
+      </figure>
       <p>
         The visualization above serves as an excellent test for generalizability of these models, beyond the standard validation set metrics.
         On closer observation, we see that:
