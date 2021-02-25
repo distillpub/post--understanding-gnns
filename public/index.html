@@ -352,6 +352,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     </h2>
       <p>
         There are many useful problems that can be formulated over graphs:
+      </p>
         <ul>
           <li><b>Node Classification:</b> Classifying individual nodes.</li>
           <li><b>Graph Classification:</b> Classifying entire graphs. </li>
@@ -359,7 +360,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           <li><b>Link Prediction:</b> Predicting missing links.</li>
           <li><b>Influence Maximization:</b> Identifying influential nodes.</li>
         </ul>
-      </p>      
       <figure id="graph-tasks" class="l-page">
         <img src="images/graph-tasks.svg" style="width: 100%;"
              alt="Examples of problems that can be defined over graphs.">
@@ -460,21 +460,16 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <p>
         Given a graph $G$, we denote its $0-1$ adjacency matrix by $A$, and we can construct a diagonal degree matrix $D$ where:      
       </p>
+      <div style="position: relative; display: flex;">
+        <d-math block>
+          D_i = \sum_j A_{ij}.
+        </d-math>
         <figure id="diagonal-degree-matrix">
-          <div style="position:relative; top:-35px">
-
-          <span style="position:absolute; left:0px; top:0px">
-            <d-math block>
-              D_i = \sum_j A_{ij}.
-            </d-math>
-          </span>
-  
-          <figcaption style="position:absolute; left:200px; top:10px; width:250px">
+          <figcaption style="margin-left: 15%; margin-top: -2%;">
             The degree of vertex $i$ is the number of out-going edges from $i$.
           </figcaption>
-
-          </div>
         </figure>
+      </div>
       <p>
         Then, the graph Laplacian $L$ is defined as:
         <d-math>
@@ -485,6 +480,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <img src="images/laplacian.svg" style="margin-right: 0%; margin-left: 10%; width: 70%; margin-bottom: 1em;">
         <figcaption style="text-align: center;">
           The Laplacian $L$ for an undirected graph $G$, with the row corresponding to node $\textsf{C}$ highlighted.
+          Zeros in $L$ are not displayed above.
         </figcaption>
         <figcaption style="text-align: center;">
           The Laplacian $L$ depends only on the structure of the graph $G$, not any node features.
@@ -603,10 +599,12 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <div class="spec_conv_sliders l-page"></div>
         <div class="spec_input_slider_watch" style="display: none;"></div>
       </div>
-      <figcaption style="width: 100%; margin-top: 1em;">
-        Move the sliders to change the spectral representation $\hat{x}$ (right), and see how $x$ itself changes on the image (left).
-        Note how the first eigenvectors are much 'smoother' than the later ones.
-      </figcaption>
+      <figure>
+        <figcaption>
+          Move the sliders to change the spectral representation $\hat{x}$ (right), and see how $x$ itself changes on the image (left).
+          Note how the first eigenvectors are much 'smoother' than the later ones.
+        </figcaption>
+      </figure>
 
       <script type="module">
       import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
@@ -813,11 +811,13 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
             });
           </script>
         </div>
-        <figcaption style="margin-top: 1em;">
-          Click on the input grid (top left, representing $x$) to toggle pixel values between $0$ (white) and $1$ (blue).
-          To randomize the input grid, press 'Randomize Grid'. To reset all pixels to $0$, press 'Reset Grid'.
-          Use the sliders at the bottom to change the coefficients of $p_w$. To reset all coefficients of $p_w$ to $0$, press 'Reset Coefficients.'
-        </figcaption>
+        <figure>
+          <figcaption>
+            Click on the input grid (top left, representing $x$) to toggle pixel values between $0$ (white) and $1$ (blue).
+            To randomize the input grid, press 'Randomize Grid'. To reset all pixels to $0$, press 'Reset Grid'.
+            Use the sliders at the bottom to change the coefficients of $p_w$. To reset all coefficients of $p_w$ to $0$, press 'Reset Coefficients.'
+          </figcaption>
+        </figure>
       <p>
         ChebNet takes this idea even further, by instead looking at polynomials of the form:
       </p>
@@ -995,10 +995,12 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         return ["interactive_list","select_fig","handle_click"].includes(name) || null;
       });
       </script>
-      <figcaption style="margin-top: 1em; margin-bottom: 1em;">
-        Choose a GNN model using the tabs at the top. Click on a node to see the update equation at that node for the next iteration.
-        Use the sliders on the left to change the weights for the current iteration, and watch how the update equation changes. 
-      </figcaption>
+      <figure>
+        <figcaption>
+          Choose a GNN model using the tabs at the top. Click on a node to see the update equation at that node for the next iteration.
+          Use the sliders on the left to change the weights for the current iteration, and watch how the update equation changes. 
+        </figcaption>
+      </figure>
 
       <p>
         In practice, each iteration above is generally thought of as a single 'neural network layer'.
@@ -1293,10 +1295,11 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         </ul>
       <p>
         The saved models (in TensorFlow Saved Model format) can be found at the Google Drive <img src="images/google-drive.svg" alt="Google Drive" width="20" height="20" style="position: relative; top: 2px"> folders below.
+        <d-footnote>Currently unavailable, pending official data release.</d-footnote>
         These saved models were converted to a TensorFlow.js Graphs Model using the <a href="https://github.com/tensorflow/tfjs/tree/master/tfjs-converter">TensorFlow.js converter script</a>.
       </p>
         <ul>
-          <li><a href="">The Game of Life Saved Models</a></li>
+          <li><a href="">The Game of Life Saved Models </a></li>
           <li><a href="">The Game of Life Saved Models Converted</a></li>
         </ul>
 
@@ -1361,6 +1364,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     <p>
       Unlike <d-cite key='game-of-life-nns'></d-cite>, we use ReLU activations exclusively, for consistency.
       With this, the 'minimal' CNN model is slightly different:
+    </p>
       <ul>
         <li>GCNConv:
           <d-math block>
@@ -1384,7 +1388,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           </d-math>
         </li>
       </ul>
-    </p>
     <p>
       The variant described earlier in the article needs many more parameters to capture the optimal update rule on finite grids,
       since it would need to distinguish between non-central cells which have fewer neighbours.
