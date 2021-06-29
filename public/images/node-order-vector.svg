@@ -283,16 +283,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.03"
-     inkscape:cx="29.207278"
-     inkscape:cy="90.878024"
+     inkscape:cx="409.30437"
+     inkscape:cy="108.35375"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="2560"
-     inkscape:window-height="1414"
+     inkscape:window-width="1792"
+     inkscape:window-height="989"
      inkscape:window-x="0"
-     inkscape:window-y="26"
+     inkscape:window-y="25"
      inkscape:window-maximized="0" />
   <metadata
      id="metadata684">
@@ -338,7 +338,7 @@
        rx="5.070426"
        ry="5.072237" />
     <ellipse
-       style="fill:#ffb380;stroke:#000000;stroke-width:0.479414;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       style="fill:#00aad4;stroke:#000000;stroke-width:0.479414;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
        id="path5538-0"
        cx="57.075588"
        cy="135.05525"
@@ -482,7 +482,7 @@
        x="186.80054"
        y="128.43723" />
     <rect
-       style="fill:#ffb380;stroke:#000000;stroke-width:0.111658;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#00aad4;stroke:#000000;stroke-width:0.111658;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect1773-0"
        width="11.011141"
        height="11.149437"

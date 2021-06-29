@@ -64,11 +64,6 @@ button {
   margin: 0.5em 0 0.5em 0em;
 }
 
-div.viz_list{
-  display: grid;
-  justify-content: center;
-}
-
 @media (max-width: 1000px) {
   d-contents {
     justify-self: start;
@@ -161,8 +156,16 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
   text-decoration: none;
 }
 
-.viewof-laplacian_type label {
-  line-height: 1rem;
+input[type="radio"] {
+  vertical-align: unset !important;
+}
+
+.math-details {
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 0em;
+  padding-top: 1em;
+  margin-bottom: 1em;
 }
   </style>
 </head>
@@ -177,16 +180,19 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     "authors": [
         {
             "author": "Ameya Daigavane",
+            "authorURL": "https://ameya98.github.io/",
             "affiliation": "Google Research",
             "affiliationURL": "https://research.google/"
         },
         {
             "author": "Balaraman Ravindran",
+            "authorURL": "https://www.cse.iitm.ac.in/~ravi/",
             "affiliation": "Google Research",
             "affiliationURL": "https://research.google/"
         },
         {
             "author": "Gaurav Aggarwal",
+            "authorURL": "https://research.google/people/GauravAggarwal/",
             "affiliation": "Google Research",
             "affiliationURL": "https://research.google/"
         }
@@ -222,24 +228,32 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <div><a href="#challenges">The Challenges of Computation on Graphs</a></div>
         <ul>
           <li><a href="#lack-of-consistent-structure">Lack of Consistent Structure</a></li>
-          <li><a href="#node-order">Node-Order Invariance</a></li>
+          <li><a href="#node-order">Node-Order Equivariance</a></li>
           <li><a href="#scalability">Scalability</a></li>
         </ul>
         <div><a href="#problem-and-notation">Problem Setting and Notation</a></div>
         <div><a href="#extending">Extending Convolutions to Graphs</a></div>
-        <div><a href="#spectral">Spectral Convolutions</a></div>
-        <div><a href="#global-to-local">From Global to Local Convolutions</a></div>
-        <div><a href="#spatial">Modern Spatial Convolutions</a></div>
+        <div><a href="#polynomial-filters">Polynomial Filters on Graphs</a></div>
+        <div><a href="#modern-gnns">Modern Graph Neural Networks</a></div>
         <div><a href="#interactive">Interactive Graph Neural Networks</a></div>
+        <div><a href="from-local-to-global">From Local to Global Convolutions</a></div>
+        <ul>
+          <li><a href="#spectral">Spectral Convolutions</a></li>
+          <li><a href="#graph-embeddings">Global Propagation via Graph Embeddings</a></li>
+        </ul>
         <div><a href="#learning">Learning GNN Parameters</a></div>
-        <div><a href="#gnns-vs-cnns">Are GNNs 'better' than CNNs?</a></div>
+        <!-- <div><a href="#gnns-vs-cnns">Are GNNs 'better' than CNNs?</a></div> -->
         <div><a href="#further-reading">Further Reading</a></div>
         <ul>
-          <li><a href="#practical-techniques">Practical Techniques for GNNs</a></li>
+          <li><a href="#practical-techniques">GNNs in Practice</a></li>
           <li><a href="#different-kinds-of-graphs">Different Kinds of Graphs</a></li>
           <li><a href="#pooling">Pooling</a></li>
         </ul>
         <div><a href="#supplementary">Supplementary Material</a></div>
+        <ul>
+          <li><a href="#experiments-notebooks">Reproducing Experiments</a></li>
+          <li><a href="#visualizations-notebooks">Recreating Visualizations</a></li>
+        </ul>
       </nav>
     </d-contents>
     <div>
@@ -260,15 +274,30 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     </div>
     
     <p>
-      Graph Neural Networks (GNNs) are a family of neural networks that can operate naturally on graph-structured data. 
+      Graph neural networks (GNNs) are a family of neural networks that can operate naturally on graph-structured data. 
       By extracting and utilizing features from the underlying graph,
-      GNNs can make more informed predictions about individual entities in these interactions.
+      GNNs can make more informed predictions about entities in these interactions,
+      as compared to models that consider individual entities in isolation.
     </p>
     <p>
-      In this article, we will describe the motivation behind popular GNN variants, interact with them, and explore their performance on an illuminating task.
+      GNNs are not the only tools available to model graph-structured data:
+      graph kernels <d-cite key="graph-kernels"></d-cite>
+      and random-walk methods <d-cite key="node2vec"></d-cite> <d-cite key="deepwalk"></d-cite>
+      were some of the most popular ones.
+      Today, however, GNNs have largely replaced these techniques
+      because of their inherent flexibility to model the underlying systems
+      better.
     </p>
     <p>
-      First, let's discuss some of the complications that graphs come with. With a firm understanding of these issues, we will be able to better critique and appreciate GNN variants.
+      In this article, we will illustrate
+      the challenges of computing over graphs, 
+      describe the origin and design of graph neural networks,
+      and explore the most popular GNN variants in recent times.
+      Particularly, we will see that many of these variants
+      are composed of similar building blocks.
+    </p>
+    <p>
+      First, let's discuss some of the complications that graphs come with.
     </p>
 
     <h2 id="challenges">
@@ -311,7 +340,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </p>
 
     <h3 id="node-order">
-      Node-Order Invariance
+      Node-Order Equivariance
     </h3>
     <p>
       Extending the point above: graphs often have no inherent ordering present amongst the nodes.
@@ -330,9 +359,10 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </figure>
   
     <p>
-      With this lack of inherent order, we make an adhoc choice of ordering. 
-      For this reason, we must ensure our algorithms are invariant to our choice of ordering of the nodes.
-      Otherwise, choosing a different ordering of nodes would lead to different predictions.
+      As a result, we would like our algorithms to be node-order equivariant:
+      they should not depend on the ordering of the nodes of the graph.
+      If we permute the nodes in some way, the resulting representations of 
+      the nodes as computed by our algorithms should also be permuted in the same way.
     </p>
 
     <h3 id="scalability">
@@ -347,7 +377,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         they tend to have their number of edges linear in their number of vertices.
         We will see that this allows the use of clever methods
         to efficiently compute representations of nodes within the graph.
-        Such methods will have their number of parameters independent of the size of the graph.
+        Further, the methods that we look at here will have significantly fewer parameters
+        in comparison to the size of the graphs they operate on.
       </p>
 
     <h2 id="problem-and-notation">
@@ -376,113 +407,116 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         learning to map individual nodes to fixed-size real-valued vectors (called 'representations' or 'embeddings').
       </p>
       <p>
-        See <a href="#learning">Learning GNN Parameters</a> for how the learnt embeddings can be used for these tasks!
+        In <a href="#learning">Learning GNN Parameters</a>, we will see how the learnt embeddings can be used for these tasks.
       </p>
       <p>
         Different GNN variants are distinguished by the way these representations are computed.
+        Generally, however, GNNs compute node representations in an iterative process.
+        We will use the notation $h_v^{(k)}$ to indicate the representation of node $v$ after the $k^{\text{th}}$ iteration.
+        Each iteration can be thought of as the equivalent of a 'layer' in standard neural networks.
       </p>
       <p>
         We will define a graph $G$ as a set of nodes, $V$, with a set of edges $E$ connecting them.
-        Nodes can have individual features: we will denote $x_v$ as the individual feature for node $v \in V$.
-        In case some nodes lack features, $x_v$ is set as some predefined constant.
+        Nodes can have individual features as part of the input: we will denote by $x_v$ the individual feature for node $v \in V$.
+        For example, the 'node features' for a pixel in a color image
+        would be the red, green and blue channel (RGB) values at that pixel.
       </p>
       <p>
-        For ease of exposition, we will assume $G$ is undirected, and all nodes are of the same type <d-footnote>These kinds of graphs are called 'homogeneous'.</d-footnote>.
+        For ease of exposition, we will assume $G$ is undirected, and all nodes are of the same type.
+        <d-footnote>These kinds of graphs are called 'homogeneous'.</d-footnote>
         Many of the same ideas apply to other kinds of graphs: see <a href="#different-kinds-of-graphs">Different Kinds of Graphs</a> for more.
       </p>
       <p>
-        We denote the node embedding for a node $v \in V$ by $h_v$. 
-        In case the embeddings are computed iteratively, we use the notation $h_v^{(k)}$ to indicate the embedding after the $k^{\text{th}}$ iteration.
-        We can think of each iteration as the equivalent of a 'layer' in standard neural networks.
-      </p>
-      <p>
-        For an arbitrary matrix (or vector) $M$, $M_v$ denotes the row corresponding to vertex $v$, wherever applicable.
-      </p>
-      <p>
-        We use $\mathcal{N}(v)$ to denote the set of neighbours of vertex $v$.
+        Sometimes we will need to denote a graph property by a matrix $M$,
+        where each row $M_v$ represents a property corresponding to a particular vertex $v$.
       </p>
 
     <h2 id="extending">
       Extending Convolutions to Graphs
     </h2>
     <p>
-      Noting that:
+      Convolutional Neural Networks have been seen to be quite powerful in extracting features from images.
+      However, images themselves can be seen as graphs with a very regular grid-like structure,
+      where the individual pixels are nodes, and the RGB channel values at each pixel as the node features.
     </p>
-      <ul>
-        <li>
-          Images are graphs with very regular grid-like structure, and,
-        </li>
-        <li>
-          Convolutions, as in Convolutional Neural Networks, have been seen to be quite powerful in extracting features from images,
-        </li>
-      </ul>
     <p>
-      a natural idea is to consider generalizing convolutions to arbitrary graphs. Recall, however, the challenges
+      A natural idea, then, is to consider generalizing convolutions to arbitrary graphs. Recall, however, the challenges
       listed out in the <a href="#challenges">previous section</a>: in particular, ordinary convolutions are not node-order invariant, because
-      they depend on the absolute positions of pixels!
+      they depend on the absolute positions of pixels.
+      It is initially unclear as how to generalize convolutions over grids to convolutions over general graphs,
+      where the neighbourhood structure differs from node to node.
+      <d-footnote>
+        The curious reader may wonder if performing some sort of padding and ordering
+        could be done to ensure the consistency of neighbourhood structure across nodes.
+        This has been attempted with some success <d-cite key="patchysan"></d-cite>,
+        but the techniques we will look at here are more general and powerful.
+      </d-footnote>
     </p>
-    <p>
-      With this in mind, there have been two approaches seen so far:
-    </p>
-      <ul>
-        <li>
-          <b>Spectral Convolutions</b>: Perform node-order invariant global convolutions.
-        </li>
-        <li>
-          <b>Spatial Convolutions</b>: Perform node-order invariant local convolutions over node neighbourhoods.
-        </li>
-      </ul>
-    <figure id="global-vs-local-conv" class="l-page">
-        <img src="images/global-vs-local.svg" style="margin-right: 10%; margin-left: 10%; width: 80%;"
-         alt="In global convolutions, all nodes take part in the convolution at each node. In local convolutions, only the node's immediate neighbours take part in the convolution at each node.">
-        <figure style="position: absolute; text-align: center; left: 39%; top: 39%; width: 25%;">
-          <figcaption>
-            Spectral convolutions are global. All nodes take part in the convolution at each node.
-          </figcaption>
-        </figure>
-        <figure style="position: absolute; text-align: center; left: 39%; top: 96%; width: 25%;">
-          <figcaption>
-            Spatial convolutions are local. Only the node's immediate neighbours take part in the convolution at each node.
-          </figcaption>
-        </figure>
-    </figure>
-    <figure class="l-page" style="display: flex; margin-top: 1em; margin-bottom: 2em;">
-      <figure style="width: 25%; margin-left: 10%; text-align: center;">
+    
+    <figure id="cnns-vs-gnns-neigh" class="l-page" style="display: flex; justify-content: center; flex-direction: column;">      
+      <div id="observablehq-cnn_svg-35509536"
+        role="img" aria-label="GNNs can perform localized convolutions, similar to those in CNNs."
+        style="text-align: center;"></div>
+      <figure style="position: relative; text-align: center; margin: 0 auto; width: 30%;">
         <figcaption>
-          <b>Left:</b> Node features, indicated as numbers within the nodes, <i>before</i> the convolution.
+          Convolutions in CNNs are inherently localized.
+          Neighbours participating in the convolution at the center pixel are highlighted in gray.
         </figcaption>
       </figure>
-      <figure style="width: 25%; margin-left: 30%; margin-right: 10%; text-align: center;">
+      <div id="observablehq-svg-35509536"
+        style="text-align: center;"></div>
+      <figure style="position: relative; text-align: center; margin-left: auto; margin-right: auto; margin-top: 1%;; width: 40%;">
         <figcaption>
-          <b>Right:</b> Node features, indicated as numbers within the nodes, <i>after</i> the convolution.
+          GNNs can perform localized convolutions mimicking CNNs.
+          Hover over a node to see its immediate neighbourhood highlighted.
+          The structure of this neighbourhood changes from node to node.
         </figcaption>
       </figure>
+
+      <script type="module">
+      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+      import define from "https://api.observablehq.com/@ameyasd/neighbourhoods-for-cnns-and-gnns.js?v=3";
+      new Runtime().module(define, name => {
+        if (name === "cnn_svg") return new Inspector(document.querySelector("#observablehq-cnn_svg-35509536"));
+        if (name === "svg") return new Inspector(document.querySelector("#observablehq-svg-35509536"));
+        return ["adjust_dimensions","reset_nodes","highlight_nodes","get_node_position","remove_old_arrows","draw_arrows_to_updated_node","add_interactivity","on_selected_node_change","updated_node_position"].includes(name);
+      });
+      </script>
     </figure>
     <p>
-      The next sections will explain these in more detail.
+      We begin by introducing the idea of constructing polynomial filters over node neighbourhoods,
+      much like how CNNs compute localized filters over neighbouring pixels.
+      Then, we will see how more recent approaches extend on this idea with more powerful mechanisms.
+      Finally, we will discuss alternative methods
+      that can use 'global' graph-level information for computing node representations.
     </p>
 
-    <h2 id="spectral">
-      Spectral Convolutions      
+    <h2 id="polynomial-filters">
+      Polynomial Filters on Graphs
     </h2>
-      <h3>
+      <h3 style="margin-top: 0;">
         The Graph Laplacian
       </h3>
       <p>
-        Given a graph $G$, we denote its $0-1$ adjacency matrix by $A$, and we can construct a diagonal degree matrix $D$ where:      
+        Given a graph $G$, let us fix an arbitrary ordering of the $n$ nodes of $G$.
+        We denote the $0-1$ adjacency matrix of $G$ by $A$, we can construct the diagonal degree matrix $D$ of $G$ as:      
       </p>
       <div style="position: relative; display: flex;">
         <d-math block>
-          D_i = \sum_j A_{ij}.
+          D_v = \sum_u A_{vu}.
         </d-math>
         <figure id="diagonal-degree-matrix">
           <figcaption style="margin-left: 15%; margin-top: -2%;">
-            The degree of vertex $i$ is the number of out-going edges from $i$.
+            The degree of node $v$ is the number of edges incident at $v$.
           </figcaption>
         </figure>
       </div>
       <p>
-        Then, the graph Laplacian $L$ is defined as:
+        where $A_{vu}$ denotes the entry in the row corresponding to $v$ and the column corresponding to $u$
+        in the matrix $A$. We will use this notation throughout this section.
+      </p>
+      <p>
+        Then, the graph Laplacian $L$ is the square $n \times n$ matrix defined as:
         <d-math>
           L = D - A.
         </d-math>
@@ -495,378 +529,229 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           The Laplacian $L$ depends only on the structure of the graph $G$, not on any node features.
         </figcaption>
       </figure>
-      <p class="shaded-figure" style="padding-left: 1em;">
-        <b>Key Idea:</b>
-        Given a feature function $x$, which assigns real-valued features to nodes in $G$,
-        the Laplacian $L$ allows us to quantify how smooth $x$ is, with respect to $G$.
-      </p>
-      <p>
-        How?
-      </p>
-      <p>
-        After fixing an ordering over the $n$ nodes in $G$, we can think of any feature function $x$ over $G$ as a vector in $\mathbb{R}^n$,
-        by just collecting each of the values $x_i$ assigned to node $i$ in $G$:
-      </p>
-        <figure id="node-order-vector" class="l-body">
-          <img src="images/node-order-vector.svg" style="margin-right: 10%; margin-left: 10%; margin-bottom: 1%; width: 80%;"
-               alt="Fixing a node order and collecting all node features into a single vector.">
-          <figcaption style="text-align: center;">
-            Fixing a node order (indicated by the alphabets) and collecting all node features into a single vector $x$.
-          </figcaption>
-        </figure>
-      <span>
-        We will also normalize $x$ such that $\sum_{i = 1}^n x_i^2 = 1$. 
-        If we look at the following quantity involving $L$: <d-footnote><d-math>R_L</d-math> is formally called the <a href="https://en.wikipedia.org/wiki/Rayleigh_quotient">Rayleigh quotient</a>.</d-footnote> 
-      </span>
-      <d-math block>
-        R_L(x) = \frac{x^T L x}{x^T x} = \frac{\sum_{(i, j) \in E} (x_i - x_j)^2}{\sum_i x_i^2} = \sum_{(i, j) \in E} (x_i - x_j)^2.
-      </d-math>
-      <p>
-        we immediately see that feature vectors $x$ that assign similar values to 
-        adjacent nodes in $G$ (i.e., are smooth!), would have smaller values of $R_L(x)$.
-      </p>
-      <span>
-        $L$ is a real, symmetric matrix, which means it has all real eigenvalues $\lambda_1 \leq \ldots \leq \lambda_{n}$. <d-footnote>An eigenvalue $\lambda$ of a matrix $A$ is a value
-        satisfying the equation $Au = \lambda u$ for a certain vector $u$, called an eigenvector.</d-footnote>
-        Further, the corresponding eigenvectors $u_1, \ldots, u_{n}$ can be taken to be orthonormal:
-      </span>
-        <d-math block style="text-align: center;">
-          u_{k_1}^T u_{k_2} =
-          \begin{cases}
-            1 \quad \text{ if } {k_1} = {k_2}. \\
-            0 \quad \text{ if } {k_1} \neq {k_2}.
-          \end{cases}
-        </d-math>
-      <span>
-        It turns out that these eigenvectors of $L$ are successively less smooth, as $R_L$ indicates:
-        <d-footnote>This is the <a href="https://en.wikipedia.org/wiki/Min-max_theorem">min-max theorem for eigenvalues.</a></d-footnote>
-      </span>
-        <figure id="min-max" style="position: relative; margin: 0;">
-          <d-math block>
-            \underset{x, \ x \perp \{u_1, \ldots, u_{i - 1}\}}{\text{argmin}} R_L(x) = u_i.
-            \qquad
-            \qquad
-            \qquad
-            \min_{x, \ x \perp \{u_1, \ldots, u_{i - 1}\}} R_L(x) = \lambda_i.
-          </d-math>
-        </figure>
-      <span>
-        The set of eigenvalues of $L$ are called its 'spectrum', hence the name!
-        We denote the 'spectral' decomposition of $L$ as:
-      </span>
-        <d-math block>
-          L = U_n \Lambda U_n^T.
-        </d-math>
-      <span>
-        where $\Lambda$ is the diagonal matrix of sorted eigenvalues,
-        and for any $m \leq n$, $U_m$ denotes the matrix of the first $m$ eigenvectors (corresponding to the smallest $m$ eigenvalues):
-      </span>
-        <d-math block>
-          \Lambda = \begin{bmatrix}
-                        \lambda_{1} &        & \\
-                                    & \ddots & \\
-                                    &        & \lambda_{n}
-                    \end{bmatrix}
-          \qquad
-          \qquad
-          \qquad
-          \qquad
-          U_m = \begin{bmatrix}  \\ u_1 \ \cdots \ u_m \\ \end{bmatrix}.
-        </d-math>
-      <span>
-        The orthonormality condition between eigenvectors gives us that $U_m^T U_m = I_m$, the identity matrix.
-      </span>
-      <span>
-        As these $n$ eigenvectors form a basis for $\mathbb{R}^n$,
-        any feature function $x$ can be represented as a linear combination of these eigenvectors:
-      </span>
-        <d-math block>
-          x = \sum_{i = 1}^n \hat{x_i} u_i = U_n \hat{x}.
-        </d-math>
-        <span>
-          The orthonormality condition allows us to state:
-        </span>
-        <d-math block>
-          x = U_n \hat{x} \quad \Longleftrightarrow \quad U_n^T x = \hat{x}.
-        </d-math>
-      <p>
-        This pair of equations allows us to interconvert between the 'natural' representation $x$ and the 'spectral' representation $\hat{x}$.
-        Indeed, we are not only limited to feature functions $x$! We can represent any vector $w \in \mathbb{R^n}$ in the spectral basis:
-        in particular, the weights of filters we want to convolve with! 
-      </p>
-      <p>
-        What happens if we limit ourselves to the first $m$ eigenvectors, where $m$ is much smaller than $n$?
-        Then, we will only be able to represent feature functions which are linear combinations of the first $m$ eigenvectors.
-        The first $m$ eigenvectors are the smoothest set of $m$ orthonormal vectors (by the <a href="#min-max">min-max theorem</a> above);
-        hence, their linear combinations will be smooth as well.
-        Thus, we have incorporated a smoothness prior!
-      </p>
-      <p>
-        The visualization below shows the relationship between the natural and spectral representations of $x$, on an $8 \times 8$ image interpreted as a graph:
-        by assigning each pixel to a node, and drawing edges to nodes corresponding to adjacent pixels.
-        In this formulation, a pixel can have either $3, 5,$ or $8$ neighbours, depending on its location within the image grid.
-      </p>
-      <p>
-        Since the corresponding graph has $64$ nodes, its Laplacian will have $64$ eigenvectors. In the interest of space, we only show linear combinations of the first $10$ eigenvectors below:
-        notice that many intricate patterns can still be made!
-      </p>
 
-      <div class="shaded-figure l-screen" id="spectral-conversions" style="grid-column: page;">
-        <div class="spec_conv_buttons_display l-page"></div>
-        <div class="viewof-num_eigenvectors" style="text-align: center; margin-top: 1.5em;"></div>
-        <div class="figcaptions"></div>
-        <div class="spec_conv_main_div l-page" style="padding-left: 80px;"></div>
-        <div class="spec_color_scale" style="position: relative; left: 116px; top: -200px;"></div>
-        <div class="spec_conv_sliders l-page"></div>
-        <div class="spec_input_slider_watch" style="display: none;"></div>
-      </div>
-      <figure>
-        <figcaption>
-          Move the sliders to change the spectral representation $\hat{x}$ (right), and see how $x$ itself changes on the image (left).
-          Note how the first eigenvectors are much 'smoother' than the later ones.
+      <h3>
+        Polynomials of the Laplacian
+      </h3>
+      <p>
+        Now that we have understood what the graph Laplacian is,
+        we can build polynomials of the form:
+        <d-math block>
+          p_w(L) = w_0 I_n + w_1 L + w_2 L^2 + \ldots + w_d L^d = \sum_{i = 0}^d w_i L^i.
+        </d-math>
+        Each polynomial of this form can alternately be represented by
+        its vector of coefficients $w = [w_0, \ldots, w_d]$.
+        Note that for every $w$, $p_w(L)$ is an $n \times n$ matrix, just like $L$.
+      </p>
+      <p>
+        These polynomials can be thought of as the equivalent of 'filters' in CNNs,
+        and the coefficients $w$ as the weights of the 'filters'.
+      </p>
+      <p>
+        For ease of exposition, we will focus on the case where nodes have one-dimensional features:
+        each of the $x_v$ for $v \in V$ is just a real number. 
+        The same ideas hold when each of the $x_v$ are higher-dimensional vectors, as well.
+      </p>
+      <p>
+        Using the previously chosen ordering of the nodes,
+        we can stack all of the node features $x_v$
+        to get a vector $x \in \mathbb{R}^n$.
+      </p>
+      <figure id="node-order-vector" class="l-body">
+        <img src="images/node-order-vector.svg" style="margin-right: 10%; margin-left: 10%; margin-bottom: 1%; width: 80%;"
+              alt="Fixing a node order and collecting all node features into a single vector.">
+        <figcaption style="text-align: center;">
+          Fixing a node order (indicated by the alphabets) and collecting all node features into a single vector $x$.
         </figcaption>
       </figure>
-
-      <script type="module">
-      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-      import define from "https://api.observablehq.com/d/0b26065713568858.js?v=3";
-      (new Runtime).module(define, name => {
-        if (name === "spec_conv_buttons_display") return Inspector.into(".spec_conv_buttons_display")();
-        if (name === "viewof num_eigenvectors") return Inspector.into(".viewof-num_eigenvectors")();
-        if (name === "figcaptions") return Inspector.into(".figcaptions")();
-        if (name === "spec_conv_main_div") return Inspector.into(".spec_conv_main_div")();
-        if (name === "spec_color_scale") return Inspector.into(".spec_color_scale")();
-        if (name === "spec_conv_sliders") return Inspector.into(".spec_conv_sliders")();
-        if (name === "spec_input_slider_watch") return Inspector.into(".spec_input_slider_watch")();
-        return ["draw_dyn_graph","input_slider_watch","texed_letters","figcaption_spec_2","svg","draw_img","draw_static_graph"].includes(name) || null;
-      });
-      </script>
-
-      <h3>
-        Analogies with Fourier Analysis
-      </h3>
       <p>
-        The spectral decomposition of features is closely related to the Fourier decomposition of images into underlying frequencies!
-      </p>
-        <ul>
-          <li>
-            Lower frequency components correspond to smoother features, since they do not vary much across adjacent pixels.
-          </li>
-          <li>
-            Higher frequency components correspond to less smooth features, since they vary more across adjacent pixels.
-          </li> 
-        </ul>
-      <p>
-        Thus, convolution in the spectral-domain of graphs can be thought of as the generalization of convolution in the frequency-domain of images.
-      </p>
-      <p>
-        We encourage you to play around with the previous <a href="#spectral-conversions">visualization</a> to solidify this intuition:
-        the first eigenvectors don't vary much across the grid, while the later eigenvectors do.
-      </p>
-  
-      <h3>Embedding Computation</h3>
-      <p>
-        We now have the background to understand spectral convolutions (first introduced in the context of neural networks in <d-cite key="spectral-networks"></d-cite>),
-        and how they can be used to compute embeddings/feature representations of nodes.
-      </p>
-      <p>
-        First, we fix an ordering of the nodes in $G$. This gives us $A$ and $L$, allowing us to compute $U_m$.
-        Finally, we define:
-      </p>
-        <div class="spec_figure_init" role="img" aria-label="Equations defining spectral convolutions."></div>
-        <div class="spec_figure"></div>
-        <div class="style"></div>
-
-        <script type="module">
-        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-        import define from "https://api.observablehq.com/d/7f0ea3801bf85fd8.js?v=3";
-        (new Runtime).module(define, name => {
-          if (name === "spec_figure_init") return Inspector.into(".spec_figure_init")();
-          if (name === "spec_figure") return Inspector.into(".spec_figure")();
-          if (name === "style") return Inspector.into(".style")();
-        });
-        </script>
-      <p>
-        For clarity, we have considered the case where node features $h^{(k)}$ at each layer $k$ are just real numbers.
-        The procedure above generalizes easily to the case where each $h^{(k)} \in \mathbb{R}^{d_k}$, as well: see <d-cite key="spectral-networks"></d-cite> for details.
-      </p>
-
-      <h3>
-        Spectral Convolutions are Node-Order Invariant
-      </h3>
-      <p>
-        In our calculations above, we fixed a node-order, and used the same node-order throughout all calculations.
-        What if we chose a different node-order?
-        We can think of this new node-order as a permutation of the original node-order,
-        and represent this permutation by the <a href="https://en.wikipedia.org/wiki/Permutation_matrix">permutation matrix</a> $P$.
-        Under this permutation, the following transformations occur:
+        Once we have constructed the feature vector $x$,
+        we can define its convolution with a polynomial filter $p_w$ as:
+        <d-math block>
+          x' = p_w(L) \ x
+        </d-math>
+        To understand how the coefficients $w$ affect the convolution,
+        let us begin by considering the 'simplest' polynomial:
+        when $w_0 = 1$ and all of the other coefficients are $0$.
+        In this case, $x'$ is just $x$:
+        <d-math block>
+          x' = p_w(L) \ x = \sum_{i = 0}^d w_i L^ix = w_0 I_n x = x.
+        </d-math>
+        Now, if we increase the degree, and consider the case where
+        instead $w_1 = 1$ and and all of the other coefficients are $0$.
+        Then, $x'$ is just $Lx$, and so:
         <d-math block>
           \begin{aligned}
-            x &\to Px. \\
-            A &\to PAP^T. \\
-            L &\to PL. \\
-            U_m &\to PU_m.
+           x'_v = (Lx)_v &= L_v x \\ 
+                         &= \sum_{u \in G} L_{vu} x_u \\ 
+                         &= \sum_{u \in G} (D_{vu} - A_{vu}) x_u \\ 
+                         &= D_v \ x_v - \sum_{u \in \mathcal{N}(v)} x_u
           \end{aligned}
         </d-math>
-        which implies that, for the first iteration of the embedding computation:
-        <d-math block>
-          \begin{aligned}
-            \hat{x} &\to \left(PU_m\right)^T (Px) = U_m^T x = \hat{x}. \\
-            \hat{w} &\to \left(PU_m\right)^T (Pw) = U_m^T w = \hat{w}. \\
-            \hat{g} &\to \hat{g}. \\
-            g &\to Pg. \\
-            h &\to Ph. 
-          \end{aligned}
-        </d-math>
-        We see that the spectral quantities $\hat{x}, \hat{w}$ and $\hat{g}$ are un-affected by permutations of the nodes.
+        We see that the features at each node $v$ are combined
+        with the features of its immediate neighbours $u \in \mathcal{N}(v)$.
       </p>
-      <p>    
-        Finally, we have that the features $h^{(1)}$ after the first iteration of embedding computation are permuted exactly as given by $P$.
-        Redoing this calculation for the next iterations as well, we see that this holds for $h^{(2)}, \ldots, h^{(K)}$ as well, which is what we wanted!
-      </p>
-
-    <h2 id="global-to-local">
-      From Global to Local Convolutions
-    </h2>
-    <p>
-      While the theory of spectral convolutions is mathematically well-grounded,
-      there are some key disadvantages that we must talk about:
-    </p>
-      <ul>
-        <li>
-          We need to compute the eigenvector matrix $U_m$ from $L$. For large graphs, this becomes quite infeasible.
-        </li>
-        <li>
-          Even if we can compute $U_m$, global convolutions themselves are inefficient to compute, because of the repeated
-          multiplications with $U_m$ and $U_m^T$.
-        </li>
-        <li>
-          The learned filters are specific to the input graphs. This is because they are represented in terms of the input graph Laplacian $L$.
-          This means they don't generalize to unseen graphs, preventing inductive learning!
-        </li>
-      </ul>
-
       <p>
-        ChebNet<d-cite key="chebnet"></d-cite> was one of the first approaches to deal with these difficulties.
-      </p>
-
-      <p class="shaded-figure" style="padding-left: 1em;">
-        <b>Key Idea:</b>
-        Instead of representing filters as weights $\hat{w}$ in the spectral domain, and dealing with repeated
-        conversions between the spectral and natural domains, convolve directly in the natural domain.
-      </p>
-
-      <p>
-        To motivate this, let us look at the effect of multiplying a feature function $x$ by the Laplacian $L$ on its spectral representation $\hat{x}$:
-      </p>
+        At this point, a natural question to ask is:
+        How does the degree $d$ of the polynomial influence the behaviour of the convolution?
+        Indeed, it is not too hard to show that:
+        <d-footnote>This is Lemma 5.2 from <d-cite key="wavelets-graphs"></d-cite>.</d-footnote>
         <d-math block>
-          \widehat{Lx} = U_n^T \left( Lx \right) = U_n^T \left(U_n \Lambda U_n^T\right) x = \left(U_n^T U_n \right) \Lambda \left(U_n^T x\right) = \Lambda \hat{x}.
+          \text{dist}_G(v, u) > i \quad \Longrightarrow \quad L_{vu}^i = 0.
         </d-math>
-      <p>
-        By multiplying $x$ by $L$, its spectral representation $\hat{x}$ gets element-wise multiplied by the eigenvalues!
-        Recall that this element-wise multiplication in the spectral domain was exactly what Spectral Networks were doing, but more explicitly.
-      </p>
-      <span>
-        Polynomials $p(L)$ of the Laplacian have a similar effect on the spectral representations:
-      </span>
-        <d-math block>
-          \widehat{p(L)x} = p(\Lambda) \hat{x}.
-        </d-math>
-      <span>
-        And now, a natural way to represent filters $w$ is just as polynomials $p_w$, where the weight $w_i$ is the coefficient of $L^i$:
-      </span>
-      <d-math block>
-        p_w(L) = \sum_{i = 1}^K w_i L^i
-      </d-math>
-      <span>
-        Does the degree $K$ influence the behaviour of the filter? Of course! 
-        It is not too hard to show that: <d-footnote>This is Lemma 5.2 from <d-cite key="wavelets-graphs"></d-cite>!</d-footnote>
-      </span>
-      <d-math block>
-        \text{dist}_G(v, u) > d \quad \Longrightarrow \quad L_{vu}^d = 0.
-      </d-math>
-      <span>
-        which implies, when we convolve $x$ with $p_w(L)$ to get $x'$:
-      </span>
+      
+        This implies, when we convolve $x$ with $p_w(L)$ of degree $d$ to get $x'$:
         <d-math block>
           \begin{aligned}
           x'_v = (p_w(L)x)_v  &= (p_w(L))_v x \\
-              &= \sum_{i = 1}^K w_i L^i_v x \\
-              &= \sum_{i = 1}^K w_i \quad \sum_{u \in G} \enspace	\; L^i_{vu} x_u \\
-              &= \sum_{i = 1}^K w_i \sum_{u \in G \atop \text{dist}_G(v, u) \leq i} L^i_{vu} x_u.
+              &= \sum_{i = 0}^d w_i L_v^i x \\
+              &= \sum_{i = 0}^d w_i \sum_{u \in G} L_{vu}^i x_u \\
+              &= \sum_{i = 0}^d w_i \sum_{u \in G \atop \text{dist}_G(v, u) \leq i} L_{vu}^i x_u.
           \end{aligned}
         </d-math>
       <p>
-        Effectively, the convolution at node $v$ occurs only with nodes $u$ which are not more than $K$ hops away.
-        Thus, the filters we will learn are localized! The degree of the localization is governed completely by $K$.
+        Effectively, the convolution at node $v$ occurs only with nodes $u$ which are not more than $d$ hops away.
+        Thus, these polynomial filters are localized. The degree of the localization is governed completely by $d$.
       </p>
       <p>
-        To help you understand these 'polynomial-based' convolutions better, we have created the visualization below!
-        Vary the polynomial coefficients to see how the result $x'$ of the convolution changes.
-        To emphasize the spectral effects of the convolution, the two plots on the bottom display the spectral representations $\hat{x}$ of 
-        $x$, and $\hat{x'}$ of $x'$ respectively. Note how higher-degree polynomials accentuate the eigenvectors corresponding to the larger eigenvalues more!
+        To help you understand these 'polynomial-based' convolutions better, we have created the visualization below.
+        Vary the polynomial coefficients and the input grid $x$ to see how the result $x'$ of the convolution changes.
+        The grid under the arrow shows the equivalent convolutional kernel applied at the highlighted pixel in $x$ to get
+        the resulting pixel in $x'$.
+        The kernel corresponds to the row of $p_w(L)$ for the highlighted pixel.
+        Note that even after adjusting for position,
+        this kernel is different for different pixels, depending on their position within the grid.
       </p>
         <div class="shaded-figure l-screen" id="polynomial-convolutions" style="grid-column: page;"
-          role="img" aria-label="An interactive visualization defining polynomial convolutions on an input grid, showing the spectral representations of the filter.">
-          <div class="grid_buttons_display" style="margin-bottom: -10px;"></div>
-          <div class="poly_color_scale" style="display: flex; justify-content: center; margin-bottom: 30px;"></div>
-          <div class="poly_figcaptions" style="position: relative; top: -50px;"></div>
-          <div class="poly_conv_main_div"></div>
-          <div class="viewof-laplacian_type" style="text-align: center; margin-top: 20px;"></div>
-          <div class="polynomial_display" style="margin-top: 10px;"></div>
-          <div class="poly_conv_sliders"></div>
-          <div class="reset_coeffs_button_display" style="margin-top: 25px; margin-bottom: -25px;"></div>
-          <div class="poly_input_slider_watch" style="display: none;"></div>
-          
+          role="img" aria-label="An interactive visualization showing polynomial convolutions on an input grid.">
+          <div id="observablehq-grid_buttons_display-05850d43" style="margin-bottom: 1em;"></div>
+          <div id="observablehq-poly_color_scale-05850d43" style="display: flex; justify-content: center; margin-bottom: 30px;"></div>
+          <div id="observablehq-poly_figcaptions-05850d43" style="position: relative; top: -50px;"></div>
+          <div id="observablehq-poly_conv_main_div-05850d43"></div>
+          <div id="observablehq-polynomial_display-05850d43" style="margin-top: 2em;"></div>
+          <div id="observablehq-poly_conv_sliders-05850d43"></div>
+          <div id="observablehq-viewof-laplacian_type-05850d43" style="text-align: center; margin-top: 2em;"></div>
+          <div id="observablehq-reset_coeffs_button_display-05850d43" style="margin-top: 25px; margin-bottom: 0;"></div>
+          <div id="observablehq-poly_input_slider_watch-05850d43" style="display: none;"></div>
+          <div id="observablehq-highlight_selected_cell-05850d43" style="display: none;"></div>
+          <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/cleaner-interactive-graph-polynomial-convolutions">Interactive Graph Polynomial Convolutions by Ameya Daigavane</a></p> -->
+
           <script type="module">
-            import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-            import define from "https://api.observablehq.com/d/eff4b12fb88e47ba.js?v=3";
-            (new Runtime).module(define, name => {
-              if (name === "grid_buttons_display") return Inspector.into(".grid_buttons_display")();
-              if (name === "poly_color_scale") return Inspector.into(".poly_color_scale")();
-              if (name === "poly_figcaptions") return Inspector.into(".poly_figcaptions")();
-              if (name === "poly_conv_main_div") return Inspector.into(".poly_conv_main_div")();
-              if (name === "viewof laplacian_type") return Inspector.into(".viewof-laplacian_type")();
-              if (name === "polynomial_display") return Inspector.into(".polynomial_display")();
-              if (name === "poly_conv_sliders") return Inspector.into(".poly_conv_sliders")();
-              if (name === "reset_coeffs_button_display") return Inspector.into(".reset_coeffs_button_display")();
-              if (name === "poly_input_slider_watch") return Inspector.into(".poly_input_slider_watch")();
-              return ["chosen_laplacian","laplacian_symbol","poly","polynomial_display_expanded","upd_feature","upd_img","upd_spectral_coeffs","draw_updated_img","y_axis_lim_upd","draw_dyn_graph_upd","y_axis_spacing_upd","draw_static_graph_upd","svg","draw_bottom_line","draw_arrow","draw_original_img","draw_static_graph_orig","draw_dyn_graph_orig"].includes(name) || null;
-            });
+          import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import define from "https://api.observablehq.com/d/34992a340dbdb759.js?v=3";
+          new Runtime().module(define, name => {
+            if (name === "grid_buttons_display") return new Inspector(document.querySelector("#observablehq-grid_buttons_display-05850d43"));
+            if (name === "poly_color_scale") return new Inspector(document.querySelector("#observablehq-poly_color_scale-05850d43"));
+            if (name === "poly_figcaptions") return new Inspector(document.querySelector("#observablehq-poly_figcaptions-05850d43"));
+            if (name === "poly_conv_main_div") return new Inspector(document.querySelector("#observablehq-poly_conv_main_div-05850d43"));
+            if (name === "viewof laplacian_type") return new Inspector(document.querySelector("#observablehq-viewof-laplacian_type-05850d43"));
+            if (name === "polynomial_display") return new Inspector(document.querySelector("#observablehq-polynomial_display-05850d43"));
+            if (name === "poly_conv_sliders") return new Inspector(document.querySelector("#observablehq-poly_conv_sliders-05850d43"));
+            if (name === "highlight_selected_cell") return new Inspector(document.querySelector("#observablehq-highlight_selected_cell-05850d43"));
+            if (name === "reset_coeffs_button_display") return new Inspector(document.querySelector("#observablehq-reset_coeffs_button_display-05850d43"));
+            if (name === "poly_input_slider_watch") return new Inspector(document.querySelector("#observablehq-poly_input_slider_watch-05850d43"));
+            return ["svg","draw_bottom_line","draw_arrow","draw_original_img","draw_convolutional_kernel","draw_updated_img","draw_static_graph_orig","draw_static_graph_upd","draw_dyn_graph_orig","draw_dyn_graph_upd"].includes(name);
+          });
           </script>
         </div>
         <figure>
           <figcaption>
-            Click on the input grid (top left, representing $x$) to toggle pixel values between $0$ (white) and $1$ (blue).
-            To randomize the input grid, press 'Randomize Grid'. To reset all pixels to $0$, press 'Reset Grid'.
-            Use the sliders at the bottom to change the coefficients of $p_w$. To reset all coefficients of $p_w$ to $0$, press 'Reset Coefficients.'
+            <p>
+              Hover over a pixel in the input grid (left, representing $x$)
+              to highlight it and see the equivalent convolutional kernel
+              for that pixel under the arrow.
+              The result $x'$ of the convolution is shown on the right:
+              note that different convolutional kernels are applied at different pixels,
+              depending on their location.
+            </p>
+            <p>
+              Click on the input grid to toggle pixel values between $0$ (white) and $1$ (blue).
+              To randomize the input grid, press 'Randomize Grid'. To reset all pixels to $0$, press 'Reset Grid'.
+              Use the sliders at the bottom to change the coefficients $w$.
+              To reset all coefficients $w$ to $0$, press 'Reset Coefficients.'
+            </p>
           </figcaption>
         </figure>
+      <h3 id="poly-filters-equivariance">
+        Polynomial Filters are Node-Order Equivariant
+      </h3>
+      <p>
+        The polynomial filters we considered here are actually independent of the ordering of the nodes.
+        This is particularly easy to see when the degree of the polynomial $p_w$ is $1$:
+        where each node's feature is aggregated with the sum of its neighbour's features.
+        Clearly, this sum does not depend on the order of the neighbours.
+        A similar proof follows for higher degree polynomials:
+        the entries in the powers of $L$ are equivariant to the ordering of the nodes.
+      </p>
+      <div class="math-details shaded-figure">
+        <b>Details for the Interested Reader</b>
+        <p>
+          As above, let's assume an arbitrary node-order over the $n$ nodes of our graph.
+          Any other node-order can be thought of as a permutation of this original node-order.
+          We can represent any permutation by a
+          <a href="https://en.wikipedia.org/wiki/Permutation_matrix">permutation matrix</a> $P$.
+          $P$ will always be an orthogonal $0-1$ matrix:
+          <d-math block>
+            PP^T = P^TP = I_n.
+          </d-math>
+          Then, we call an algorithm $f$ node-order equivariant iff for all permutations $P$:
+          <d-math block>
+            f(Px) = P f(x).
+          </d-math>
+
+          When switching to the new node-order using the permutation $P$,
+          the quantities below transform in the following way:
+          <d-math block>
+            \begin{aligned}
+              x &\to Px \\
+              L &\to PLP^T \\
+              L^i &\to PL^iP^T
+            \end{aligned}
+          </d-math>
+          and so, for the case of polynomial filters, we can see that:
+          <d-math block>
+            \begin{aligned}
+              f(Px) & = \sum_{i = 0}^d w_i (PL^iP^T) (Px) \\
+                    & = P \sum_{i = 0}^d w_i L^i x' \\
+                    & = P f(x).
+            \end{aligned}
+          </d-math> 
+          as needed.
+        </p>
+      </div>
+
+      <h3 id="chebnet">
+        ChebNet
+      </h3>
       <span>
-        ChebNet takes this idea even further, by instead looking at polynomials of the form:
+        ChebNet refines this idea of polynomial filters by looking at polynomial filters of the form:
       </span>
         <d-math block>
-          p_w(L) = \sum_{i = 1}^K w_i T_i(\tilde{L})
+          p_w(L) = \sum_{i = 1}^d w_i T_i(\tilde{L})
         </d-math>
       <span>
-        where $T_i$ is the degree-$i$ <a href="https://en.wikipedia.org/wiki/Chebyshev_polynomials">Chebyshev polynomial of the first kind</a> and
-        $\tilde{L}$ is the normalized Laplacian:
+        where $T_i$ is the degree-$i$
+        <a href="https://en.wikipedia.org/wiki/Chebyshev_polynomials">Chebyshev polynomial of the first kind</a> and
+        $\tilde{L}$ is the normalized Laplacian defined using the largest eigenvalue of $L$:
+        <d-footnote>
+          We discuss the eigenvalues of the Laplacian $L$ in more detail in <a href="#spectral">a later section</a>.
+        </d-footnote>
       </span>
         <d-math block>
           \tilde{L} = \frac{2L}{\lambda_{\max}(L)} - I_n.
         </d-math> 
       <p>
-        What's the motivation here?
+        What is the motivation behind these choices?
       </p>
         <ul>
           <li>
-            $L$ has eigenvalues in the range $[0, \lambda_{\max}]$.
-            When $\lambda_{\max} > 1$, the entries in powers of $L$ rapidly increase in size.
+            $L$ is actually positive semi-definite: all of the eigenvalues of $L$ are not lesser than $0$.
+            If $\lambda_{\max}(L) > 1$, the entries in the powers of $L$ rapidly increase in size.
             $\tilde{L}$ is effectively a scaled-down version of $L$, with eigenvalues guaranteed to be in the range $[-1, 1]$.
             This prevents the entries of powers of $\tilde{L}$ from blowing up.
             Indeed, in the <a href="#polynomial-convolutions">previous visualization</a> above: we restrict the higher-order coefficients
             when the unnormalized Laplacian $L$ is selected, but allow larger values when the normalized Laplacian $\tilde{L}$ is selected,
-            in order to show the result $\hat{x'}$ on the same color scale.
+            in order to show the result $x'$ on the same color scale.
           </li>
           <li>
             The Chebyshev polynomials have certain interesting properties that make interpolation more numerically stable.
@@ -879,33 +764,43 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         Embedding Computation
       </h3>
         <p>
-          For consistency, we list the embedding computation for ChebNet (again, with one-dimensional node features) below.
-          Note the lack of any 'spectral' quantities!
+          We now describe how we can build a graph neural network
+          by stacking ChebNet (or any polynomial filter) layers
+          one after the other with non-linearities,
+          much like a standard CNN.
+          In particular, if we have $K$ different polynomial filter layers,
+          the $k^{\text{th}}$ of which has its own learnable weights $w^{(k)}$,
+          we would perform the following computation:
         </p>
-          <div class="cheb_figure" role="img" aria-label="Equations defining ChebNet."></div>
-          <div class="style"></div>
+        <div id="observablehq-cheb_figure-fa1f970f" role="img" aria-label="Equations defining ChebNet."></div>
+        <div id="observablehq-style-fa1f970f"></div>
+        <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/updated-chebnet-equations">(Updated) ChebNet Equations by Ameya Daigavane</a></p> -->
+        
+        <script type="module">
+        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+        import define from "https://api.observablehq.com/@ameyasd/updated-chebnet-equations.js?v=3";
+        new Runtime().module(define, name => {
+          if (name === "cheb_figure") return new Inspector(document.querySelector("#observablehq-cheb_figure-fa1f970f"));
+          if (name === "style") return new Inspector(document.querySelector("#observablehq-style-fa1f970f"));
+        });
+        </script>
+        <p>
+          Note that these networks
+          reuse the same filter weights across different nodes,
+          exactly mimicking weight-sharing in Convolutional Neural Networks (CNNs)
+          which reuse weights for convolutional filters across a grid.
+        </p>
 
-          <script type="module">
-          import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-          import define from "https://api.observablehq.com/d/42b43a915865040a.js?v=3";
-          (new Runtime).module(define, name => {
-            if (name === "cheb_figure") return Inspector.into(".cheb_figure")();
-            if (name === "style") return Inspector.into(".style")();
-          });
-          </script>
-      <p>
-        In conclusion, ChebNet allows us to learn localized filters, and learn them efficiently!
-      </p>
-
-    <h2 id="spatial">
-      Modern Spatial Convolutions
+    <h2 id="modern-gnns">
+      Modern Graph Neural Networks
     </h2>
       <p>
         ChebNet was a breakthrough in learning localized filters over graphs,
-        and it motivated many to think of graph convolutions from a different perspective:
+        and it motivated many to think of graph convolutions from a different perspective.
       </p>
       <span>
-        Let's go back to the effect of multiplying $x$ by $L$, and focus on a particular vertex $v$:
+        We return back to the result of convolving $x$ by the polynomial kernel $p_w(L) = L$,
+        focussing on a particular vertex $v$:
       </span>
         <d-math block>
           \begin{aligned}
@@ -915,20 +810,22 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
                   &= D_v \  x_v - \sum_{u \in \mathcal{N}(v)} x_u
           \end{aligned}
         </d-math>
-      <p>
-        As expected from the degree <d-footnote>$p_w(L) = L$ is a degree-$1$ polynomial.</d-footnote>, this is a $1$-hop localized convolution.
+      <p> 
+        As we noted before, this is a $1$-hop localized convolution.
         But more importantly, we can think of this convolution as arising of two steps:
       </p>
         <ul>
           <li>Aggregating over immediate neighbour features $x_u$.</li>
           <li>Combining with the node's own feature $x_v$.</li>
         </ul>
-      <p>
-        This is precisely the idea behind modern spatial convolutions: allowing different kinds of 'aggregation' and 'combination' steps,
-        beyond what is possible using 'Laplacian polynomial' multiplication from ChebNet.
+      <p class="shaded-figure" style="padding-left: 1em;">
+        <b>Key Idea:</b>
+        What if we consider different kinds of 'aggregation' and 'combination' steps,
+        beyond what are possible using polynomial filters?
       </p>
       <p>
-        By ensuring that the aggregation is node-order invariant, the overall convolution becomes node-order invariant.
+        By ensuring that the aggregation is node-order equivariant,
+        the overall convolution becomes node-order equivariant.
       </p>
       <p>
         These convolutions can be thought of as 'message-passing' between adjacent nodes:
@@ -943,34 +840,35 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         Embedding Computation
       </h3>
         <p>
-          Spatial convolutions form the backbone of most popular GNN architectures in recent times.
-          Let's look at some of the most popular ones!
+          Message-passing forms the backbone of many GNN architectures today.
+          We describe the most popular ones in depth below:
         </p>
-          <ul style="margin-bottom: 0;">
+          <ul>
             <li>Graph Convolutional Networks (GCN)<d-cite key="semi-supervised-gcn"></d-cite></li>
             <li>Graph Attention Networks (GAT)<d-cite key="gat"></d-cite></li>
             <li>Graph Sample and Aggregate (GraphSAGE)<d-cite key="graphsage"></d-cite></li>
             <li>Graph Isomorphism Network (GIN)<d-cite key="gin"></d-cite></li>
           </ul>
-        <p style="margin-bottom: 0;">
-          Click on the different tabs below to see the definitions of the different models.
-        </p>
+        
+        <div class="shaded-figure l-screen" id="modern-gnns-equations" style="grid-column: page; padding-left: 2em; padding-right: 2em; padding-top: 0em;"
+          role="img" aria-label="Equations defining the embedding computations for GCN, GAT, GraphSAGE and GIN models.">
 
-        <div class="fig_div l-page" role="img" aria-label="Equations defining the embedding computations for GCN, GAT, GraphSAGE and GIN models."></div>
-        <div class="text_div"></div>
-        <div class="interactive_list" style="display: none;"></div>
-        <div class="style"></div>
-  
-        <script type="module">
-        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-        import define from "https://api.observablehq.com/d/d1859c2b1e394a60.js?v=3";
-        (new Runtime).module(define, name => {
-          if (name === "fig_div") return Inspector.into(".fig_div")();
-          if (name === "text_div") return Inspector.into(".text_div")();
-          if (name === "interactive_list") return Inspector.into(".interactive_list")();
-          if (name === "style") return Inspector.into(".style")();
-        });
-        </script>
+          <div class="fig_div" role="img"></div>
+          <div class="text_div"></div>
+          <div class="interactive_list" style="display: none;"></div>
+          <div class="style"></div>
+    
+          <script type="module">
+          import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import define from "https://api.observablehq.com/d/d1859c2b1e394a60.js?v=3";
+          (new Runtime).module(define, name => {
+            if (name === "fig_div") return Inspector.into(".fig_div")();
+            if (name === "text_div") return Inspector.into(".text_div")();
+            if (name === "interactive_list") return Inspector.into(".interactive_list")();
+            if (name === "style") return Inspector.into(".style")();
+          });
+          </script>
+        </div>
   
     <h3>
      Thoughts
@@ -979,13 +877,17 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         An interesting point is to assess different aggregation functions: are some better and others worse?
         <d-cite key="gin"></d-cite> demonstrates that aggregation functions indeed can be compared on how well
         they can uniquely preserve node neighbourhood features;
-        we recommend the interested reader read the detailed theoretical analysis there.
+        we recommend the interested reader take a look at the detailed theoretical analysis there.
       </p>
       <p>
-        Here, we talk about spatial convolutions, where the computation only occurs at the nodes.
-        Some graph neural networks <d-cite key="neural-message-passing"></d-cite> <d-cite key="graphnets"></d-cite> perform computation over the edges as well;
+        Here, we've talk about GNNs where the computation only occurs at the nodes.
+        More recent GNN models
+        such as Message-Passing Neural Networks <d-cite key="neural-message-passing"></d-cite>
+        and Graph Networks <d-cite key="graphnets"></d-cite>
+        perform computation over the edges as well;
         they compute edge embeddings together with node embeddings.
-        This is an even more general framework - but the same 'message passing' ideas from this section apply!
+        This is an even more general framework -
+        but the same 'message passing' ideas from this section apply.
       </p>
 
     <h2 id="interactive">
@@ -994,13 +896,14 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <p>
         Below is an interactive visualization of these GNN models on small graphs.
         For clarity, the node features are just real numbers here, shown inside the squares next to each node,
-        but the same equations hold when the node features are vectors!
+        but the same equations hold when the node features are vectors.
       </p>
 
-      <div class="shaded-figure l-screen" style="grid-column: page;" role="img" aria-label="An interactive visualization of different GNN models with update equations displayed at the selected node.">
-        <div class="viz_list l-page"></div>
-        <div class="buttons l-page"></div>
-        <div class="fig l-page"></div>
+      <div class="shaded-figure l-screen" style="grid-column: page;" role="img"
+        aria-label="An interactive visualization of different GNN models with update equations displayed at the selected node.">
+        <div class="viz_list" style="padding-left: 2em; padding-right: 2em"></div>
+        <div class="buttons"></div>
+        <div class="fig"></div>
         <div class="eqn"></div>
         <div class="network_display_hack" style="display: none;"></div>
         <div class="style"></div>
@@ -1028,12 +931,418 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
 
       <p>
         In practice, each iteration above is generally thought of as a single 'neural network layer'.
-        This ideology is followed by many popular Graph Neural Network libraries
+        This ideology is followed by many popular Graph Neural Network libraries,
         <d-footnote>
         For example: <a href="https://pytorch-geometric.readthedocs.io/en/latest/modules/nn.html">PyTorch Geometric</a>
         and <a href="https://stellargraph.readthedocs.io/en/stable/api.html#module-stellargraph.layer">StellarGraph</a>.
-        </d-footnote>,
-        allowing you to compose different 'types' of graph convolutions in the same model, if needed.
+        </d-footnote>
+        allowing one to compose different types of graph convolutions in the same model.
+      </p>
+
+    <h2 id="from-local-to-global">
+      From Local to Global Convolutions       
+    </h2>
+      <p>
+        The methods we've seen so far perform 'local' convolutions:
+        every node's feature is updated using a function of its local neighbours' features.
+      </p>
+      <p>
+        While performing enough steps of message-passing will eventually ensure that
+        information from all nodes in the graph is passed,
+        one may wonder if there are more direct ways to perform 'global' convolutions.
+      </p>
+      <p>
+        The answer is yes; we will now describe an approach that was actually first put forward
+        in the context of neural networks by <d-cite key="spectral-networks"></d-cite>,
+        much before any of the GNN models we looked at above.
+      </p> 
+
+      <h3 id="spectral">
+        Spectral Convolutions      
+      </h3>
+      <p>
+        As before, we will focus on the case where nodes have one-dimensional features.
+        After choosing an arbitrary node-order, we can stack all of the node features to get a
+        'feature vector' $x \in \mathbb{R}^n$.
+      </p>
+      <p class="shaded-figure" style="padding-left: 1em;">
+        <b>Key Idea:</b>
+        Given a feature vector $x$, 
+        the Laplacian $L$ allows us to quantify how smooth $x$ is, with respect to $G$.
+      </p>
+      <p>
+        How?
+      </p>
+      <p>
+        After normalizing $x$ such that $\sum_{i = 1}^n x_i^2 = 1$,
+        if we look at the following quantity involving $L$:
+        <d-footnote>
+          <d-math>R_L</d-math> is formally called the <a href="https://en.wikipedia.org/wiki/Rayleigh_quotient">Rayleigh quotient</a>.
+        </d-footnote> 
+        <d-math block>
+          R_L(x) = \frac{x^T L x}{x^T x} = \frac{\sum_{(i, j) \in E} (x_i - x_j)^2}{\sum_i x_i^2} = \sum_{(i, j) \in E} (x_i - x_j)^2.
+        </d-math>
+        we immediately see that feature vectors $x$ that assign similar values to 
+        adjacent nodes in $G$ (hence, are smooth) would have smaller values of $R_L(x)$.
+      </p>
+      <p>
+        $L$ is a real, symmetric matrix, which means it has all real eigenvalues $\lambda_1 \leq \ldots \leq \lambda_{n}$.
+        <d-footnote>
+          An eigenvalue $\lambda$ of a matrix $A$ is a value
+          satisfying the equation $Au = \lambda u$ for a certain vector $u$, called an eigenvector.
+          For a friendly introduction to eigenvectors,
+          please see <a href="http://www.sosmath.com/matrix/eigen0/eigen0.html">this tutorial</a>.
+        </d-footnote>
+        Further, the corresponding eigenvectors $u_1, \ldots, u_{n}$ can be taken to be orthonormal:
+        <d-math block style="text-align: center;">
+          u_{k_1}^T u_{k_2} =
+          \begin{cases}
+            1 \quad \text{ if } {k_1} = {k_2}. \\
+            0 \quad \text{ if } {k_1} \neq {k_2}.
+          \end{cases}
+        </d-math>
+        It turns out that these eigenvectors of $L$ are successively less smooth, as $R_L$ indicates:
+        <d-footnote>This is the <a href="https://en.wikipedia.org/wiki/Min-max_theorem">min-max theorem for eigenvalues.</a></d-footnote>
+        <d-math block>
+          \underset{x, \ x \perp \{u_1, \ldots, u_{i - 1}\}}{\text{argmin}} R_L(x) = u_i.
+          \qquad
+          \qquad
+          \qquad
+          \min_{x, \ x \perp \{u_1, \ldots, u_{i - 1}\}} R_L(x) = \lambda_i.
+        </d-math>
+        The set of eigenvalues of $L$ are called its 'spectrum', hence the name!
+        We denote the 'spectral' decomposition of $L$ as:
+        <d-math block>
+          L = U \Lambda U^T.
+        </d-math>
+        where $\Lambda$ is the diagonal matrix of sorted eigenvalues,
+        and $U$ denotes the matrix of the eigenvectors (sorted corresponding to increasing eigenvalues):
+        <d-math block>
+          \Lambda = \begin{bmatrix}
+                        \lambda_{1} &        & \\
+                                    & \ddots & \\
+                                    &        & \lambda_{n}
+                    \end{bmatrix}
+          \qquad
+          \qquad
+          \qquad
+          \qquad
+          U = \begin{bmatrix}  \\ u_1 \ \cdots \ u_n \\ \end{bmatrix}.
+        </d-math>
+        The orthonormality condition between eigenvectors gives us that $U^T U = I$, the identity matrix.
+        As these $n$ eigenvectors form a basis for $\mathbb{R}^n$,
+        any feature vector $x$ can be represented as a linear combination of these eigenvectors:
+        <d-math block>
+          x = \sum_{i = 1}^n \hat{x_i} u_i = U \hat{x}.
+        </d-math>
+        where $\hat{x}$ is the vector of coefficients $[x_0, \ldots x_n]$.
+        We call $\hat{x}$ as the spectral representation of the feature vector $x$.
+        The orthonormality condition allows us to state:
+        <d-math block>
+          x = U \hat{x} \quad \Longleftrightarrow \quad U^T x = \hat{x}.
+        </d-math>
+        This pair of equations allows us to interconvert
+        between the 'natural' representation $x$ and the 'spectral' representation $\hat{x}$
+        for any vector $x \in \mathbb{R}^n$.
+      </p>
+      <h3 id="spectral-decompositions-of-natural-images">
+        Spectral Representations of Natural Images
+      </h3>
+      <p>
+        As discussed before, we can consider any image as a grid graph, where each pixel is a node,
+        connected by edges to adjacent pixels.
+        Thus, a pixel can have either $3, 5,$ or $8$ neighbours, depending on its location within the image grid.
+        Each pixel gets a value as part of the image. If the image is grayscale, each value will be a single 
+        real number indicating how dark the pixel is. If the image is colored, each value will be a $3$-dimensional
+        vector, indicating the values for the red, green and blue (RGB) channels.
+        <d-footnote>We use the alpha channel as well in the visualization below, so this is actually RGBA.</d-footnote>
+      </p>
+      <p>
+        This construction allows us to compute the graph Laplacian and the eigenvector matrix $U$.
+        Given an image, we can then investigate what its spectral representation looks like.
+      </p>
+      <p>
+        To shed some light on what the spectral representation actually encodes,
+        we perform the following experiment over each channel of the image independently:  
+      </p>
+        <ul>
+          <li>
+            We first collect all pixel values across a channel into a feature vector $x$.
+          </li>
+          <li>
+            Then, we obtain its spectral representation $\hat{x}$.
+            <d-math block>
+              \hat{x} = U^T x
+            </d-math>
+          </li>
+          <li>
+            We truncate this to the first $m$ components to get $\hat{x}_m$.
+            By truncation, we mean zeroing out all of the remaining $n - m$ components of $\hat{x}$.
+            This truncation is equivalent to using only the first $m$ eigenvectors to compute the spectral representation.
+            <d-math block>
+              \hat{x}_m = \text{Truncate}_m(\hat{x})
+            </d-math>
+          </li>
+          <li>
+            Then, we convert this truncated representation $\hat{x}_m$ back to the natural basis to get $x_m$.
+            <d-math block>
+              x_m = U \hat{x}_m
+            </d-math>
+          </li>
+        </ul>
+      <p>
+        Finally, we stack the resulting channels back together to get back an image.
+        We can now see how the resulting image changes with choices of $m$.
+        Note that when $m = n$, the resulting image is identical to the original image,
+        as we can reconstruct each channel exactly.
+      </p>
+      <div class="shaded-figure l-screen" id="spectral-decompositions-viz" style="grid-column: page; padding-bottom: 1em; padding-top: 1em;">
+        <div id="observablehq-spectralDecompositionsAll-59114e0b"></div>
+        <div id="observablehq-updateArrowCaption-59114e0b" style="display: none;"></div>
+        <div id="observablehq-drawArrow-59114e0b" style="display: none;"></div>
+        <div id="observablehq-drawCurrBaseImg-59114e0b" style="display: none;"></div>
+        <div id="observablehq-drawCurrUpdImg-59114e0b" style="display: none;"></div>
+        <div id="observablehq-style-59114e0b" style="display: none;"></div>
+        <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/spectral-decompositions-of-natural-images">Spectral Decompositions of Natural Images by Ameya Daigavane</a></p> -->
+
+        <script type="module">
+        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+        import define from "https://api.observablehq.com/d/509685ffa5edf675.js?v=3";
+        new Runtime().module(define, name => {
+          if (name === "spectralDecompositionsAll") return new Inspector(document.querySelector("#observablehq-spectralDecompositionsAll-59114e0b"));
+          if (name === "updateArrowCaption") return new Inspector(document.querySelector("#observablehq-updateArrowCaption-59114e0b"));
+          if (name === "drawArrow") return new Inspector(document.querySelector("#observablehq-drawArrow-59114e0b"));
+          if (name === "drawCurrBaseImg") return new Inspector(document.querySelector("#observablehq-drawCurrBaseImg-59114e0b"));
+          if (name === "drawCurrUpdImg") return new Inspector(document.querySelector("#observablehq-drawCurrUpdImg-59114e0b"));
+          if (name === "style") return new Inspector(document.querySelector("#observablehq-style-59114e0b"));
+        });
+        </script>
+      </div>
+      <figure>
+        <figcaption>
+          Use the radio buttons at the top to chose one of the four sample images.
+          Each of these images has been taken from the ImageNet <d-cite key="imagenet"></d-cite>
+          dataset and downsampled to $50$ pixels wide and $40$ pixels tall.
+          As there are $n = 50 \times 40 = 2000$ pixels in each image, there are $2000$ Laplacian eigenvectors.
+          Use the slider at the bottom to change the number of spectral components to keep, noting how
+          images get progressively blurrier as the number of components decrease.
+        </figcaption>
+      </figure>
+      <p>
+        As $m$ decreases, we see that the output image $x_m$ gets blurrier.
+        If we decrease $m$ to $1$, the output image $x_m$ is entirely the same color throughout.
+        We see that we do not need to keep all $n$ components;
+        we can retain a lot of the information in the image with significantly fewer components.
+
+        We can relate this to the Fourier decomposition of images:
+        the more eigenvectors we use, the higher frequencies we can represent on the grid.
+      </p>
+      <p>
+        To complement the visualization above,
+        we additionally visualize the first few eigenvectors on a smaller $8 \times 8$ grid below.
+        We change the coefficients of the first $10$ out of $64$ eigenvectors
+        in the spectral representation
+        and see how the resulting image changes:
+      </p>
+      <div class="shaded-figure l-screen" id="spectral-conversions" style="grid-column: page; padding-bottom: 0; padding-top: 0;">
+        <div id="observablehq-figcaptions-6ac8e785"></div>
+        <div id="observablehq-spec_conv_main_div-6ac8e785" class="l-page" style="padding-left: 80px;"></div>
+        <div id="observablehq-spec_color_scale-6ac8e785" style="position: relative; left: 116px; top: -188px;"></div>
+        <div id="observablehq-spec_conv_sliders-6ac8e785" class="l-page"></div>
+        <div id="observablehq-subgrid_main_div-6ac8e785"></div>
+        <div id="observablehq-spec_conv_buttons_display-6ac8e785" style="margin-top: 2em; margin-bottom: 1em;"></div>
+        <div id="observablehq-spec_input_slider_watch-6ac8e785" style="display: none;"></div>
+        <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/interactive-spectral-conversions">Interactive Spectral Conversions by Ameya Daigavane</a></p> -->
+
+      </div>
+      <script type="module">
+        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+        import define from "https://api.observablehq.com/d/0b26065713568858.js?v=3";
+        new Runtime().module(define, name => {
+          if (name === "figcaptions") return new Inspector(document.querySelector("#observablehq-figcaptions-6ac8e785"));
+          if (name === "spec_conv_main_div") return new Inspector(document.querySelector("#observablehq-spec_conv_main_div-6ac8e785"));
+          if (name === "spec_color_scale") return new Inspector(document.querySelector("#observablehq-spec_color_scale-6ac8e785"));
+          if (name === "subgrid_main_div") return new Inspector(document.querySelector("#observablehq-subgrid_main_div-6ac8e785"));
+          if (name === "spec_conv_sliders") return new Inspector(document.querySelector("#observablehq-spec_conv_sliders-6ac8e785"));
+          if (name === "spec_conv_buttons_display") return new Inspector(document.querySelector("#observablehq-spec_conv_buttons_display-6ac8e785"));
+          if (name === "spec_input_slider_watch") return new Inspector(document.querySelector("#observablehq-spec_input_slider_watch-6ac8e785"));
+          return ["svg","draw_img","draw_static_graph","draw_dyn_graph","draw_eigenvectors"].includes(name);
+        });
+      </script>
+      <figure>
+        <figcaption>
+          Move the sliders to change the spectral representation $\hat{x}$ (right),
+          and see how $x$ itself changes on the image (left).
+          Note how the first eigenvectors are much 'smoother' than the later ones,
+          and the many patterns we can make with only $10$ eigenvectors.
+        </figcaption>
+      </figure>
+
+      <p>
+        These visualizations should convince you that the first eigenvectors are indeed smooth,
+        and the smoothness correspondingly decreases as we consider later eigenvectors.
+      </p>
+      <p>
+        For any image $x$, we can think of
+        the initial entries of the spectral representation $\hat{x}$
+        as capturing 'global' image-wide trends, which are the low-frequency components,
+        while the later entries as capturing 'local' details, which are the high-frequency components.
+      </p>
+
+      <h3>Embedding Computation</h3>
+      <p>
+        We now have the background to understand spectral convolutions
+        and how they can be used to compute embeddings/feature representations of nodes.
+      </p>
+      <p>
+        As before, the model we describe below has $K$ layers:
+        each layer $k$ has learnable parameters $\hat{w}^{(k)}$,
+        called the 'filter weights'.
+        These weights will be convolved with the spectral representations of the node features.
+        As a result, the number of weights needed in each layer is equal to $m$, the number of 
+        eigenvectors used to compute the spectral representations.
+        We had shown in the previous section that we can take $m \ll n$
+        and still not lose out on significant amounts of information.
+      </p>
+      <p>
+        Thus, convolution in the spectral domain enables the use of significantly lesser parameters
+        than just direct convolution in the natural domain.
+        Further, by virtue of the smoothness of the Laplacian eigenvectors across the graph,
+        using spectral representations automatically enforces an inductive bias for
+        neighbouring nodes to get similar representations.
+      </p>
+      <p>
+        Assuming one-dimensional node features for now,
+        the output of each layer is a vector of node representations $h^{(k)}$,
+        where each node's representation corresponds to a row
+        of the vector.
+      </p>
+      <div class="spec_figure_init" role="img" aria-label="Equations defining spectral convolutions."></div>
+      <p>
+        We fix an ordering of the nodes in $G$. This gives us the adjacency matrix $A$ and the graph Laplacian $L$,
+        allowing us to compute $U_m$.
+        Finally, we can describe the computation that the layers perform, one after the other:
+      </p>
+      <div class="spec_figure"></div>
+      <div class="style"></div>
+
+      <script type="module">
+      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+      import define from "https://api.observablehq.com/d/7f0ea3801bf85fd8.js?v=3";
+      (new Runtime).module(define, name => {
+        if (name === "spec_figure_init") return Inspector.into(".spec_figure_init")();
+        if (name === "spec_figure") return Inspector.into(".spec_figure")();
+        if (name === "style") return Inspector.into(".style")();
+      });
+      </script>
+      <p>
+        The method above generalizes easily to the case where each $h^{(k)} \in \mathbb{R}^{d_k}$, as well:
+        see <d-cite key="spectral-networks"></d-cite> for details.
+      </p>
+      <p>
+        With the insights from the previous section, we see that convolution in the spectral-domain of graphs
+        can be thought of as the generalization of convolution in the frequency-domain of images.
+      </p>
+
+      <h3 id="spectral-equivariance">
+        Spectral Convolutions are Node-Order Equivariant
+      </h3>
+      <p>
+        We can show spectral convolutions are node-order equivariant using a similar approach
+        as for Laplacian polynomial filters. 
+      </p>
+      <div class="math-details shaded-figure">
+        <b>
+          Details for the Interested Reader
+        </b>
+        <p>
+          As in <a href="#poly-filters-equivariance">our proof before</a>,
+          let's fix an arbitrary node-order.
+          Then, any other node-order can be represented by a
+          permutation of this original node-order.
+          We can associate this permutation with its permutation matrix $P$.
+
+          Under this new node-order,
+          the quantities below transform in the following way:
+          <d-math block>
+            \begin{aligned}
+              x &\to Px \\
+              A &\to PAP^T \\
+              L &\to PLP^T \\
+              U_m &\to PU_m
+            \end{aligned}
+          </d-math>
+          which implies that, in the embedding computation:
+          <d-math block>
+            \begin{aligned}
+              \hat{x} &\to \left(PU_m\right)^T (Px) = U_m^T x = \hat{x} \\
+              \hat{w} &\to \left(PU_m\right)^T (Pw) = U_m^T w = \hat{w} \\
+              \hat{g} &\to \hat{g} \\
+              g &\to (PU_m)\hat{g} = P(U_m\hat{g}) = Pg
+            \end{aligned}
+          </d-math>
+          Hence, as $\sigma$ is applied elementwise:
+          <d-math block>
+            f(Px) = \sigma(Pg) = P \sigma(g) = P f(x)
+          </d-math>
+          as required.
+          Further, we see that the spectral quantities $\hat{x}, \hat{w}$ and $\hat{g}$
+          are unchanged by permutations of the nodes.
+          <d-footnote>
+          Formally, they are what we would call node-order invariant.
+          </d-footnote>
+        </p>
+      </div>
+
+      <p>
+        The theory of spectral convolutions is mathematically well-grounded;
+        however, there are some key disadvantages that we must talk about:
+      </p>
+      <ul>
+        <li>
+          We need to compute the eigenvector matrix $U_m$ from $L$. For large graphs, this becomes quite infeasible.
+        </li>
+        <li>
+          Even if we can compute $U_m$, global convolutions themselves are inefficient to compute,
+          because of the repeated
+          multiplications with $U_m$ and $U_m^T$.
+        </li>
+        <li>
+          The learned filters are specific to the input graphs,
+          as they are represented in terms
+          of the spectral decomposition of input graph Laplacian $L$.
+          This means they do not transfer well to new graphs
+          which have significantly different structure (and hence, significantly
+          different eigenvalues) <d-cite key="spectral-transfer"></d-cite>.
+        </li>
+      </ul>
+
+      <p>
+        While spectral convolutions have largely been superseded by
+        'local' convolutions for the reasons discussed above,
+        there is still much merit to understanding the ideas behind them.
+        Indeed, a recently proposed GNN model called Directional Graph Networks
+        <d-cite key="directional-gnns"></d-cite>
+        actually uses the Laplacian eigenvectors
+        and their mathematical properties
+        extensively.
+      </p>
+
+      <h3 id="graph-embeddings">
+        Global Propagation via Graph Embeddings
+      </h3>
+      <p>
+        A simpler way to incorporate graph-level information
+        is to compute embeddings of the entire graph by pooling node
+        (and possibly edge) embeddings,
+        and then using the graph embedding to update node embeddings,
+        following an iterative scheme similar to what we have looked at here.
+        This is an approach used by Graph Networks
+        <d-cite key="graphnets"></d-cite>.
+        We will briefly discuss how graph-level embeddings
+        can be constructed in <a href="#pooling">Pooling</a>.
+        However, such approaches tend to ignore the underlying
+        topology of the graph that spectral convolutions can capture.
       </p>
 
     <h2 id="learning">
@@ -1042,40 +1351,55 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       <p>
         All of the embedding computations we've described here, whether spectral or spatial, are completely differentiable.
         This allows GNNs to be trained in an end-to-end fashion, just like a standard neural network,
-        once a suitable loss function $L$ is defined:
+        once a suitable loss function $\mathcal{L}$ is defined:
       </p>
         <ul>
           <li>
-            <b>Node Classification</b>: Any standard loss used for classification tasks can be used, such as categorical cross-entropy:
+            <b>Node Classification</b>: By minimizing any of the standard losses for classification tasks,
+            such as categorical cross-entropy when multiple classes are present:
             <d-math block>
-              L(y_v, \hat{y_v}) = -\sum_{c} y_{vc} \log{\hat{y_{vc}}}.
+              \mathcal{L}(y_v, \hat{y_v}) = -\sum_{c} y_{vc} \log{\hat{y_{vc}}}.
             </d-math>
             where $\hat{y_{vc}}$ is the predicted probability that node $v$ is in class $c$.
             GNNs adapt well to the semi-supervised setting, which is when only some nodes in the graph are labelled.
-            In this setting, one way to define a loss $L_G$ over an input graph $G$ is
+            In this setting, one way to define a loss $\mathcal{L}_{G}$ over an input graph $G$ is:
             <d-math block>
-              L_{G} = \frac{\sum\limits_{v \in \text{Lab}(G)} L(y_v, \hat{y_v})}{| \text{Lab}(G) |}
+              \mathcal{L}_{G} = \frac{\sum\limits_{v \in \text{Lab}(G)} \mathcal{L}(y_v, \hat{y_v})}{| \text{Lab}(G) |}
             </d-math>
-            where, we only compute losses over labelled nodes <d-math>\text{Lab}(G)</d-math>!
+            where, we only compute losses over labelled nodes <d-math>\text{Lab}(G)</d-math>.
           </li>
           <li>
-            <b>Graph Classification</b>: By aggregating node representations, one can construct a vector representation of the entire graph.
+            <b>Graph Classification</b>: By aggregating node representations,
+            one can construct a vector representation of the entire graph.
             This graph representation can be used for any graph-level task, even beyond classification.
             See <a href="#pooling">Pooling</a> for how representations of graphs can be constructed.
           </li>
           <li>
-            <b>Link Prediction</b>: Sample pairs of adjacent and non-adjacent nodes, and use these vector pairs as inputs to predict the presence/absence of an edge.
+            <b>Link Prediction</b>: By sampling pairs of adjacent and non-adjacent nodes,
+            and use these vector pairs as inputs to predict the presence/absence of an edge.
+            For a concrete example, by minimizing the following 'logistic regression'-like loss:
+            <d-math block>
+              \begin{aligned}
+              \mathcal{L}(y_v, y_u, e_{vu}) &= -e_{vu} \log(p_{vu}) - (1 - e_{vu}) \log(1 - p_{vu}) \\
+              p_{vu} &= \sigma(y_v^Ty_u)
+              \end{aligned}
+            </d-math>
+            where $\sigma$ is the <a href="https://en.wikipedia.org/wiki/Sigmoid_function">sigmoid function</a>,
+            and $e_{vu} = 1$ iff there is an edge between nodes $v$ and $u$, being $0$ otherwise.
           </li>
           <li>
-            <b>Node Clustering</b>: Cluster the learned node representations!
+            <b>Node Clustering</b>: By simply clustering the learned node representations.
           </li>
         </ul>
 
       <p>
-        Sometimes, we may not have a downstream task (such as node classification) to optimize for. 
-        This has led to interest in self-supervised techniques for training GNNs
-        <d-cite key="m3s"></d-cite><d-cite key="when-does-self-help"></d-cite><d-cite key="self-supervised-graphs-new"></d-cite>.
-        The key idea in each of these papers is to train GNNs to predict local (eg. node degrees, clustering coefficient) and/or global graph properties (eg. pairwise distances).
+        The broad success of pre-training for natural language processing models
+        such as ELMo <d-cite key="elmo"></d-cite> and BERT <d-cite key="bert"></d-cite>
+        has sparked interest in similar techniques for GNNs
+        <d-cite key="strategies-pre-training"></d-cite><d-cite key="m3s"></d-cite><d-cite key="when-does-self-help"></d-cite><d-cite key="self-supervised-graphs-insights"></d-cite>.
+        The key idea in each of these papers is to train GNNs to predict
+        local (eg. node degrees, clustering coefficient, masked node attributes)
+        and/or global graph properties (eg. pairwise distances, masked global attributes).
       </p>
       <p>
         Another self-supervised technique is to enforce that neighbouring nodes get similar embeddings,
@@ -1090,6 +1414,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         techniques such as Noise Contrastive Estimation <d-cite key="nce"></d-cite> <d-cite key="nce-embeddings"></d-cite>are especially useful.
       </p>
 
+    <!--
     <h2 id="gnns-vs-cnns">
       Are GNNs 'better' than CNNs?
     </h2>
@@ -1239,34 +1564,42 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
         <ul>
           <li>The best CNN and GCN models at $m = 1$ have nearly identical predictions.</li>
           <li>Although not identical, there are many similarities between the predictions of the worst CNN and GCN models at $m = 5$.</li>
-        </ul>
+        </ul> -->
 
     <h2 id="further-reading">
       Further Reading
     </h2>
       
       <p>
-        While we have looked at many techniques and ideas in this article, the field of Graph Neural Networks is extremely vast,
-        and we have been forced to restrict our discussion to a narrow subset of the entire literature.
-        We recommend the interested reader take a look at <d-cite key="gnn-survey"></d-cite><d-cite key="gnn-review"></d-cite> for more comprehensive surveys.
+        While we have looked at many techniques and ideas in this article,
+        the field of Graph Neural Networks is extremely vast.
+        We have been forced to restrict our discussion to a small subset of the entire literature,
+        while still communicating the key ideas and design principles behind GNNs.
+        We recommend the interested reader take a look at
+        <d-cite key="gnn-survey"></d-cite><d-cite key="gnn-review"></d-cite> for more comprehensive surveys.
       </p>
 
       <h3 id="practical-techniques">
-        Practical Techniques for GNNs
+        GNNs in Practice
       </h3>
       <p>
-        While we have discussed scaling of GNN parameters, we haven't discussed efficient implementations of these algorithms.
-        It turns out that accomodating the different structures of graphs is often hard to do efficiently, but we can still represent many of these algorithms
-        as sparse matrix-vector products (since generally, the adjacency matrix is sparse.)
+        It turns out that accomodating the different structures of graphs is often hard to do efficiently,
+        but we can still represent many GNN update equations using
+        as sparse matrix-vector products (since generally, the adjacency matrix is sparse for most real-world graph datasets.)
         For example, the GCN variant discussed here can be represented as:
-      </p>
         <d-math block>
           h^{(k)} = D^{-1} A \cdot h^{(k - 1)} {W^{(k)}}^T + h^{(k - 1)} {B^{(k)}}^T.
         </d-math>
+        Restructuring the update equations in this way allows for efficient vectorized implementations of GNNs on accelerators
+        such as GPUs.
+      </p>
       <p>
         Regularization techniques for standard neural networks,
-        such as Dropout <d-cite key="dropout"></d-cite>, can be applied straightforwardly to the parameters (for example, zero out entire rows of $W^{(k)}$ above).
-        However, there are graph-specific techniques such as DropEdge <d-cite key="dropedge"></d-cite> that removes entire edges at random from the graph,
+        such as Dropout <d-cite key="dropout"></d-cite>,
+        can be applied in a straightforward manner to the parameters
+        (for example, zero out entire rows of $W^{(k)}$ above).
+        However, there are graph-specific techniques such as DropEdge <d-cite key="dropedge"></d-cite>
+        that removes entire edges at random from the graph,
         that also boost the performance of many GNN models.
       </p>
 
@@ -1283,7 +1616,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           <li>Heterogeneous graphs: Learn different aggregation functions for each node/edge type.</li>
         </ul>
       <p>
-        There do exist more sophisticated techniques for each of the above classes of graphs: see <d-cite key="gnn-survey"></d-cite><d-cite key="gnn-review"></d-cite> for more!
+        There do exist more sophisticated techniques that can take advantage of the different structures of these graphs:
+        see <d-cite key="gnn-survey"></d-cite><d-cite key="gnn-review"></d-cite> for more.
       </p>
 
       <h3 id="pooling">
@@ -1309,10 +1643,17 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     <h2 id="supplementary">
       Supplementary Material
     </h2>
-    
-      <h3>
+      <h3 id="experiments-notebooks">
         Reproducing Experiments
       </h3>
+      <p>
+        The experiments from
+        <a href="spectral-decompositions-of-natural-images">Spectral Representations of Natural Images</a>
+        can be reproduced using the following
+        Colab <img src="images/colab.svg" alt="Google Colaboratory" style="position: relative; top: 2px"> notebook:
+        <a href="https://colab.research.google.com/github/google-research/google-research/blob/master/understanding_convolutions_on_graphs/SpectralRepresentations.ipynb">Spectral Representations of Natural Images</a>.
+      </p>
+<!-- 
       <p>
         The experiments from <a href="#gnns-vs-cnns">Are GNNs 'better' than CNNs?</a> can be reproduced using the following Colab <img src="images/colab.svg" alt="Google Colaboratory" style="position: relative; top: 2px"> notebook:
       </p>
@@ -1328,23 +1669,35 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
           <li><a href="">The Game of Life Saved Models </a></li>
           <li><a href="">The Game of Life Saved Models Converted</a></li>
         </ul>
-
-      <h3>
+ -->
+      <h3 id="visualizations-notebooks">
         Recreating Visualizations
       </h3>
       <p>
-        To aid in the creation of future interactive articles, we have created ObservableHQ <img src="images/observable.svg" alt="ObservableHQ" width="20" height="20" style="position: relative; top: 3px">
+        To aid in the creation of future interactive articles,
+        we have created ObservableHQ
+        <img src="images/observable.svg" alt="ObservableHQ" width="20" height="20" style="position: relative; top: 3px">
         notebooks for each of the interactive visualizations here:
       </p>
         <ul>
-          <li><a href="https://observablehq.com/@ameyasd/spectral-conversions">Spectral Representations for an Image</a></li>
-          <li><a href="https://observablehq.com/@ameyasd/interactive-graph-polynomial-convolutions">Graph Polynomial Convolutions</a></li>
-          <li><a href="https://observablehq.com/@ameyasd/interactive-gnn-equations">Graph Neural Network Equations</a></li>
-          <li><a href="https://observablehq.com/@ameyasd/graph-convolutional-networks">Graph Convolutional Networks</a></li>
-          <li><a href="https://observablehq.com/@ameyasd/graph-attention-networks">Graph Attention Networks</a></li>
-          <li><a href="https://observablehq.com/@ameyasd/graph-sample-and-aggregate-graphsage">GraphSAGE</a></li>
-          <li><a href="https://observablehq.com/@ameyasd/graph-isomorphism-networks">Graph Isomorphism Networks</a></li>
-          <li><a href="https://observablehq.com/@ameyasd/the-game-of-life">The Game of Life</a></li>
+          <li><a href="https://observablehq.com/@ameyasd/neighbourhoods-for-cnns-and-gnns">Neighbourhood Definitions for CNNs and GNNs</a></li>
+          <li><a href="https://observablehq.com/@ameyasd/cleaner-interactive-graph-polynomial-convolutions">Graph Polynomial Convolutions on a Grid</a></li>
+          <li><a href="https://observablehq.com/@ameyasd/updated-chebnet-equations">Graph Polynomial Convolutions: Equations</a></li>
+          <li><a href="https://observablehq.com/@ameyasd/interactive-gnn-equations">Modern Graph Neural Networks: Equations</a></li>
+          <li>
+            <a href="https://observablehq.com/@ameyasd/interactive-gnn-visualizations">Modern Graph Neural Networks: Interactive Models</a>
+            which pulls together the following standalone notebooks:
+            <ul>
+              <li><a href="https://observablehq.com/@ameyasd/graph-convolutional-networks">Graph Convolutional Networks</a></li>
+              <li><a href="https://observablehq.com/@ameyasd/graph-attention-networks">Graph Attention Networks</a></li>
+              <li><a href="https://observablehq.com/@ameyasd/graph-sample-and-aggregate-graphsage">GraphSAGE</a></li>
+              <li><a href="https://observablehq.com/@ameyasd/graph-isomorphism-networks">Graph Isomorphism Networks</a></li>
+            </ul>
+          </li>
+          <li><a href="https://observablehq.com/@ameyasd/interactive-spectral-conversions">Laplacian Eigenvectors for Grids</a></li>
+          <li><a href="https://observablehq.com/@ameyasd/spectral-decompositions-of-natural-images">Spectral Decomposition of Natural Images</a></li>
+          <li><a href="https://observablehq.com/@ameyasd/spectral-convolutions-equation">Spectral Convolutions: Equations</a></li>
+          <!-- <li><a href="https://observablehq.com/@ameyasd/the-game-of-life">The Game of Life</a></li> -->
         </ul>
 
   </d-article>
@@ -1354,7 +1707,7 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
     
     <d-footnote-list></d-footnote-list>
 
-    <h3 id="minimal-models">Appendix: Minimal Models for The Game of Life</h3>
+    <!-- <h3 id="minimal-models">Appendix: Minimal Models for The Game of Life</h3>
     <p>
       We use a variant of the GCN that doesn't normalize by neighbour degrees, and has an additional constant bias term $C$:
       <d-math block>
@@ -1442,7 +1795,6 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       For completeness, we list the best and worst seeds (according to the validation accuracy after training) for each value of the overparametrization factor $m$.
       If multiple seeds had the same final validation accuracy, the largest seed (in numeric value) was chosen.
     </p>
-      <!-- XManager Experiment ID: 19174057 -->
       <table>
         <caption>GCN Seeds</caption>
         <thead>
@@ -1481,7 +1833,8 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </table>
     <p>
       Links to all of this code are available in the <a href="#supplementary">Supplementary Material</a>.
-    </p>
+    </p> -->
+    <!-- XManager Experiment ID: 19174057 -->
 
     <h3>Acknowledgments</h3>
     <p>
@@ -1496,6 +1849,10 @@ d-contents nav > div > a:hover, d-contents nav > ul > li > a:hover {
       </ul>
     <p>
       We would like to thank Thomas Kipf for his valuable feedback on the technical content within this article.
+    </p>
+    <p>
+      We would like to thank David Nichols for creating <a href="https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40">Coloring for Colorblindness</a>
+      which helped us improve the accessibility of this article's color scheme.
     </p>
     <p>
       We would also like to acknowledge <a href="http://web.stanford.edu/class/cs224w/">CS224W: Machine Learning with Graphs</a> as an excellent reference from which the authors benefitted significantly.
