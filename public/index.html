@@ -424,7 +424,9 @@ input[type="radio"] {
       <p>
         For ease of exposition, we will assume $G$ is undirected, and all nodes are of the same type.
         <d-footnote>These kinds of graphs are called 'homogeneous'.</d-footnote>
-        Many of the same ideas apply to other kinds of graphs: see <a href="#different-kinds-of-graphs">Different Kinds of Graphs</a> for more.
+        Many of the same ideas we will see here 
+        apply to other kinds of graphs:
+        we will discuss this later in <a href="#different-kinds-of-graphs">Different Kinds of Graphs</a>.
       </p>
       <p>
         Sometimes we will need to denote a graph property by a matrix $M$,
@@ -453,11 +455,11 @@ input[type="radio"] {
       </d-footnote>
     </p>
     
-    <figure id="cnns-vs-gnns-neigh" class="l-page" style="display: flex; justify-content: center; flex-direction: column;">      
+    <figure id="cnns-vs-gnns-neigh" class="l-page" style="display: flex; align-items: center; flex-direction: column;">
       <div id="observablehq-cnn_svg-35509536"
         role="img" aria-label="GNNs can perform localized convolutions, similar to those in CNNs."
         style="text-align: center;"></div>
-      <figure style="position: relative; text-align: center; margin: 0 auto; width: 30%;">
+      <figure style="position: relative; text-align: center; margin-top: 0; width: 30%;">
         <figcaption>
           Convolutions in CNNs are inherently localized.
           Neighbours participating in the convolution at the center pixel are highlighted in gray.
@@ -465,10 +467,10 @@ input[type="radio"] {
       </figure>
       <div id="observablehq-svg-35509536"
         style="text-align: center;"></div>
-      <figure style="position: relative; text-align: center; margin-left: auto; margin-right: auto; margin-top: 1%;; width: 40%;">
+      <figure style="position: relative; text-align: center; margin-top: 1%; width: 40%;">
         <figcaption>
           GNNs can perform localized convolutions mimicking CNNs.
-          Hover over a node to see its immediate neighbourhood highlighted.
+          Hover over a node to see its immediate neighbourhood highlighted on the left.
           The structure of this neighbourhood changes from node to node.
         </figcaption>
       </figure>
@@ -529,6 +531,30 @@ input[type="radio"] {
           The Laplacian $L$ depends only on the structure of the graph $G$, not on any node features.
         </figcaption>
       </figure>
+      <p>
+        The graph Laplacian gets its name from being the discrete analog of the
+        <a href="https://mathworld.wolfram.com/Laplacian.html">Laplacian operator</a>
+        from calculus.
+      </p>
+      <p>
+        Although it encodes precisely the same information as the adjacency matrix $A$
+        <d-footnote>
+          In the sense that given either of the matrices $A$ or $L$, you can construct the other.
+        </d-footnote>,
+        the graph Laplacian has many interesting properties of its own.
+        <d-footnote>
+          The graph Laplacian shows up in many mathematical problems involving graphs:
+          <a href="https://people.math.sc.edu/lu/talks/nankai_2014/spec_nankai_2.pdf">random walks</a>,
+          <a href="https://arxiv.org/abs/0711.0189">spectral clustering</a><d-cite key="spectral-clustering"></d-cite>,
+          and
+          <a href="https://www.math.fsu.edu/~bertram/lectures/Diffusion.pdf">diffusion</a>, to name a few.
+        </d-footnote>
+        We will see some of these properties
+        in <a href="#spectral">a later section</a>,
+        but will instead point readers to
+        <a href="https://csustan.csustan.edu/~tom/Clustering/GraphLaplacian-tutorial.pdf">this tutorial</a>
+        for greater insight into the graph Laplacian.
+      </p>
 
       <h3>
         Polynomials of the Laplacian
@@ -590,6 +616,12 @@ input[type="radio"] {
         </d-math>
         We see that the features at each node $v$ are combined
         with the features of its immediate neighbours $u \in \mathcal{N}(v)$.
+        <d-footnote>
+          For readers familiar with
+          <a href="https://docs.opencv.org/3.4/d5/db5/tutorial_laplace_operator.html">Laplacian filtering of images</a>,
+          this is the exact same idea. When $x$ is an image, 
+          $x' = Lx$ is exactly the result of applying a 'Laplacian filter' to $x$.
+        </d-footnote>
       </p>
       <p>
         At this point, a natural question to ask is:
@@ -672,6 +704,47 @@ input[type="radio"] {
             </p>
           </figcaption>
         </figure>
+
+      <h3 id="chebnet">
+        ChebNet
+      </h3>
+      <span>
+        ChebNet refines this idea of polynomial filters by looking at polynomial filters of the form:
+      </span>
+        <d-math block>
+          p_w(L) = \sum_{i = 1}^d w_i T_i(\tilde{L})
+        </d-math>
+      <span>
+        where $T_i$ is the degree-$i$
+        <a href="https://en.wikipedia.org/wiki/Chebyshev_polynomials">Chebyshev polynomial of the first kind</a> and
+        $\tilde{L}$ is the normalized Laplacian defined using the largest eigenvalue of $L$:
+        <d-footnote>
+          We discuss the eigenvalues of the Laplacian $L$ in more detail in <a href="#spectral">a later section</a>.
+        </d-footnote>
+      </span>
+        <d-math block>
+          \tilde{L} = \frac{2L}{\lambda_{\max}(L)} - I_n.
+        </d-math> 
+      <p>
+        What is the motivation behind these choices?
+      </p>
+        <ul>
+          <li>
+            $L$ is actually positive semi-definite: all of the eigenvalues of $L$ are not lesser than $0$.
+            If $\lambda_{\max}(L) > 1$, the entries in the powers of $L$ rapidly increase in size.
+            $\tilde{L}$ is effectively a scaled-down version of $L$, with eigenvalues guaranteed to be in the range $[-1, 1]$.
+            This prevents the entries of powers of $\tilde{L}$ from blowing up.
+            Indeed, in the <a href="#polynomial-convolutions">visualization above</a>: we restrict the higher-order coefficients
+            when the unnormalized Laplacian $L$ is selected, but allow larger values when the normalized Laplacian $\tilde{L}$ is selected,
+            in order to show the result $x'$ on the same color scale.
+          </li>
+          <li>
+            The Chebyshev polynomials have certain interesting properties that make interpolation more numerically stable.
+            We won't talk about this in more depth here,
+            but will advise interested readers to take a look at <d-cite key="chebyshev"></d-cite> as a definitive resource.
+          </li>
+        </ul>
+      
       <h3 id="poly-filters-equivariance">
         Polynomial Filters are Node-Order Equivariant
       </h3>
@@ -720,46 +793,6 @@ input[type="radio"] {
         </p>
       </div>
 
-      <h3 id="chebnet">
-        ChebNet
-      </h3>
-      <span>
-        ChebNet refines this idea of polynomial filters by looking at polynomial filters of the form:
-      </span>
-        <d-math block>
-          p_w(L) = \sum_{i = 1}^d w_i T_i(\tilde{L})
-        </d-math>
-      <span>
-        where $T_i$ is the degree-$i$
-        <a href="https://en.wikipedia.org/wiki/Chebyshev_polynomials">Chebyshev polynomial of the first kind</a> and
-        $\tilde{L}$ is the normalized Laplacian defined using the largest eigenvalue of $L$:
-        <d-footnote>
-          We discuss the eigenvalues of the Laplacian $L$ in more detail in <a href="#spectral">a later section</a>.
-        </d-footnote>
-      </span>
-        <d-math block>
-          \tilde{L} = \frac{2L}{\lambda_{\max}(L)} - I_n.
-        </d-math> 
-      <p>
-        What is the motivation behind these choices?
-      </p>
-        <ul>
-          <li>
-            $L$ is actually positive semi-definite: all of the eigenvalues of $L$ are not lesser than $0$.
-            If $\lambda_{\max}(L) > 1$, the entries in the powers of $L$ rapidly increase in size.
-            $\tilde{L}$ is effectively a scaled-down version of $L$, with eigenvalues guaranteed to be in the range $[-1, 1]$.
-            This prevents the entries of powers of $\tilde{L}$ from blowing up.
-            Indeed, in the <a href="#polynomial-convolutions">previous visualization</a> above: we restrict the higher-order coefficients
-            when the unnormalized Laplacian $L$ is selected, but allow larger values when the normalized Laplacian $\tilde{L}$ is selected,
-            in order to show the result $x'$ on the same color scale.
-          </li>
-          <li>
-            The Chebyshev polynomials have certain interesting properties that make interpolation more numerically stable.
-            We won't be able to talk about this in more depth here,
-            but will advise interested readers to take a look at <d-cite key="chebyshev"></d-cite> as a definitive resource.
-          </li>
-        </ul>
-      
       <h3>
         Embedding Computation
       </h3>
@@ -1567,7 +1600,7 @@ input[type="radio"] {
         </ul> -->
 
     <h2 id="further-reading">
-      Further Reading
+      Conclusion and Further Reading
     </h2>
       
       <p>
@@ -1577,6 +1610,9 @@ input[type="radio"] {
         while still communicating the key ideas and design principles behind GNNs.
         We recommend the interested reader take a look at
         <d-cite key="gnn-survey"></d-cite><d-cite key="gnn-review"></d-cite> for more comprehensive surveys.
+      </p>
+      <p>
+        We end with pointers and references for additional concepts readers might be interested in:
       </p>
 
       <h3 id="practical-techniques">
@@ -1632,7 +1668,7 @@ input[type="radio"] {
           <d-math block>
             h_G = \text{PREDICT}_G \Big( \text{AGG}_{v \in G}\left(\{ h_v \} \right) \Big)
           </d-math>
-          But, we can do even better! We refer the reader to some recent pooling methods:
+          However, there do exist more powerful techniques for 'pooling' together node representations:
         </p>
           <ul>
             <li>SortPool<d-cite key="sortpool"></d-cite>: Sort vertices of the graph to get a fixed-size node-order invariant representation of the graph, and then apply any standard neural network architecture.</li>
