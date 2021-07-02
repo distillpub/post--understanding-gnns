@@ -282,7 +282,7 @@ input[type="radio"] {
     <p>
       GNNs are not the only tools available to model graph-structured data:
       graph kernels <d-cite key="graph-kernels"></d-cite>
-      and random-walk methods <d-cite key="node2vec"></d-cite> <d-cite key="deepwalk"></d-cite>
+      and random-walk methods <d-cite key="node2vec,deepwalk"></d-cite>
       were some of the most popular ones.
       Today, however, GNNs have largely replaced these techniques
       because of their inherent flexibility to model the underlying systems
@@ -309,7 +309,7 @@ input[type="radio"] {
     </h3>
       <p>
         Graphs are extremely flexible mathematical models; but this means they lack consistent structure across instances.
-        Consider the task of predicting whether a given chemical molecule is toxic<d-cite key="molecules-gnn"></d-cite> <d-cite key="neural-message-passing"></d-cite> :
+        Consider the task of predicting whether a given chemical molecule is toxic <d-cite key="molecules-gnn,neural-message-passing"></d-cite> :
       </p>
       <figure class="l-page-outset" id="menthyl-nicotinate-molecule" style="display: inline-flex;">
         <img src="images/1,2,6-trigalloyl-glucose-molecule.svg" style="width: 50%;"
@@ -1429,7 +1429,7 @@ input[type="radio"] {
         The broad success of pre-training for natural language processing models
         such as ELMo <d-cite key="elmo"></d-cite> and BERT <d-cite key="bert"></d-cite>
         has sparked interest in similar techniques for GNNs
-        <d-cite key="strategies-pre-training"></d-cite><d-cite key="m3s"></d-cite><d-cite key="when-does-self-help"></d-cite><d-cite key="self-supervised-graphs-insights"></d-cite>.
+        <d-cite key="strategies-pre-training,m3s,when-does-self-help,self-supervised-graphs-insights"></d-cite>.
         The key idea in each of these papers is to train GNNs to predict
         local (eg. node degrees, clustering coefficient, masked node attributes)
         and/or global graph properties (eg. pairwise distances, masked global attributes).
@@ -1444,7 +1444,7 @@ input[type="radio"] {
       <p>
         where $N_R(v)$ is a multi-set of nodes visited when random walks are started from $v$.
         For large graphs, where computing the sum over all nodes may be computationally expensive,
-        techniques such as Noise Contrastive Estimation <d-cite key="nce"></d-cite> <d-cite key="nce-embeddings"></d-cite>are especially useful.
+        techniques such as Noise Contrastive Estimation <d-cite key="nce,nce-embeddings"></d-cite> are especially useful.
       </p>
 
     <!--
@@ -1609,7 +1609,7 @@ input[type="radio"] {
         We have been forced to restrict our discussion to a small subset of the entire literature,
         while still communicating the key ideas and design principles behind GNNs.
         We recommend the interested reader take a look at
-        <d-cite key="gnn-survey"></d-cite><d-cite key="gnn-review"></d-cite> for more comprehensive surveys.
+        <d-cite key="gnn-survey,gnn-review"></d-cite> for a more comprehensive survey.
       </p>
       <p>
         We end with pointers and references for additional concepts readers might be interested in:
@@ -1653,7 +1653,7 @@ input[type="radio"] {
         </ul>
       <p>
         There do exist more sophisticated techniques that can take advantage of the different structures of these graphs:
-        see <d-cite key="gnn-survey"></d-cite><d-cite key="gnn-review"></d-cite> for more.
+        see <d-cite key="gnn-survey,gnn-review"></d-cite> for more discussion.
       </p>
 
       <h3 id="pooling">
@@ -1915,5 +1915,5 @@ input[type="radio"] {
   <!-- bibliography will be inlined during Distill pipeline's pre-rendering -->
   <d-bibliography src="bibliography.bib"></d-bibliography>
 
-<script type="text/javascript" src="/index.bundle.js"></script></body>
+<script type="text/javascript" src="index.bundle.js"></script></body>
 </html>
