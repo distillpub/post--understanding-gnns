@@ -1,0 +1,14 @@
+{
+  "name": "@ameyasd/spectral-decompositions-of-natural-images",
+  "main": "509685ffa5edf675@2342.js",
+  "version": "2342.0.0",
+  "homepage": "https://observablehq.com/@ameyasd/spectral-decompositions-of-natural-images",
+  "author": {
+    "name": "Ameya Daigavane",
+    "url": "https://observablehq.com/@ameyasd"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  }
+}

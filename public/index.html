@@ -1145,7 +1145,18 @@ input[type="radio"] {
         <div id="observablehq-style-59114e0b" style="display: none;"></div>
         <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/spectral-decompositions-of-natural-images">Spectral Decompositions of Natural Images by Ameya Daigavane</a></p> -->
 
+
         <script type="module">
+        import define from "./spectral-decompositions-of-natural-images/index.js";
+        import {Runtime, Library, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
+
+        const runtime = new Runtime();
+        const main = runtime.module(define, Inspector.into(document.body));
+
+        </script>
+
+
+<!--         <script type="module">
         import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
         import define from "https://api.observablehq.com/d/509685ffa5edf675.js?v=3";
         new Runtime().module(define, name => {
@@ -1157,7 +1168,9 @@ input[type="radio"] {
           if (name === "style") return new Inspector(document.querySelector("#observablehq-style-59114e0b"));
         });
         </script>
-      </div>
+ -->      
+
+</div>
       <figure>
         <figcaption>
           Use the radio buttons at the top to chose one of the four sample images.
