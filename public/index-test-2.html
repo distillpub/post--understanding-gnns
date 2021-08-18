@@ -21,8 +21,7 @@
 
   <script type="module">
   import define from "./spectral-decompositions-of-natural-images/index.js";
-  import {Runtime, Library, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
-  const runtime = new Runtime();
+  import {Runtime, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
   new Runtime().module(define, name => {
     if (name === "spectralDecompositionsAll") return new Inspector(document.querySelector("#spectralDecompositionsAll"));
     if (name === "updateArrowCaption") return new Inspector(document.querySelector("#updateArrowCaption"));
