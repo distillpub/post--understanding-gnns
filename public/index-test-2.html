@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Spectral Decomposition of Natural Images</title>
+<body>
+
+
+<p>
+  Finally, we stack the resulting channels back together to get back an image.
+  We can now see how the resulting image changes with choices of $m$.
+  Note that when $m = n$, the resulting image is identical to the original image,
+  as we can reconstruct each channel exactly.
+</p>
+<div class="shaded-figure l-screen" id="spectral-decompositions-viz" style="grid-column: page; padding-bottom: 1em; padding-top: 1em;">
+
+  <div id="spectralDecompositionsAll"></div>
+  <div id="updateArrowCaption" style="display: none;"></div>
+  <div id="drawArrow" style="display: none;"></div>
+  <div id="drawCurrBaseImg" style="display: none;"></div>
+  <div id="drawCurrUpdImg" style="display: none;"></div>
+  <div id="style" style="display: none;"></div>
+
+  <script type="module">
+  import define from "./spectral-decompositions-of-natural-images/index.js";
+  import {Runtime, Library, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
+
+  const runtime = new Runtime();
+  const main = runtime.module(define, Inspector.into(document.body));
+
+  </script>
+</div>
+
+<h3>Text about this after</h3>
