@@ -483,8 +483,8 @@ input[type="radio"] {
       </figure>
 
       <script type="module">
-      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-      import define from "https://api.observablehq.com/@ameyasd/neighbourhoods-for-cnns-and-gnns.js?v=3";
+      import {Runtime, Inspector} from "./observablehq-base/runtime.js";
+      import define from "./notebooks/neighbourhoods-for-cnns-and-gnns.js";
       new Runtime().module(define, name => {
         if (name === "cnn_svg") return new Inspector(document.querySelector("#observablehq-cnn_svg-35509536"));
         if (name === "svg") return new Inspector(document.querySelector("#observablehq-svg-35509536"));
@@ -676,8 +676,8 @@ input[type="radio"] {
           <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/cleaner-interactive-graph-polynomial-convolutions">Interactive Graph Polynomial Convolutions by Ameya Daigavane</a></p> -->
 
           <script type="module">
-          import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-          import define from "https://api.observablehq.com/d/34992a340dbdb759.js?v=3";
+          import {Runtime, Inspector} from "./observablehq-base/runtime.js";
+          import define from "./notebooks/cleaner-interactive-graph-polynomial-convolutions.js";
           new Runtime().module(define, name => {
             if (name === "grid_buttons_display") return new Inspector(document.querySelector("#observablehq-grid_buttons_display-05850d43"));
             if (name === "poly_color_scale") return new Inspector(document.querySelector("#observablehq-poly_color_scale-05850d43"));
@@ -817,8 +817,8 @@ input[type="radio"] {
         <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/updated-chebnet-equations">(Updated) ChebNet Equations by Ameya Daigavane</a></p> -->
         
         <script type="module">
-        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-        import define from "https://api.observablehq.com/@ameyasd/updated-chebnet-equations.js?v=3";
+        import {Runtime, Inspector} from "./observablehq-base/runtime.js";
+        import define from "./notebooks/updated-chebnet-equations.js";
         new Runtime().module(define, name => {
           if (name === "cheb_figure") return new Inspector(document.querySelector("#observablehq-cheb_figure-fa1f970f"));
           if (name === "style") return new Inspector(document.querySelector("#observablehq-style-fa1f970f"));
@@ -899,8 +899,8 @@ input[type="radio"] {
           <div class="style"></div>
     
           <script type="module">
-          import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-          import define from "https://api.observablehq.com/d/d1859c2b1e394a60.js?v=3";
+          import {Runtime, Inspector} from "./observablehq-base/runtime.js";
+          import define from "./notebooks/interactive-gnn-equations.js";
           (new Runtime).module(define, name => {
             if (name === "fig_div") return Inspector.into(".fig_div")();
             if (name === "text_div") return Inspector.into(".text_div")();
@@ -950,8 +950,8 @@ input[type="radio"] {
       </div>
 
       <script type="module">
-      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-      import define from "https://api.observablehq.com/d/5453631f78ab2e96.js?v=3";
+      import {Runtime, Inspector} from "./observablehq-base/runtime.js";
+      import define from "./notebooks/interactive-gnn-visualizations.js";
       (new Runtime).module(define, name => {
         if (name === "viz_list") return Inspector.into(".viz_list")();
         if (name === "buttons") return Inspector.into(".buttons")();
@@ -1146,8 +1146,8 @@ input[type="radio"] {
         <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/spectral-decompositions-of-natural-images">Spectral Decompositions of Natural Images by Ameya Daigavane</a></p> -->
 
         <script type="module">
-        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-        import define from "https://api.observablehq.com/d/509685ffa5edf675.js?v=3";
+        import {Runtime, Inspector} from "./observablehq-base/runtime.js";
+        import define from "./notebooks/spectral-decompositions-of-natural-images.js";
         new Runtime().module(define, name => {
           if (name === "spectralDecompositionsAll") return new Inspector(document.querySelector("#observablehq-spectralDecompositionsAll-59114e0b"));
           if (name === "updateArrowCaption") return new Inspector(document.querySelector("#observablehq-updateArrowCaption-59114e0b"));
@@ -1196,8 +1196,8 @@ input[type="radio"] {
 
       </div>
       <script type="module">
-        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-        import define from "https://api.observablehq.com/d/0b26065713568858.js?v=3";
+        import {Runtime, Inspector} from "./observablehq-base/runtime.js";
+        import define from "./notebooks/interactive-spectral-conversions.js";
         new Runtime().module(define, name => {
           if (name === "figcaptions") return new Inspector(document.querySelector("#observablehq-figcaptions-6ac8e785"));
           if (name === "spec_conv_main_div") return new Inspector(document.querySelector("#observablehq-spec_conv_main_div-6ac8e785"));
@@ -1267,8 +1267,8 @@ input[type="radio"] {
       <div class="style"></div>
 
       <script type="module">
-      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
-      import define from "https://api.observablehq.com/d/7f0ea3801bf85fd8.js?v=3";
+      import {Runtime, Inspector} from "./observablehq-base/runtime.js";
+      import define from "./notebooks/spectral-convolutions-equation.js";
       (new Runtime).module(define, name => {
         if (name === "spec_figure_init") return Inspector.into(".spec_figure_init")();
         if (name === "spec_figure") return Inspector.into(".spec_figure")();
