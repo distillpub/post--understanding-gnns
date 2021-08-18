@@ -483,7 +483,7 @@ input[type="radio"] {
       </figure>
 
       <script type="module">
-      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+      import {Runtime, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
       import define from "https://api.observablehq.com/@ameyasd/neighbourhoods-for-cnns-and-gnns.js?v=3";
       new Runtime().module(define, name => {
         if (name === "cnn_svg") return new Inspector(document.querySelector("#observablehq-cnn_svg-35509536"));
@@ -675,8 +675,9 @@ input[type="radio"] {
           <div id="observablehq-highlight_selected_cell-05850d43" style="display: none;"></div>
           <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/cleaner-interactive-graph-polynomial-convolutions">Interactive Graph Polynomial Convolutions by Ameya Daigavane</a></p> -->
 
+          <!-- KEEP THIS ONE -->
           <script type="module">
-          import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import {Runtime, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
           import define from "https://api.observablehq.com/d/34992a340dbdb759.js?v=3";
           new Runtime().module(define, name => {
             if (name === "grid_buttons_display") return new Inspector(document.querySelector("#observablehq-grid_buttons_display-05850d43"));
@@ -817,7 +818,7 @@ input[type="radio"] {
         <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/updated-chebnet-equations">(Updated) ChebNet Equations by Ameya Daigavane</a></p> -->
         
         <script type="module">
-        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+        import {Runtime, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
         import define from "https://api.observablehq.com/@ameyasd/updated-chebnet-equations.js?v=3";
         new Runtime().module(define, name => {
           if (name === "cheb_figure") return new Inspector(document.querySelector("#observablehq-cheb_figure-fa1f970f"));
@@ -893,13 +894,14 @@ input[type="radio"] {
         <div class="shaded-figure l-screen" id="modern-gnns-equations" style="grid-column: page; padding-left: 2em; padding-right: 2em; padding-top: 0em;"
           role="img" aria-label="Equations defining the embedding computations for GCN, GAT, GraphSAGE and GIN models.">
 
+          <!-- Toph note: would prob be better if these had a namespace prefix to reduce probability of a collision, esp wih style -->
           <div class="fig_div" role="img"></div>
           <div class="text_div"></div>
           <div class="interactive_list" style="display: none;"></div>
           <div class="style"></div>
     
           <script type="module">
-          import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+          import {Runtime, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
           import define from "https://api.observablehq.com/d/d1859c2b1e394a60.js?v=3";
           (new Runtime).module(define, name => {
             if (name === "fig_div") return Inspector.into(".fig_div")();
@@ -950,7 +952,7 @@ input[type="radio"] {
       </div>
 
       <script type="module">
-      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+      import {Runtime, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
       import define from "https://api.observablehq.com/d/5453631f78ab2e96.js?v=3";
       (new Runtime).module(define, name => {
         if (name === "viz_list") return Inspector.into(".viz_list")();
@@ -1147,16 +1149,20 @@ input[type="radio"] {
 
         <script type="module">
         import define from "./spectral-decompositions-of-natural-images/index.js";
-        import {Runtime, Library, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
-
-        const runtime = new Runtime();
-        const main = runtime.module(define, Inspector.into(document.body));
-
+        import {Runtime, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
+        new Runtime().module(define, name => {
+          if (name === "spectralDecompositionsAll") return new Inspector(document.querySelector("#observablehq-spectralDecompositionsAll-59114e0b"));
+          if (name === "updateArrowCaption") return new Inspector(document.querySelector("#observablehq-updateArrowCaption-59114e0b"));
+          if (name === "drawArrow") return new Inspector(document.querySelector("#observablehq-drawArrow-59114e0b"));
+          if (name === "drawCurrBaseImg") return new Inspector(document.querySelector("#observablehq-drawCurrBaseImg-59114e0b"));
+          if (name === "drawCurrUpdImg") return new Inspector(document.querySelector("#observablehq-drawCurrUpdImg-59114e0b"));
+          if (name === "style") return new Inspector(document.querySelector("#observablehq-style-59114e0b"));
+        });
         </script>
 
 
-<!--         
-        <div id="observablehq-spectralDecompositionsAll-59114e0b"></div>
+
+        <!-- <div id="observablehq-spectralDecompositionsAll-59114e0b"></div>
         <div id="observablehq-updateArrowCaption-59114e0b" style="display: none;"></div>
         <div id="observablehq-drawArrow-59114e0b" style="display: none;"></div>
         <div id="observablehq-drawCurrBaseImg-59114e0b" style="display: none;"></div>
@@ -1176,8 +1182,8 @@ input[type="radio"] {
           if (name === "drawCurrUpdImg") return new Inspector(document.querySelector("#observablehq-drawCurrUpdImg-59114e0b"));
           if (name === "style") return new Inspector(document.querySelector("#observablehq-style-59114e0b"));
         });
-        </script>
- -->      
+        </script> -->
+ 
 
 </div>
       <figure>
@@ -1218,7 +1224,7 @@ input[type="radio"] {
 
       </div>
       <script type="module">
-        import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+        import {Runtime, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
         import define from "https://api.observablehq.com/d/0b26065713568858.js?v=3";
         new Runtime().module(define, name => {
           if (name === "figcaptions") return new Inspector(document.querySelector("#observablehq-figcaptions-6ac8e785"));
@@ -1289,7 +1295,7 @@ input[type="radio"] {
       <div class="style"></div>
 
       <script type="module">
-      import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+      import {Runtime, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
       import define from "https://api.observablehq.com/d/7f0ea3801bf85fd8.js?v=3";
       (new Runtime).module(define, name => {
         if (name === "spec_figure_init") return Inspector.into(".spec_figure_init")();

@@ -21,12 +21,15 @@
 
   <script type="module">
   import define from "./spectral-decompositions-of-natural-images/index.js";
-  import {Runtime, Library, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
-
-  const runtime = new Runtime();
-  const main = runtime.module(define, Inspector.into(document.body));
-
+  import {Runtime, Inspector} from "./spectral-decompositions-of-natural-images/runtime.js";
+  new Runtime().module(define, name => {
+    if (name === "spectralDecompositionsAll") return new Inspector(document.querySelector("#spectralDecompositionsAll"));
+    if (name === "updateArrowCaption") return new Inspector(document.querySelector("#updateArrowCaption"));
+    if (name === "drawArrow") return new Inspector(document.querySelector("#drawArrow"));
+    if (name === "drawCurrBaseImg") return new Inspector(document.querySelector("#drawCurrBaseImg"));
+    if (name === "drawCurrUpdImg") return new Inspector(document.querySelector("#drawCurrUpdImg"));
+    if (name === "style") return new Inspector(document.querySelector("#style"));
+  });
   </script>
-</div>
 
 <h3>Text about this after</h3>
