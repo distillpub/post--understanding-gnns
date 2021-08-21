@@ -171,10 +171,6 @@ input[type="radio"] {
 </head>
 
 <body>
-
-  <script type="module">
-    import {Runtime, Inspector} from "./observablehq-base/runtime.js";
-  </script>
   
   <d-front-matter>
     <script type="text/json">
@@ -487,7 +483,7 @@ input[type="radio"] {
       </figure>
 
       <script type="module">
-      
+      import {Runtime, Inspector} from "./observablehq-base/runtime.js";
       import define from "./notebooks/neighbourhoods-for-cnns-and-gnns.js";
       new Runtime().module(define, name => {
         if (name === "cnn_svg") return new Inspector(document.querySelector("#observablehq-cnn_svg-35509536"));
@@ -680,7 +676,7 @@ input[type="radio"] {
           <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/cleaner-interactive-graph-polynomial-convolutions">Interactive Graph Polynomial Convolutions by Ameya Daigavane</a></p> -->
 
           <script type="module">
-          
+          import {Runtime, Inspector} from "./observablehq-base/runtime.js";
           import define from "./notebooks/cleaner-interactive-graph-polynomial-convolutions.js";
           new Runtime().module(define, name => {
             if (name === "grid_buttons_display") return new Inspector(document.querySelector("#observablehq-grid_buttons_display-05850d43"));
@@ -821,7 +817,7 @@ input[type="radio"] {
         <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/updated-chebnet-equations">(Updated) ChebNet Equations by Ameya Daigavane</a></p> -->
         
         <script type="module">
-        
+        import {Runtime, Inspector} from "./observablehq-base/runtime.js";
         import define from "./notebooks/updated-chebnet-equations.js";
         new Runtime().module(define, name => {
           if (name === "cheb_figure") return new Inspector(document.querySelector("#observablehq-cheb_figure-fa1f970f"));
@@ -903,7 +899,7 @@ input[type="radio"] {
           <div class="style"></div>
     
           <script type="module">
-          
+          import {Runtime, Inspector} from "./observablehq-base/runtime.js";     
           import define from "./notebooks/interactive-gnn-equations.js";
           (new Runtime).module(define, name => {
             if (name === "fig_div") return Inspector.into(".fig_div")();
@@ -954,7 +950,7 @@ input[type="radio"] {
       </div>
 
       <script type="module">
-      
+      import {Runtime, Inspector} from "./observablehq-base/runtime.js";
       import define from "./notebooks/interactive-gnn-visualizations.js";
       (new Runtime).module(define, name => {
         if (name === "viz_list") return Inspector.into(".viz_list")();
@@ -1150,7 +1146,7 @@ input[type="radio"] {
         <!-- <p>Credit: <a href="https://observablehq.com/@ameyasd/spectral-decompositions-of-natural-images">Spectral Decompositions of Natural Images by Ameya Daigavane</a></p> -->
 
         <script type="module">
-        
+        import {Runtime, Inspector} from "./observablehq-base/runtime.js";   
         import define from "./notebooks/spectral-decompositions-of-natural-images.js";
         new Runtime().module(define, name => {
           if (name === "spectralDecompositionsAll") return new Inspector(document.querySelector("#observablehq-spectralDecompositionsAll-59114e0b"));
@@ -1200,7 +1196,7 @@ input[type="radio"] {
 
       </div>
       <script type="module">
-        
+        import {Runtime, Inspector} from "./observablehq-base/runtime.js"; 
         import define from "./notebooks/interactive-spectral-conversions.js";
         new Runtime().module(define, name => {
           if (name === "figcaptions") return new Inspector(document.querySelector("#observablehq-figcaptions-6ac8e785"));
@@ -1271,7 +1267,7 @@ input[type="radio"] {
       <div class="style"></div>
 
       <script type="module">
-      
+      import {Runtime, Inspector} from "./observablehq-base/runtime.js";    
       import define from "./notebooks/spectral-convolutions-equation.js";
       (new Runtime).module(define, name => {
         if (name === "spec_figure_init") return Inspector.into(".spec_figure_init")();
