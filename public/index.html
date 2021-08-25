@@ -485,11 +485,13 @@ input[type="radio"] {
       <script type="module">
       import {Runtime, Inspector} from "./observablehq-base/runtime.js";
       import define from "./notebooks/neighbourhoods-for-cnns-and-gnns.js";
-      new Runtime().module(define, name => {
-        if (name === "cnn_svg") return new Inspector(document.querySelector("#observablehq-cnn_svg-35509536"));
-        if (name === "svg") return new Inspector(document.querySelector("#observablehq-svg-35509536"));
-        return ["adjust_dimensions","reset_nodes","highlight_nodes","get_node_position","remove_old_arrows","draw_arrows_to_updated_node","add_interactivity","on_selected_node_change","updated_node_position"].includes(name);
-      });
+      setTimeout(() => {
+        new Runtime().module(define, name => {
+          if (name === "cnn_svg") return new Inspector(document.querySelector("#observablehq-cnn_svg-35509536"));
+          if (name === "svg") return new Inspector(document.querySelector("#observablehq-svg-35509536"));
+          return ["adjust_dimensions","reset_nodes","highlight_nodes","get_node_position","remove_old_arrows","draw_arrows_to_updated_node","add_interactivity","on_selected_node_change","updated_node_position"].includes(name);
+        });
+      }, 200);
       </script>
     </figure>
     <p>
@@ -678,19 +680,21 @@ input[type="radio"] {
           <script type="module">
           import {Runtime, Inspector} from "./observablehq-base/runtime.js";
           import define from "./notebooks/cleaner-interactive-graph-polynomial-convolutions.js";
-          new Runtime().module(define, name => {
-            if (name === "grid_buttons_display") return new Inspector(document.querySelector("#observablehq-grid_buttons_display-05850d43"));
-            if (name === "poly_color_scale") return new Inspector(document.querySelector("#observablehq-poly_color_scale-05850d43"));
-            if (name === "poly_figcaptions") return new Inspector(document.querySelector("#observablehq-poly_figcaptions-05850d43"));
-            if (name === "poly_conv_main_div") return new Inspector(document.querySelector("#observablehq-poly_conv_main_div-05850d43"));
-            if (name === "viewof laplacian_type") return new Inspector(document.querySelector("#observablehq-viewof-laplacian_type-05850d43"));
-            if (name === "polynomial_display") return new Inspector(document.querySelector("#observablehq-polynomial_display-05850d43"));
-            if (name === "poly_conv_sliders") return new Inspector(document.querySelector("#observablehq-poly_conv_sliders-05850d43"));
-            if (name === "highlight_selected_cell") return new Inspector(document.querySelector("#observablehq-highlight_selected_cell-05850d43"));
-            if (name === "reset_coeffs_button_display") return new Inspector(document.querySelector("#observablehq-reset_coeffs_button_display-05850d43"));
-            if (name === "poly_input_slider_watch") return new Inspector(document.querySelector("#observablehq-poly_input_slider_watch-05850d43"));
-            return ["svg","draw_bottom_line","draw_arrow","draw_original_img","draw_convolutional_kernel","draw_updated_img","draw_static_graph_orig","draw_static_graph_upd","draw_dyn_graph_orig","draw_dyn_graph_upd"].includes(name);
-          });
+          setTimeout(() => {
+            new Runtime().module(define, name => {
+              if (name === "grid_buttons_display") return new Inspector(document.querySelector("#observablehq-grid_buttons_display-05850d43"));
+              if (name === "poly_color_scale") return new Inspector(document.querySelector("#observablehq-poly_color_scale-05850d43"));
+              if (name === "poly_figcaptions") return new Inspector(document.querySelector("#observablehq-poly_figcaptions-05850d43"));
+              if (name === "poly_conv_main_div") return new Inspector(document.querySelector("#observablehq-poly_conv_main_div-05850d43"));
+              if (name === "viewof laplacian_type") return new Inspector(document.querySelector("#observablehq-viewof-laplacian_type-05850d43"));
+              if (name === "polynomial_display") return new Inspector(document.querySelector("#observablehq-polynomial_display-05850d43"));
+              if (name === "poly_conv_sliders") return new Inspector(document.querySelector("#observablehq-poly_conv_sliders-05850d43"));
+              if (name === "highlight_selected_cell") return new Inspector(document.querySelector("#observablehq-highlight_selected_cell-05850d43"));
+              if (name === "reset_coeffs_button_display") return new Inspector(document.querySelector("#observablehq-reset_coeffs_button_display-05850d43"));
+              if (name === "poly_input_slider_watch") return new Inspector(document.querySelector("#observablehq-poly_input_slider_watch-05850d43"));
+              return ["svg","draw_bottom_line","draw_arrow","draw_original_img","draw_convolutional_kernel","draw_updated_img","draw_static_graph_orig","draw_static_graph_upd","draw_dyn_graph_orig","draw_dyn_graph_upd"].includes(name);
+            });
+          }, 200);
           </script>
         </div>
         <figure>
@@ -819,10 +823,12 @@ input[type="radio"] {
         <script type="module">
         import {Runtime, Inspector} from "./observablehq-base/runtime.js";
         import define from "./notebooks/updated-chebnet-equations.js";
-        new Runtime().module(define, name => {
-          if (name === "cheb_figure") return new Inspector(document.querySelector("#observablehq-cheb_figure-fa1f970f"));
-          if (name === "style") return new Inspector(document.querySelector("#observablehq-style-fa1f970f"));
-        });
+        setTimeout(() => {
+          new Runtime().module(define, name => {
+            if (name === "cheb_figure") return new Inspector(document.querySelector("#observablehq-cheb_figure-fa1f970f"));
+            if (name === "style") return new Inspector(document.querySelector("#observablehq-style-fa1f970f"));
+          });
+        }, 200);
         </script>
         <p>
           Note that these networks
@@ -893,20 +899,22 @@ input[type="radio"] {
         <div class="shaded-figure l-screen" id="modern-gnns-equations" style="grid-column: page; padding-left: 2em; padding-right: 2em; padding-top: 0em;"
           role="img" aria-label="Equations defining the embedding computations for GCN, GAT, GraphSAGE and GIN models.">
 
-          <div class="fig_div" role="img"></div>
-          <div class="text_div"></div>
-          <div class="interactive_list" style="display: none;"></div>
-          <div class="style"></div>
+          <div class="interactive-gnn-equations-fig_div" role="img"></div>
+          <div class="interactive-gnn-equations-text_div"></div>
+          <div class="interactive-gnn-equations-interactive_list" style="display: none;"></div>
+          <div class="interactive-gnn-equations-style"></div>
     
           <script type="module">
           import {Runtime, Inspector} from "./observablehq-base/runtime.js";     
           import define from "./notebooks/interactive-gnn-equations.js";
-          (new Runtime).module(define, name => {
-            if (name === "fig_div") return Inspector.into(".fig_div")();
-            if (name === "text_div") return Inspector.into(".text_div")();
-            if (name === "interactive_list") return Inspector.into(".interactive_list")();
-            if (name === "style") return Inspector.into(".style")();
-          });
+          setTimeout(() => {
+            new Runtime().module(define, name => {
+              if (name === "fig_div") return Inspector.into(".interactive-gnn-equations-fig_div")();
+              if (name === "text_div") return Inspector.into(".interactive-gnn-equations-text_div")();
+              if (name === "interactive_list") return Inspector.into(".interactive-gnn-equations-interactive_list")();
+              if (name === "style") return Inspector.into(".interactive-gnn-equations-style")();
+            });
+          }, 200);
           </script>
         </div>
   
@@ -941,26 +949,28 @@ input[type="radio"] {
 
       <div class="shaded-figure l-screen" style="grid-column: page;" role="img"
         aria-label="An interactive visualization of different GNN models with update equations displayed at the selected node.">
-        <div class="viz_list" style="padding-left: 2em; padding-right: 2em"></div>
-        <div class="buttons"></div>
-        <div class="fig"></div>
-        <div class="eqn"></div>
-        <div class="network_display_hack" style="display: none;"></div>
-        <div class="style"></div>
+        <div class="interactive-gnn-visualizations-viz_list" style="padding-left: 2em; padding-right: 2em"></div>
+        <div class="interactive-gnn-visualizations-buttons"></div>
+        <div class="interactive-gnn-visualizations-fig"></div>
+        <div class="interactive-gnn-visualizations-eqn"></div>
+        <div class="interactive-gnn-visualizations-network_display_hack" style="display: none;"></div>
+        <div class="interactive-gnn-visualizations-style"></div>
       </div>
 
       <script type="module">
       import {Runtime, Inspector} from "./observablehq-base/runtime.js";
       import define from "./notebooks/interactive-gnn-visualizations.js";
-      (new Runtime).module(define, name => {
-        if (name === "viz_list") return Inspector.into(".viz_list")();
-        if (name === "buttons") return Inspector.into(".buttons")();
-        if (name === "fig") return Inspector.into(".fig")();
-        if (name === "eqn") return Inspector.into(".eqn")();
-        if (name === "network_display_hack") return Inspector.into(".network_display_hack")();
-        if (name === "style") return Inspector.into(".style")();
-        return ["interactive_list","select_fig","handle_click"].includes(name) || null;
-      });
+      setTimeout(() => {
+        new Runtime().module(define, name => {
+          if (name === "viz_list") return Inspector.into(".interactive-gnn-visualizations-viz_list")();
+          if (name === "buttons") return Inspector.into(".interactive-gnn-visualizations-buttons")();
+          if (name === "fig") return Inspector.into(".interactive-gnn-visualizations-fig")();
+          if (name === "eqn") return Inspector.into(".interactive-gnn-visualizations-eqn")();
+          if (name === "network_display_hack") return Inspector.into(".interactive-gnn-visualizations-network_display_hack")();
+          if (name === "style") return Inspector.into(".interactive-gnn-visualizations-style")();
+          return ["interactive_list","select_fig","handle_click"].includes(name) || null;
+        });
+      }, 200);
       </script>
       <figure>
         <figcaption>
@@ -1148,14 +1158,16 @@ input[type="radio"] {
         <script type="module">
         import {Runtime, Inspector} from "./observablehq-base/runtime.js";   
         import define from "./notebooks/spectral-decompositions-of-natural-images.js";
-        new Runtime().module(define, name => {
-          if (name === "spectralDecompositionsAll") return new Inspector(document.querySelector("#observablehq-spectralDecompositionsAll-59114e0b"));
-          if (name === "updateArrowCaption") return new Inspector(document.querySelector("#observablehq-updateArrowCaption-59114e0b"));
-          if (name === "drawArrow") return new Inspector(document.querySelector("#observablehq-drawArrow-59114e0b"));
-          if (name === "drawCurrBaseImg") return new Inspector(document.querySelector("#observablehq-drawCurrBaseImg-59114e0b"));
-          if (name === "drawCurrUpdImg") return new Inspector(document.querySelector("#observablehq-drawCurrUpdImg-59114e0b"));
-          if (name === "style") return new Inspector(document.querySelector("#observablehq-style-59114e0b"));
-        });
+        setTimeout(() => {
+          new Runtime().module(define, name => {
+            if (name === "spectralDecompositionsAll") return new Inspector(document.querySelector("#observablehq-spectralDecompositionsAll-59114e0b"));
+            if (name === "updateArrowCaption") return new Inspector(document.querySelector("#observablehq-updateArrowCaption-59114e0b"));
+            if (name === "drawArrow") return new Inspector(document.querySelector("#observablehq-drawArrow-59114e0b"));
+            if (name === "drawCurrBaseImg") return new Inspector(document.querySelector("#observablehq-drawCurrBaseImg-59114e0b"));
+            if (name === "drawCurrUpdImg") return new Inspector(document.querySelector("#observablehq-drawCurrUpdImg-59114e0b"));
+            if (name === "style") return new Inspector(document.querySelector("#observablehq-style-59114e0b"));
+          });
+        }, 200);
         </script>
       </div>
       <figure>
@@ -1198,16 +1210,18 @@ input[type="radio"] {
       <script type="module">
         import {Runtime, Inspector} from "./observablehq-base/runtime.js"; 
         import define from "./notebooks/interactive-spectral-conversions.js";
-        new Runtime().module(define, name => {
-          if (name === "figcaptions") return new Inspector(document.querySelector("#observablehq-figcaptions-6ac8e785"));
-          if (name === "spec_conv_main_div") return new Inspector(document.querySelector("#observablehq-spec_conv_main_div-6ac8e785"));
-          if (name === "spec_color_scale") return new Inspector(document.querySelector("#observablehq-spec_color_scale-6ac8e785"));
-          if (name === "subgrid_main_div") return new Inspector(document.querySelector("#observablehq-subgrid_main_div-6ac8e785"));
-          if (name === "spec_conv_sliders") return new Inspector(document.querySelector("#observablehq-spec_conv_sliders-6ac8e785"));
-          if (name === "spec_conv_buttons_display") return new Inspector(document.querySelector("#observablehq-spec_conv_buttons_display-6ac8e785"));
-          if (name === "spec_input_slider_watch") return new Inspector(document.querySelector("#observablehq-spec_input_slider_watch-6ac8e785"));
-          return ["svg","draw_img","draw_static_graph","draw_dyn_graph","draw_eigenvectors"].includes(name);
-        });
+        setTimeout(() => {
+          new Runtime().module(define, name => {
+            if (name === "figcaptions") return new Inspector(document.querySelector("#observablehq-figcaptions-6ac8e785"));
+            if (name === "spec_conv_main_div") return new Inspector(document.querySelector("#observablehq-spec_conv_main_div-6ac8e785"));
+            if (name === "spec_color_scale") return new Inspector(document.querySelector("#observablehq-spec_color_scale-6ac8e785"));
+            if (name === "subgrid_main_div") return new Inspector(document.querySelector("#observablehq-subgrid_main_div-6ac8e785"));
+            if (name === "spec_conv_sliders") return new Inspector(document.querySelector("#observablehq-spec_conv_sliders-6ac8e785"));
+            if (name === "spec_conv_buttons_display") return new Inspector(document.querySelector("#observablehq-spec_conv_buttons_display-6ac8e785"));
+            if (name === "spec_input_slider_watch") return new Inspector(document.querySelector("#observablehq-spec_input_slider_watch-6ac8e785"));
+            return ["svg","draw_img","draw_static_graph","draw_dyn_graph","draw_eigenvectors"].includes(name);
+          });
+        }, 200);
       </script>
       <figure>
         <figcaption>
@@ -1264,16 +1278,18 @@ input[type="radio"] {
         Finally, we can describe the computation that the layers perform, one after the other:
       </p>
       <div class="spec_figure"></div>
-      <div class="style"></div>
+      <div class="spec_figure_style"></div>
 
       <script type="module">
       import {Runtime, Inspector} from "./observablehq-base/runtime.js";    
       import define from "./notebooks/spectral-convolutions-equation.js";
-      (new Runtime).module(define, name => {
-        if (name === "spec_figure_init") return Inspector.into(".spec_figure_init")();
-        if (name === "spec_figure") return Inspector.into(".spec_figure")();
-        if (name === "style") return Inspector.into(".style")();
-      });
+      setTimeout(() => {
+        new Runtime().module(define, name => {
+          if (name === "spec_figure_init") return Inspector.into(".spec_figure_init")();
+          if (name === "spec_figure") return Inspector.into(".spec_figure")();
+          if (name === "style") return Inspector.into(".spec_figure_style")();
+        });
+      }, 200);
       </script>
       <p>
         The method above generalizes easily to the case where each $h^{(k)} \in \mathbb{R}^{d_k}$, as well:
