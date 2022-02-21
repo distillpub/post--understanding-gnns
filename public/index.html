@@ -778,7 +778,7 @@ input[type="radio"] {
           <d-math block>
             PP^T = P^TP = I_n.
           </d-math>
-          Then, we call an algorithm $f$ node-order equivariant iff for all permutations $P$:
+          Then, we call a function $f$ node-order equivariant iff for all permutations $P$:
           <d-math block>
             f(Px) = P f(x).
           </d-math>
@@ -796,11 +796,11 @@ input[type="radio"] {
           <d-math block>
             \begin{aligned}
               f(Px) & = \sum_{i = 0}^d w_i (PL^iP^T) (Px) \\
-                    & = P \sum_{i = 0}^d w_i L^i x' \\
+                    & = P \sum_{i = 0}^d w_i L^i x \\
                     & = P f(x).
             \end{aligned}
           </d-math> 
-          as needed.
+          as claimed.
         </p>
       </div>
 
